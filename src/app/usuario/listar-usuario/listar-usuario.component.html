@@ -1,0 +1,46 @@
+<div class="row text-right d-flex justify-content-between mb-3">
+  <h1>Usuarios.</h1>
+
+  <button type="button" [routerLink]="['./nuevo']" class="btn btn-info">
+    <i class="fas fa-lg fa-user-plus"></i>
+  </button>
+</div>
+<div class="row">
+  <table class=" table table-striped text-center align-middle table-sm">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Codigo</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let u of usuarios">
+        <th class="align-middle" scope="row">{{u.id_usuario}}</th>
+        <td class="align-middle">{{u.nombre_usuario}}</td>
+        <td class="align-middle">
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" [routerLink]="['.', u.id_login]" class="btn btn-primary">
+              <i class="fas fa-lg fa-pen"></i> </button>
+            <button type="button" (click)="eliminarUsuario(u.id_login)" class="btn btn-danger">
+              <i class="far fa-lg fa-trash-alt"></i></button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #noData>
+  <div class="row abs-center" *ngIf="data; else noData">
+    <div class="card border-0">
+      <img src="http://sasteedeals.com/assets/uploads/nodatafound.png" class="card-img-top" alt="...">
+      <div class="card-body">
+        <p class="card-text text-center">
+          Lo sentimos, no hay información para mostrar
+          <i class="fas fa-lg fa-frown-open"></i>
+        </p>
+      </div>
+    </div>
+  </div>
+</ng-template>

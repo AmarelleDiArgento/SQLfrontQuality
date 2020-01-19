@@ -1,0 +1,51 @@
+<div class="row text-right d-flex justify-content-between mb-3">
+  <h1>Procesos.</h1>
+
+  <button type="button" [routerLink]="['./nuevo']" class="btn btn-info">
+    <i class="fas fa-lg fa-user-plus"></i>
+  </button>
+</div>
+<div class="row">
+  <table class=" table table-striped text-center align-middle table-sm">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Codigo</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <!-- 
+          <th class="align-middle" scope="row">{{u.id_Proceso}}</th>
+
+          -->
+      <tr *ngFor="let u of procesos">
+        <th class="align-middle" scope="row">{{u.codigo_proceso}}</th>
+        <td class="align-middle">{{u.nombre_proceso}}</td>
+        <td class="align-middle">
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" [routerLink]="['.', u.id_Proceso]" class="btn btn-primary">
+              <i class="fas fa-lg fa-pen"></i> </button>
+            <button type="button" (click)="eliminarProceso(u.id_Proceso)" class="btn btn-danger">
+              <i class="far fa-lg fa-trash-alt"></i></button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #noData>
+  <div class="row abs-center" *ngIf="data; else noData">
+    <div class="card border-0">
+      <img src="http://sasteedeals.com/assets/uploads/nodatafound.png" class="card-img-top" alt="...">
+      <div class="card-body">
+        <p class="card-text text-center">
+          Lo sentimos, no hay información para mostrar
+          <i class="fas fa-lg fa-frown-open"></i>
+        </p>
+      </div>
+    </div>
+  </div>
+</ng-template>
