@@ -6,8 +6,10 @@ import { isUndefined } from 'util';
 @Component({
   selector: 'app-grafica',
   styleUrls: ['./grafica.component.scss'],
-  templateUrl: '/grafica.component.html',
+  template: '',
 })
+
+// /grafica.component.html
 export class GraficaComponent implements OnInit {
 
   public lineal: any = null;

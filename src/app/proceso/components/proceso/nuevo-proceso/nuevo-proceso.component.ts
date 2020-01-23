@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { UsuarioService } from 'src/app/core/services/usuario.service';
+import { ProcesoService } from 'src/app/core/services/proceso.service';
 import { SwalModalService } from 'src/app/core/swal-modal.service';
 import { Router } from '@angular/router';
 
@@ -12,40 +12,40 @@ import { Router } from '@angular/router';
 export class NuevoProcesoComponent implements OnInit {
 
   // var form
-  nuevoUsuario: FormGroup;
+  nuevoProceso: FormGroup;
   submitted = false;
 
   constructor(
     private formBuilder: FormBuilder,
-    private usuarioService: UsuarioService,
+    private procesoService: ProcesoService,
     private sw: SwalModalService,
     private router: Router,
   ) { }
 
   ngOnInit() {
     // init form
-    this.nuevoUsuario = this.formBuilder.group({
-      id_usuario: ['', Validators.required],
-      nombre_usuario: ['', Validators.required]
+    this.nuevoProceso = this.formBuilder.group({
+      id_proceso: ['', Validators.required],
+      nombre_proceso: ['', Validators.required]
     });
 
   }
   // get form controls
-  get f() { return this.nuevoUsuario.controls; }
+  get f() { return this.nuevoProceso.controls; }
 
 
   onSubmit() {
     // error here if form is invalid
-    if (this.nuevoUsuario.valid) {
+    if (this.nuevoProceso.valid) {
       // console.log('valido');
       this.submitted = true;
-      this.usuarioService.crear(this.nuevoUsuario.value)
+      this.procesoService.crear(this.nuevoProceso.value)
         .subscribe(data => {
           // console.log(data);
           let val = this.sw.modal(data)
           if (val) {
             // console.log('Cargue');
-            this.router.navigate(['usuario'])
+            this.router.navigate(['proceso'])
           }
         })
     }
