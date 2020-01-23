@@ -52,10 +52,10 @@ export class EditarUsuarioComponent implements OnInit {
 
           this.data = data.respuesta === 'success'
           if (this.data) {
-            console.log(data);
+            // console.log(data);
             this.editarUsuario = this.formBuilder.group(data.rows);
           } else {
-            console.log(data);
+            // console.log(data);
 
             Swal.fire({
               icon: data.respuesta,
@@ -75,14 +75,14 @@ export class EditarUsuarioComponent implements OnInit {
   onSubmit() {
     // error here if form is invalid
     if (this.editarUsuario.valid) {
-      console.log('valido');
+      // console.log('valido');
       this.submitted = true;
       this.usuarioService.editar(this.id, this.editarUsuario.value)
         .subscribe(data => {
-          console.log(data);
+          // console.log(data);
           let val = this.sw.modal(data)
           if (val) {
-            console.log('Cargue');
+            // console.log('Cargue');
             this.router.navigate(['usuario'])
           }
         })

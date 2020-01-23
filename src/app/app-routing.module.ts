@@ -9,6 +9,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 const routes: Routes = [
 
   {
+
     path: '',
     component: LayoutComponent,
     children: [
@@ -18,13 +19,18 @@ const routes: Routes = [
         pathMatch: 'full'
       },
       {
+        path: 'home',
+        loadChildren: () => import('./home/home.module').then(h => h.HomeModule)
+      },
+      {
         path: 'usuario',
         loadChildren: () => import('./usuario/usuario.module').then(u => u.UsuarioModule)
       },
       {
         path: 'proceso',
         loadChildren: () => import('./proceso/proceso.module').then(p => p.ProcesoModule)
-      }]
+      }
+    ]
   },
   {
     path: '**',

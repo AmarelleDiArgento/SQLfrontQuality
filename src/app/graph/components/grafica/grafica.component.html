@@ -1,1 +1,44 @@
-<p>grafica works!</p>
+<ng-container *ngIf="valido">
+
+  <div class="row">
+
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+
+          <h3 class="text-uppercase m-0">{{dataGraf.titulo}}</h3>
+        </div>
+        <div class="card-body minbodycard">
+          <h5 class="card-title">{{dataGraf.subtitulo}} </h5>
+          <p class="card-text"></p>
+          <div class="row">
+            <div class="col-12 col-md-6 text-center wrapper">
+
+              <canvas id="{{dataGraf.item}}"></canvas>
+            </div>
+            <div class="col-12 col-md-6 text-center">
+              <table class="table table-hover m-2 text-center">
+                <thead class="thead-inverse table-dark">
+                  <tr>
+                    <th>No.</th>
+                    <th>Item</th>
+                    <th>Cumplimiento</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let l of dataGraf.labels; let i = index"
+                    class="alert-{{backgroundRow(dataGraf.data[0][i])}}">
+                    <td scope="row">{{i+1}}</td>
+                    <td>{{l}}</td>
+                    <td class="porciento">{{dataGraf.data[0][i]}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ng-container>

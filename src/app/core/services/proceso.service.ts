@@ -19,7 +19,7 @@ export class ProcesoService {
   }
 
   crear(proceso: Proceso) {
-    console.log(proceso);
+    // console.log(proceso);
 
     return this.http.post<JsonRes>(`${this.url}ins`, proceso)
   }

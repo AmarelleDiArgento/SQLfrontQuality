@@ -37,14 +37,14 @@ export class CrearUsuarioComponent implements OnInit {
   onSubmit() {
     // error here if form is invalid
     if (this.nuevoUsuario.valid) {
-      console.log('valido');
+      // console.log('valido');
       this.submitted = true;
       this.usuarioService.crear(this.nuevoUsuario.value)
         .subscribe(data => {
-          console.log(data);
+          // console.log(data);
           let val = this.sw.modal(data)
           if (val) {
-            console.log('Cargue');
+            // console.log('Cargue');
             this.router.navigate(['usuario'])
           }
         })

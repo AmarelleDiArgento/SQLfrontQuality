@@ -1,1 +1,109 @@
-<p>nuevo-proceso works!</p>
+<div class="row">
+  <div class="col-12 offset-md-2 col-md-8 mt-md-5">
+
+    <div class="card">
+      <div class="card-header">
+        <h2>Nuevo proceso</h2>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="editarProceso" (ngSubmit)="onSubmit()">
+
+          <div class="form-group">
+            <label for="codigo_proceso">Codigo: </label>
+            <input type="text" autofocus class="form-control" id="codigo_proceso" formControlName="codigo_proceso"
+              [ngClass]="{ 'is-invalid': submitted && f.codigo_proceso.errors }"
+              placeholder="Digite el codigo de empleado">
+            <span>
+              <div *ngIf="submitted && f.codigo_proceso.errors">
+                <div *ngIf="f.codigo_proceso.errors.required"> <label id="error">El codigo es requerido</label></div>
+              </div>
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="nombre_proceso">Nombre: </label>
+            <input type="text" class="form-control" id="nombre_proceso" formControlName="nombre_proceso"
+              [ngClass]="{ 'is-invalid': submitted && f.nombre_proceso.errors }" placeholder="Personalizado">
+            <span>
+              <div *ngIf="submitted && f.nombre_proceso.errors">
+                <div *ngIf="f.nombre_proceso.errors.required"> <label id="error">El codigo es requerido</label></div>
+              </div>
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="Personalizado1">Personalizado: </label>
+            <input type="text" class="form-control" id="Personalizado1" formControlName="Personalizado1"
+              [ngClass]="{ 'is-invalid': submitted && f.Personalizado1.errors }" placeholder="Personalizado">
+            <span>
+              <div *ngIf="submitted && f.Personalizado1.errors">
+                <div *ngIf="f.Personalizado1.errors.required"> <label id="error">El codigo es requerido</label></div>
+              </div>
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="Personalizado2">Personalizado: </label>
+            <input type="text" class="form-control" id="Personalizado2" formControlName="Personalizado2"
+              [ngClass]="{ 'is-invalid': submitted && f.Personalizado2.errors }" placeholder="Personalizado">
+            <span>
+              <div *ngIf="submitted && f.Personalizado2.errors">
+                <div *ngIf="f.Personalizado2.errors.required"> <label id="error">El codigo es requerido</label></div>
+              </div>
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="Personalizado3">Personalizado: </label>
+            <input type="text" class="form-control" id="Personalizado3" formControlName="Personalizado3"
+              [ngClass]="{ 'is-invalid': submitted && f.Personalizado3.errors }" placeholder="Personalizado">
+            <span>
+              <div *ngIf="submitted && f.Personalizado3.errors">
+                <div *ngIf="f.Personalizado3.errors.required"> <label id="error">El codigo es requerido</label></div>
+              </div>
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="Personalizado4">Personalizado: </label>
+            <input type="text" class="form-control" id="Personalizado4" formControlName="Personalizado4"
+              [ngClass]="{ 'is-invalid': submitted && f.Personalizado4.errors }" placeholder="Personalizado">
+            <span>
+              <div *ngIf="submitted && f.Personalizado4.errors">
+                <div *ngIf="f.Personalizado4.errors.required"> <label id="error">El codigo es requerido</label></div>
+              </div>
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="Personalizado5">Personalizado: </label>
+            <input type="text" class="form-control" id="Personalizado5" formControlName="Personalizado5"
+              [ngClass]="{ 'is-invalid': submitted && f.Personalizado5.errors }" placeholder="Personalizado">
+            <span>
+              <div *ngIf="submitted && f.Personalizado5.errors">
+                <div *ngIf="f.Personalizado5.errors.required"> <label id="error">El codigo es requerido</label></div>
+              </div>
+            </span>
+          </div>
+
+
+          <div class="form-group">
+            <label for="Personalizado1_Valor">Valor: </label>
+            <input type="text" class="form-control" id="Personalizado1_Valor" formControlName="Personalizado1_Valor"
+              [ngClass]="{ 'is-invalid': submitted && f.Personalizado1_Valor.errors }" placeholder="Personalizado">
+            <span>
+              <div *ngIf="submitted && f.Personalizado1_Valor.errors">
+                <div *ngIf="f.Personalizado1_Valor.errors.required"> <label id="error">El codigo es requerido</label>
+                </div>
+              </div>
+            </span>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-lg btn-block btn-full">Actualizar</button>
+
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -21,7 +21,7 @@ export class UsuarioService {
   }
 
   crear(usuario: Usuario) {
-    console.log(usuario);
+    // console.log(usuario);
 
     return this.http.post<JsonRes>(`${this.url}ins`, usuario)
   }

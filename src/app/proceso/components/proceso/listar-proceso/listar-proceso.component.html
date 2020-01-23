@@ -2,7 +2,7 @@
   <h1>Procesos.</h1>
 
   <button type="button" [routerLink]="['./nuevo']" class="btn btn-info">
-    <i class="fas fa-lg fa-user-plus"></i>
+    <i class="fas fa-lg fa-plus"></i>
   </button>
 </div>
 <div class="row">
@@ -22,7 +22,7 @@
           -->
       <tr *ngFor="let u of procesos">
         <th class="align-middle" scope="row">{{u.codigo_proceso}}</th>
-        <td class="align-middle">{{u.nombre_proceso}}</td>
+        <td class="align-middle text-capitalize">{{u.nombre_proceso}}</td>
         <td class="align-middle">
           <div class="btn-group" role="group" aria-label="Basic example">
             <button type="button" [routerLink]="['.', u.id_Proceso]" class="btn btn-primary">

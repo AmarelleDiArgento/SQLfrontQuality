@@ -31,11 +31,11 @@ export class ListarUsuarioComponent implements OnInit, AfterContentInit {
   getUsuarios() {
     this.usuarioService.todos()
       .subscribe(data => {
-        console.log(data);
+        // console.log(data);
 
         this.usuarios = data.rows
         this.data = data.respuesta === 'success'
-        console.log(this.usuarios);
+        // console.log(this.usuarios);
       })
 
   }
@@ -43,10 +43,10 @@ export class ListarUsuarioComponent implements OnInit, AfterContentInit {
   eliminarUsuario(id: string) {
     this.usuarioService.eliminar(id)
       .subscribe(data => {
-        console.log(data);
+        // console.log(data);
         let val = this.sw.modal(data)
         if (val) {
-          console.log('Cargue');
+          // console.log('Cargue');
           
           this.getUsuarios()
         }

@@ -31,11 +31,11 @@ export class ListarProcesoComponent implements OnInit, AfterContentInit {
   getProcesos() {
     this.procesoService.todos()
       .subscribe(data => {
-        console.log(data);
+        // console.log(data);
 
         this.procesos = data.rows
         this.data = data.respuesta === 'success'
-        console.log(this.procesos);
+        // console.log(this.procesos);
       })
 
   }
@@ -43,10 +43,10 @@ export class ListarProcesoComponent implements OnInit, AfterContentInit {
   eliminarProceso(id: string) {
     this.procesoService.eliminar(id)
       .subscribe(data => {
-        console.log(data);
+        // console.log(data);
         let val = this.sw.modal(data)
         if (val) {
-          console.log('Cargue');
+          // console.log('Cargue');
 
           this.getProcesos()
         }

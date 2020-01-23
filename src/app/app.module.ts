@@ -12,6 +12,7 @@ import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { NgBootstrapModule } from './ng-bootstrap/ng-bootstrap.module';
+import { HomeModule } from './home/home.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { NgBootstrapModule } from './ng-bootstrap/ng-bootstrap.module';
   imports: [
     CoreModule,
     SharedModule,
+    HomeModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserModule,
