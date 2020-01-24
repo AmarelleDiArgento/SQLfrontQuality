@@ -5,6 +5,7 @@ export interface GraficaPostco {
     Si: number,
     No: number,
     cumplimiento: number,
+    activo: boolean,
     procesos: Procesos[]
 }
 

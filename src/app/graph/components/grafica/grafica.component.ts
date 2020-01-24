@@ -17,9 +17,11 @@ export class GraficaComponent implements OnInit {
   @Input() dataGraf: Grafica;
 
   public element: HTMLElement;
-  constructor() { }
+  constructor(
+  ) { }
 
   ngAfterViewInit() {
+
     // console.log('Hola :D', this.dataGraf);
 
     if (!isUndefined(this.dataGraf.data)) {

@@ -6,6 +6,7 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './components/home/home.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DetallesComponent } from './components/detalles/detalles.component';
+import { NgBootstrapModule } from '../ng-bootstrap/ng-bootstrap.module';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { DetallesComponent } from './components/detalles/detalles.component';
     HomeRoutingModule,
     GraphModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgBootstrapModule
   ]
 })
 export class HomeModule { }

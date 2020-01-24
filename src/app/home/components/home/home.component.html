@@ -2,18 +2,21 @@
   <h1 class="ml-4 text-center">SEGUIMIENTO GENERAL POSTCOSECHAS: </h1>
 </div>
 
+
 <ng-container *ngFor="let g of Graf">
 
   <div *ngIf="g.postcosecha !== 'NULL'" class="card mt-2 border-{{backgroundRow(g.cumplimiento)}}">
-    <div class="card-header bg-{{backgroundRow(g.cumplimiento)}} d-flex justify-content-between">
+    <div class="card-header bg-{{backgroundRow(g.cumplimiento)}} d-flex justify-content-between"
+      (click)="g.activo = !g.activo" [attr.aria-expanded]="!isCollapsed">
       <div class="text-uppercase">{{g.postcosecha}}</div>
       <div class="font-weight-bold">{{(g.cumplimiento * 100).toFixed(1)}} %</div>
     </div>
-    <div class="card-body">
+    <div class="card-body" [ngbCollapse]="g.activo">
       <h5 class="card-title">Procesos monitoreados:
         <div class="small">
 
-          <button type="button" disabled class="btn btn-link" data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom">Ver detalles</button>
+          <button type="button" disabled class="btn btn-link" data-toggle="tooltip" data-placement="bottom"
+            title="Tooltip on bottom">Ver detalles</button>
         </div>
       </h5>
       <div *ngFor="let p of g.procesos"

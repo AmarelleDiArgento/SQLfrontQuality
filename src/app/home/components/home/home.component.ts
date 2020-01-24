@@ -14,6 +14,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
   }
 
+  public isCollapsed = false;
 
   public backgroundColor = [];
   public borderColor = [];
@@ -156,6 +157,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           i.cumplimiento = i.Si / (i.No + i.Si)
           AgregoPostco = true;
           i.procesos = this.DataProceso(r, i.procesos);
+
         }
       }
 
@@ -168,6 +170,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           postcosecha: r.Postcosecha,
           Si: r.Total_Si,
           No: r.Total_No,
+          activo: true,
           cumplimiento: (r.Total_Si / (r.Total_Si + r.Total_No)),
           procesos: [{
             id: 0,
