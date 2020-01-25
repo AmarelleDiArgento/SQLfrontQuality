@@ -1,22 +1,6 @@
-<div class="row d-flex justify-content-between">
+<app-grafica [dataGraf]="grafGen"></app-grafica>
 
-  <div class="col-12 col-md-6 ">
-    <h1 class="ml-4"></h1>
-  </div>
 
-  <!--
-  <div class="col-12 col-md-6 mt-2 d-flex justify-content-center">
-    <form [formGroup]="cambioPoscto" class="form-inline" (ngSubmit)="onSubmit()">
-      <div class="form-group m-2 ">
-        <label for="seleccionado"></label>
-
-        <select class="form-control-plaintext" formControlName="seleccionado" name="seleccionado" id="seleccionado">
-          <option *ngFor="let p of postcosechas; let i = index " value="{{i}}"> {{p}} </option>
-        </select>
-      </div>
-      <button type="submit" class="btn btn-primary mb-2">Actualizar</button>
-    </form>
-  </div>
+<div class="mt-3" *ngFor="let g of graficas; let i = index">
+  <app-grafica [dataGraf]="g"></app-grafica>
 </div>
-
-        -->

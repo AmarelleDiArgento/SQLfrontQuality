@@ -15,15 +15,6 @@ export interface Procesos {
     Si: number,
     No: number,
     cumplimiento: number,
-    capitulos: Capitulos[]
-}
-
-export interface Capitulos {
-    id: number
-    capitulo: string,
-    Si: number,
-    No: number,
-    cumplimiento: number,
     shorts: Shorts[]
 }
 

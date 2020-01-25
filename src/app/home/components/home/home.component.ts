@@ -1,9 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { Grafica } from 'src/app/graph/interfaces/grafica';
 import { DataService } from 'src/app/core/services/data.service';
-import { GraficaPostco, Procesos, Capitulos, Shorts, Items } from 'src/app/shared/interfaces/grafica-postco';
-import { isNull, isUndefined } from 'util';
-import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
+import { GraficaPostco, Procesos, Shorts, Items } from 'src/app/shared/interfaces/grafica-postco';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -14,12 +12,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
   }
 
-  public isCollapsed = false;
 
-  public backgroundColor = [];
-  public borderColor = [];
-  public labels = [];
-  public datas = [];
 
   public dataGraf;
 
@@ -28,7 +21,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
   public cambioPoscto: FormGroup;
   public activo: number = 3;
 
-  public graflin: Grafica;
 
   public Graf: GraficaPostco[] = [];
 
@@ -45,42 +37,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
       seleccionado: [3, Validators.required]
     });
 
-
-
-    this.backgroundColor = [
-      "rgba(54, 162, 235, 0.6)",
-      "rgba(255, 206, 86, 0.6)",
-      "rgba(75, 192, 192, 0.6)",
-      "rgba(255, 99, 132, 0.6)",
-      "rgba(153, 102, 255, 0.6)",
-      "rgba(255, 159, 64, 0.6)",
-      "rgba(255, 159, 64, 0.6)"
-    ];
-
-    this.borderColor = [
-      "rgba(54, 162, 235, 1)",
-      "rgba(255, 206, 86, 1)",
-      "rgba(75, 192, 192, 1)",
-      "rgba(255, 99, 132, 1)",
-      "rgba(153, 102, 255, 1)",
-      "rgba(255, 159, 64, 1)",
-      "rgba(255, 159, 64, 1)"
-    ];
   }
 
   ngOnInit() {
-
-    this.graflin = {
-      tipo: 'radar',
-      relleno: true,
-      titulo: 'General',
-      item: 'gen',
-      labels: this.labels,
-      series: ['cumplimiento'],
-      data: [this.datas],
-      background: this.backgroundColor,
-      border: this.borderColor
-    }
     console.log(this.postcosechas);
 
 
@@ -88,19 +47,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
 
-  optenerLabels(datos) {
-    this.labels = []
-    this.datas = []
-    for (const p of datos) {
-      if (!isNaN(p.cumplimiento) && !isNull(p.cumplimiento) && !isUndefined(p.cumplimiento)) {
-        this.labels.push(p.proceso);
-        let porc = (p.cumplimiento * 100).toFixed(1);
-        this.datas.push(porc);
-      }
-    }
-    console.log(this.labels, this.datas);
 
-  }
 
   /**
    * Conexion a la base de datos:
@@ -114,10 +61,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
       .subscribe(data => {
         this.dataGraf = data.rows
         this.DataPostco()
-        console.log(this.dataGraf);
+        // console.log(this.dataGraf);
 
         this.postco = this.Graf[this.activo].postcosecha
-        this.optenerLabels(this.Graf[this.activo].procesos)
       })
   }
 
@@ -128,9 +74,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
   onSubmit() {
     console.log(this.cambioPoscto.value);
     this.activo = this.cambioPoscto.get('seleccionado').value;
-
-    this.postco = this.Graf[this.activo].postcosecha
-    this.optenerLabels(this.Graf[this.activo].procesos)
 
     console.log(this.Graf);
 
@@ -157,7 +100,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           i.cumplimiento = i.Si / (i.No + i.Si)
           AgregoPostco = true;
           i.procesos = this.DataProceso(r, i.procesos);
-
+          this.data.cargar(this.Graf)
         }
       }
 
@@ -178,13 +121,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
             Si: r.Total_Si,
             No: r.Total_No,
             cumplimiento: (r.Total_Si / (r.Total_Si + r.Total_No)),
-            capitulos: [{
-              id: 0,
-              capitulo: r.Capitulo,
-              Si: r.Total_Si,
-              No: r.Total_No,
-              cumplimiento: (r.Total_Si / (r.Total_Si + r.Total_No)),
-              shorts: [{
+            shorts: [{
                 id: 0,
                 short: r.Short_Item,
                 Si: r.Total_Si,
@@ -199,9 +136,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 }]
               }]
             }]
-          }]
         }
         this.Graf.push(gnew)
+        this.data.cargar(this.Graf)
       }
 
     })
@@ -217,7 +154,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         p[i].No += r.Total_No;
         p[i].cumplimiento = p[i].Si / (p[i].No + p[i].Si)
         AgregoProceso = true;
-        p[i].capitulos = this.DataCapitulo(r, p[i].capitulos)
+        p[i].shorts = this.DataShorts(r, p[i].shorts)
       }
     }
 
@@ -226,54 +163,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
       pnew = {
         id: 0,
         proceso: r.nombre_proceso,
-        Si: r.Total_Si,
-        No: r.Total_No,
-        cumplimiento: (r.Total_Si / (r.Total_Si + r.Total_No)),
-        capitulos: [{
-          id: 0,
-          capitulo: r.Capitulo,
-          Si: r.Total_Si,
-          No: r.Total_No,
-          cumplimiento: (r.Total_Si / (r.Total_Si + r.Total_No)),
-          shorts: [{
-            id: 0,
-            short: r.Short_Item,
-            Si: r.Total_Si,
-            No: r.Total_No,
-            cumplimiento: (r.Total_Si / (r.Total_Si + r.Total_No)),
-            items: [{
-              id: 0,
-              item: r.item,
-              Si: r.Total_Si,
-              No: r.Total_No,
-              cumplimiento: (r.Total_Si / (r.Total_Si + r.Total_No))
-            }]
-          }]
-        }]
-      }
-      p.push(pnew)
-    }
-    return p
-  }
-
-  DataCapitulo(r, p: Capitulos[]): Capitulos[] {
-
-    let AgregoCapitulo = false;
-    for (let i = 0; i < p.length; i++) {
-      if (p[i].capitulo === r.capitulo) {
-        p[i].Si += r.Total_Si;
-        p[i].No += r.Total_No;
-        p[i].cumplimiento = p[i].Si / (p[i].No + p[i].Si)
-        AgregoCapitulo = true;
-        p[i].shorts = this.DataShorts(r, p[i].shorts)
-      }
-    }
-
-    if (!AgregoCapitulo) {
-      let cnew: Capitulos;
-      cnew = {
-        id: 0,
-        capitulo: r.Capitulo,
         Si: r.Total_Si,
         No: r.Total_No,
         cumplimiento: (r.Total_Si / (r.Total_Si + r.Total_No)),
@@ -291,106 +180,106 @@ export class HomeComponent implements OnInit, AfterViewInit {
             cumplimiento: (r.Total_Si / (r.Total_Si + r.Total_No))
           }]
         }]
-      }
-      p.push(cnew)
     }
+    p.push(pnew)
+  }
     return p
   }
 
-  DataShorts(r, p: Shorts[]): Shorts[] {
+DataShorts(r, p: Shorts[]): Shorts[] {
 
-    let AgregoShort = false;
-    for (let i = 0; i < p.length; i++) {
-      if (p[i].short === r.Short_Item) {
-        p[i].Si += r.Total_Si;
-        p[i].No += r.Total_No;
-        p[i].cumplimiento = p[i].Si / (p[i].No + p[i].Si)
-        AgregoShort = true;
-        p[i].items = this.DataItems(r, p[i].items)
-      }
+  let AgregoShort = false;
+  for (let i = 0; i < p.length; i++) {
+    if (p[i].short === r.Short_Item) {
+      p[i].Si += r.Total_Si;
+      p[i].No += r.Total_No;
+      p[i].cumplimiento = p[i].Si / (p[i].No + p[i].Si)
+      AgregoShort = true;
+      p[i].items = this.DataItems(r, p[i].items)
     }
-
-    if (!AgregoShort) {
-      let snew: Shorts;
-      snew = {
-        id: 0,
-        short: r.Short_Item,
-        Si: r.Total_Si,
-        No: r.Total_No,
-        cumplimiento: (r.Total_Si / (r.Total_Si + r.Total_No)),
-        items: [{
-          id: 0,
-          item: r.item,
-          Si: r.Total_Si,
-          No: r.Total_No,
-          cumplimiento: (r.Total_Si / (r.Total_Si + r.Total_No))
-        }]
-      }
-      p.push(snew)
-    }
-    return p
-
   }
 
-  DataItems(r, p: Items[]): Items[] {
-
-
-    let AgregoShort = false;
-    for (let i = 0; i < p.length; i++) {
-      if (p[i].item === r.item) {
-        p[i].Si += r.Total_Si;
-        p[i].No += r.Total_No;
-        p[i].cumplimiento = p[i].Si / (p[i].No + p[i].Si)
-        AgregoShort = true;
-      }
-    }
-
-    if (!AgregoShort) {
-      let snew: Items;
-      snew = {
+  if (!AgregoShort) {
+    let snew: Shorts;
+    snew = {
+      id: 0,
+      short: r.Short_Item,
+      Si: r.Total_Si,
+      No: r.Total_No,
+      cumplimiento: (r.Total_Si / (r.Total_Si + r.Total_No)),
+      items: [{
         id: 0,
         item: r.item,
         Si: r.Total_Si,
         No: r.Total_No,
         cumplimiento: (r.Total_Si / (r.Total_Si + r.Total_No))
-      }
-      p.push(snew)
+      }]
     }
-    return p
+    p.push(snew)
   }
+  return p
 
-  /**
-   * Estructurar json! Final
-   */
+}
 
-
-  //Data Random
-  dataRandom(lim): number[] {
-    let data = [];
-    for (let i = 0; i < lim; i++) {
-      data.push((Math.random() * 100).toFixed(1));
-    }
-    return data;
-  }
+DataItems(r, p: Items[]): Items[] {
 
 
-  backgroundRow(data: any) {
-
-    // console.log(data);
-    // console.log('Menor que 75: ', data <= 75);
-    // console.log('Entre 75 y 85: ', data > 75 && data <= 85);
-    // console.log('Mayor que 85: ', data > 85);
-
-    switch (true) {
-      case data <= 0.75:
-        return 'danger'
-      case data > 0.75 && data <= 0.85:
-        return 'warning'
-      case data > 0.85:
-        return 'success'
-      default:
-        return 'light'
+  let AgregoShort = false;
+  for (let i = 0; i < p.length; i++) {
+    if (p[i].item === r.item) {
+      p[i].Si += r.Total_Si;
+      p[i].No += r.Total_No;
+      p[i].cumplimiento = p[i].Si / (p[i].No + p[i].Si)
+      AgregoShort = true;
     }
   }
+
+  if (!AgregoShort) {
+    let snew: Items;
+    snew = {
+      id: 0,
+      item: r.item,
+      Si: r.Total_Si,
+      No: r.Total_No,
+      cumplimiento: (r.Total_Si / (r.Total_Si + r.Total_No))
+    }
+    p.push(snew)
+  }
+  return p
+}
+
+/**
+ * Estructurar json! Final
+ */
+
+
+//Data Random
+dataRandom(lim): number[] {
+  let data = [];
+  for (let i = 0; i < lim; i++) {
+    data.push((Math.random() * 100).toFixed(1));
+  }
+  return data;
+}
+
+
+backgroundRow(data: any) {
+
+  // console.log(data);
+  // console.log('Menor que 75: ', data <= 75);
+  // console.log('Entre 75 y 85: ', data > 75 && data <= 85);
+  // console.log('Mayor que 85: ', data > 85);
+
+  switch (true) {
+    case data <= 0.75:
+      return 'danger'
+    case data > 0.75 && data <= 0.85:
+      return 'warning'
+    case data > 0.85:
+      return 'success'
+    default:
+      return 'light'
+  }
+}
 }
 

@@ -6,75 +6,81 @@ import { isUndefined } from 'util';
 @Component({
   selector: 'app-grafica',
   styleUrls: ['./grafica.component.scss'],
-  template: '',
+  templateUrl: 'grafica.component.html',
 })
 
 // /grafica.component.html
 export class GraficaComponent implements OnInit {
 
+
+
   public lineal: any = null;
-  public valido: boolean = false;
+  private escala;
+
   @Input() dataGraf: Grafica;
 
   public element: HTMLElement;
-  constructor(
-  ) { }
+  constructor() {
+
+    console.log('Hola :D', this.dataGraf);
+  }
 
   ngAfterViewInit() {
 
-    // console.log('Hola :D', this.dataGraf);
-
-    if (!isUndefined(this.dataGraf.data)) {
-      if (this.dataGraf.data.length > 0) {
-
-        console.log(this.dataGraf.data.length);
-        this.valido = true;
-        this.element = document.getElementById(this.dataGraf.item) as HTMLElement;
-        this.genGrafLineal(this.element)
-        console.log(this.lineal);
-
-      } else {
-        this.valido = false;
-        console.log('Data vacia...');
-      }
-    }
-
+    this.element = document.getElementById(this.dataGraf.item) as HTMLElement;
+    this.genGrafLineal(this.element)
   }
   ngOnInit() {
 
+    this.escala = {
+      gridLines: {
+        lineWidth: 2
+      },
+      angleLines: {
+        display: false
+      },
+      ticks: {
+        beginAtZero: true,
+        min: 0,
+        max: 100,
+        stepSize: 20
+      },
+      pointLabels: {
+        fontSize: 18
+      }
+    }
+    // scale: (this.dataGraf.tipo === 'radar') ? this.escala : {}
   }
 
   genGrafLineal(elemento: HTMLElement) {
 
     var dataset = this.dataSet()
-    console.log(dataset);
-
-
     this.lineal = new Chart(this.element, {
-      type: this.dataGraf.tipo,
+      type: this.ajuste(this.dataGraf.tipo, this.dataGraf.labels.length),
       data: {
-        labels: this.dataGraf.labels,
+        labels: this.recortar(this.dataGraf.labels),
         datasets: dataset
       },
       options: {
         maintainAspectRatio: false,
-        resposive: true,
+        resposive: false,
 
         padding: {
           left: 0,
           right: 0,
           top: 0,
           bottom: 0
-        }
+        },
+
       }
     });
-    // console.log(this.lineal);
+    console.log(this.lineal);
 
   }
 
   dataSet(): any[] {
     var dataset = []
-    // console.log(this.dataGraf.series.length);
+    console.log(this.dataGraf.series.length);
 
     for (let i = 0; i < this.dataGraf.series.length; i++) {
 
@@ -87,11 +93,22 @@ export class GraficaComponent implements OnInit {
         borderWidth: 1 // Specify bar border width
       })
     }
-    // console.log('dataset: ', dataset);
+    console.log('dataset: ', dataset);
 
     return dataset
   }
 
+  recortar(labesl: string[]) {
+    return labesl.map(l => { return l.substr(0, 10) + '...' })
+  }
+
+  ajuste(tipo: string, conteo: number) {
+    if (tipo === 'radar' && conteo < 3) {
+      return (conteo === 1) ? 'doughnut' : 'bar';
+    } else {
+      return tipo;
+    }
+  }
 
 
   backgroundRow(data: any) {

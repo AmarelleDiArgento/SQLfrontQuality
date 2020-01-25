@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { GraficaPostco } from 'src/app/shared/interfaces/grafica-postco';
 import { JsonRes } from 'src/app/shared/interfaces/json-res';
+import { saveAs } from 'file-saver';
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +12,7 @@ import { JsonRes } from 'src/app/shared/interfaces/json-res';
 export class DataService {
 
   private url: string
+  public dataTransform: GraficaPostco[];
   private params
 
   constructor(
@@ -39,4 +42,20 @@ export class DataService {
   todos() {
     return this.http.get<JsonRes>(`${this.url}all`)
   }
+
+  cargar(data: GraficaPostco[]) {
+
+    this.dataTransform = data;
+    // open function with filename, file opening mode and callback function
+
+    var blob = new Blob([JSON.stringify(this.dataTransform)], { type: "application/json;charset=utf-8" });
+    // saveAs(blob, "data.json");
+
+  }
+
+  data(id: number): GraficaPostco {
+    return this.dataTransform[id]
+  }
+
+
 }
