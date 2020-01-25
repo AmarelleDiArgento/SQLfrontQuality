@@ -7,7 +7,7 @@
 
   <div *ngIf="g.postcosecha !== 'NULL'" class="card mt-2 border-{{backgroundRow(g.cumplimiento)}}">
     <div class="card-header bg-{{backgroundRow(g.cumplimiento)}} d-flex justify-content-between"
-      (click)="g.activo = !g.activo" [attr.aria-expanded]="!isCollapsed">
+      (click)="g.activo = !g.activo" [attr.aria-expanded]="!g.activo">
       <div class="text-uppercase">{{g.postcosecha}}</div>
       <div class="font-weight-bold">{{(g.cumplimiento * 100).toFixed(1)}} %</div>
     </div>

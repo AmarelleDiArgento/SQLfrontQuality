@@ -24,7 +24,7 @@ export class DetallesComponent implements OnInit, AfterViewInit {
 
   public grafGen: Grafica;
 
-  private graficas: Grafica[];
+  public graficas: Grafica[];
 
   public labels = [];
   public datas = [];
