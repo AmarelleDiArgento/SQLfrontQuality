@@ -8,6 +8,7 @@ import { EditarUsuarioComponent } from './editar-usuario/editar-usuario.componen
 import { ListarUsuarioComponent } from './listar-usuario/listar-usuario.component';
 import { UsuarioRoutingModule } from './usuario-routing.module'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgBootstrapModule } from '../ng-bootstrap/ng-bootstrap.module';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     UsuarioRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgBootstrapModule
   ]
 })
 export class UsuarioModule { }

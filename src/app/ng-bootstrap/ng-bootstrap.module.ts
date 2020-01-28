@@ -1,18 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { NgbCollapseModule, NgbCollapse, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCollapseModule, NgbModule, NgbPaginationModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbdSortableHeader } from './directives/sortable.directive';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [NgbdSortableHeader],
   imports: [
-    CommonModule,
     NgbModule,
-    NgbCollapseModule
+    NgbCollapseModule,
+    NgbPaginationModule,
+    NgbTypeaheadModule
   ],
   exports: [
-    NgbCollapseModule
+    NgbCollapseModule,
+    NgbPaginationModule,
+    NgbTypeaheadModule,
   ]
 })
 export class NgBootstrapModule { }

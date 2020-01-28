@@ -15,7 +15,7 @@ export class GraficaComponent implements OnInit {
 
 
   public lineal: any = null;
-  private escala;
+  private options;
 
   @Input() dataGraf: Grafica;
 
@@ -32,24 +32,7 @@ export class GraficaComponent implements OnInit {
   }
   ngOnInit() {
 
-    this.escala = {
-      gridLines: {
-        lineWidth: 2
-      },
-      angleLines: {
-        display: false
-      },
-      ticks: {
-        beginAtZero: true,
-        min: 0,
-        max: 100,
-        stepSize: 20
-      },
-      pointLabels: {
-        fontSize: 18
-      }
-    }
-    // scale: (this.dataGraf.tipo === 'radar') ? this.escala : {}
+    //  (this.dataGraf.tipo === 'radar') ? this.escala : {}
   }
 
   genGrafLineal(elemento: HTMLElement) {
@@ -61,18 +44,7 @@ export class GraficaComponent implements OnInit {
         labels: this.recortar(this.dataGraf.labels),
         datasets: dataset
       },
-      options: {
-        maintainAspectRatio: false,
-        resposive: false,
-
-        padding: {
-          left: 0,
-          right: 0,
-          top: 0,
-          bottom: 0
-        },
-
-      }
+      options: this.options
     });
     console.log(this.lineal);
 
@@ -104,8 +76,66 @@ export class GraficaComponent implements OnInit {
 
   ajuste(tipo: string, conteo: number) {
     if (tipo === 'radar' && conteo < 3) {
-      return (conteo === 1) ? 'doughnut' : 'bar';
+
+      if (conteo === 1) {
+        this.options = {
+          maintainAspectRatio: false,
+          resposive: false,
+
+          padding: {
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0
+          }
+        }
+        return 'doughnut'
+
+
+      } else {
+        this.options = {
+          responsive: true,
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          }
+        }
+        return 'bar'
+
+      };
     } else {
+
+      this.options = {
+        maintainAspectRatio: false,
+        resposive: false,
+
+        padding: {
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0
+        },
+        scale: {
+          gridLines: {
+            lineWidth: 2
+          },
+          angleLines: {
+            display: false
+          },
+          ticks: {
+            beginAtZero: true,
+            min: 0,
+            max: 100,
+            stepSize: 20
+          },
+          pointLabels: {
+            fontSize: 18
+          }
+        }
+      }
       return tipo;
     }
   }
@@ -130,3 +160,6 @@ export class GraficaComponent implements OnInit {
   }
 
 }
+
+
+

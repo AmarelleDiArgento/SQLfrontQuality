@@ -1,3 +1,5 @@
+<!-- 
+
 <div class="row text-right d-flex justify-content-between mb-3">
   <h1>Usuarios.</h1>
 
@@ -6,7 +8,7 @@
   </button>
 </div>
 <div class="row">
-  <table class=" table table-striped text-center align-middle table-sm">
+  <table class=" ">
     <thead class="thead-dark">
       <tr>
         <th scope="col">Codigo</th>
@@ -15,7 +17,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let u of usuarios">
+      <tr *ngFor="let u of usuarios | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize" >
         <th class="align-middle" scope="row">{{u.id_usuario}}</th>
         <td class="align-middle">{{u.nombre_usuario}}</td>
         <td class="align-middle">
@@ -29,6 +31,7 @@
       </tr>
     </tbody>
   </table>
+  <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="usuarios.length"></ngb-pagination>
 </div>
 
 <ng-template #noData>
@@ -44,3 +47,81 @@
     </div>
   </div>
 </ng-template>
+
+-->
+
+
+
+<form>
+
+  <div class="row text-center d-flex justify-content-between mb-3">
+
+    <div class="col-12">
+      <h1>Usuarios.</h1>
+    </div>
+
+    <div class="input-group mb-3 col-12 col-md-6">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">
+          <i class="fas fa-search"></i>
+        </span>
+      </div>
+      <input class="form-control col" type="text" name="searchTerm" [(ngModel)]="service.searchTerm"
+        placeholder="Buscar..." aria-label="Buscar" aria-describedby="basic-addon1" />
+      <span class="ml-3" *ngIf="service.loading$ | async"> Cargando... </span>
+
+    </div>
+
+    <button type="button" [routerLink]="['./nuevo']" class="btn btn-info">
+      <i class="fas fa-lg fa-user-plus"></i>
+    </button>
+
+
+  </div>
+
+
+  <table class="table table-striped text-center align-middle table-sm">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col" sortable="id_usuario" (sort)="onSort($event)">Codigo</th>
+        <th scope=" col" sortable="nombre_usuario" (sort)="onSort($event)">Nombre</th>
+        <th scope=" col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor=" let u of usuarios$ | async">
+        <th scope="row" class="align-middle">{{ u.id_login }}</th>
+        <td class="align-middle">
+          <ngb-highlight [result]="u.id_usuario | number" [term]="service.searchTerm"></ngb-highlight>
+        </td>
+
+        <td class="align-middle">
+          <ngb-highlight [result]="u.nombre_usuario" [term]="service.searchTerm"></ngb-highlight>
+        </td>
+
+        <td class="align-middle">
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" [routerLink]="['.', u.id_login]" class="btn btn-primary">
+              <i class="fas fa-lg fa-pen"></i> </button>
+            <button type="button" (click)="eliminarUsuario(u.id_login)" class="btn btn-danger">
+              <i class="far fa-lg fa-trash-alt"></i></button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="d-flex justify-content-between p-2">
+    <ngb-pagination [collectionSize]="total$ | async" [(page)]="service.page" [pageSize]="service.pageSize">
+    </ngb-pagination>
+
+    <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+      <option [ngValue]="10">10</option>
+      <option [ngValue]="20">20</option>
+      <option [ngValue]="50">50</option>
+      <option [ngValue]="100">100</option>
+    </select>
+  </div>
+
+</form>

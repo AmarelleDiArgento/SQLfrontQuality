@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DecimalPipe } from '@angular/common';
 
 import { UsuarioService } from './services/usuario.service';
 
@@ -7,11 +7,11 @@ import { UsuarioService } from './services/usuario.service';
   declarations: [],
   imports: [
     CommonModule
-    
-  ], 
-  providers:[
-    UsuarioService
+
+  ],
+  providers: [
+    UsuarioService, DecimalPipe
   ]
-  
+
 })
 export class CoreModule { }
