@@ -3,7 +3,7 @@
 </div>
 
 
-<ng-container *ngFor="let g of Graf">
+<ng-container *ngFor="let g of Graf$ | async ">
 
   <div *ngIf="g.postcosecha !== 'NULL'" class="card mt-2 border-{{backgroundRow(g.cumplimiento)}}">
     <div class="card-header bg-{{backgroundRow(g.cumplimiento)}} d-flex justify-content-between"

@@ -4,6 +4,7 @@ import { DataService } from 'src/app/core/services/data.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Grafica } from 'src/app/graph/interfaces/grafica';
 import { isNull, isUndefined } from 'util';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-detalles',
@@ -15,12 +16,34 @@ export class DetallesComponent implements OnInit, AfterViewInit {
 
   }
 
-  postco: number;
-  Postcosecha: GraficaPostco;
-  Procesos: GraficaPostco[];
 
-  public backgroundColor = [];
-  public borderColor = [];
+
+  public Graf$: Observable<GraficaPostco[]>;
+
+
+  postco: number;
+
+
+  public Postcosecha;
+
+  public backgroundColor = [
+    "rgba(54, 162, 235, 0.6)",
+    "rgba(255, 206, 86, 0.6)",
+    "rgba(75, 192, 192, 0.6)",
+    "rgba(255, 99, 132, 0.6)",
+    "rgba(153, 102, 255, 0.6)",
+    "rgba(255, 159, 64, 0.6)",
+    "rgba(255, 159, 64, 0.6)"
+  ];
+  public borderColor = [
+    "rgba(54, 162, 235, 1)",
+    "rgba(255, 206, 86, 1)",
+    "rgba(75, 192, 192, 1)",
+    "rgba(255, 99, 132, 1)",
+    "rgba(153, 102, 255, 1)",
+    "rgba(255, 159, 64, 1)",
+    "rgba(255, 159, 64, 1)"
+  ];
 
   public grafGen: Grafica;
 
@@ -31,42 +54,30 @@ export class DetallesComponent implements OnInit, AfterViewInit {
 
 
   constructor(
-    private dataService: DataService,
+    private data: DataService,
     private activatedRoute: ActivatedRoute,
 
   ) {
-
-    this.backgroundColor = [
-      "rgba(54, 162, 235, 0.6)",
-      "rgba(255, 206, 86, 0.6)",
-      "rgba(75, 192, 192, 0.6)",
-      "rgba(255, 99, 132, 0.6)",
-      "rgba(153, 102, 255, 0.6)",
-      "rgba(255, 159, 64, 0.6)",
-      "rgba(255, 159, 64, 0.6)"
-    ];
-
-    this.borderColor = [
-      "rgba(54, 162, 235, 1)",
-      "rgba(255, 206, 86, 1)",
-      "rgba(75, 192, 192, 1)",
-      "rgba(255, 99, 132, 1)",
-      "rgba(153, 102, 255, 1)",
-      "rgba(255, 159, 64, 1)",
-      "rgba(255, 159, 64, 1)"
-    ];
+    if (this.data.graph$ !== null) {
+      this.Graf$ = this.data.graph$
+    } else {
+      this.data.cargar()
+      this.Graf$ = this.data.graph$
+    }
 
     this.activatedRoute.params.subscribe((params: Params) => {
       this.postco = params.id
     })
 
-
+    this.Graf$.subscribe(grafs => {
+      this.Postcosecha = grafs[this.postco];
+    })
   }
 
   ngOnInit() {
 
-    this.Postcosecha = this.dataService.data(this.postco)
-    console.log(this.Postcosecha);
+
+
 
     let datos = this.optenerLabels(this.Postcosecha.procesos, 'proceso')
     this.grafGen = {
