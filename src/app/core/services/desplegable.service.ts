@@ -2,7 +2,7 @@ import { Injectable, PipeTransform } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { JsonRes } from 'src/app/shared/interfaces/json-res';
-import { Usuario } from 'src/app/shared/interfaces/usuario';
+import { Desplegable } from 'src/app/shared/interfaces/desplegable';
 import { environment } from 'src/environments/environment';
 import { SortDirection } from 'src/app/ng-bootstrap/directives/sortable.directive';
 import { BehaviorSubject, Subject, Observable, of } from 'rxjs';
@@ -10,7 +10,7 @@ import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
 import { DecimalPipe } from '@angular/common';
 
 interface SearchResult {
-  usuarios: Usuario[];
+  desplegables: Desplegable[];
   total: number;
 }
 
@@ -26,32 +26,32 @@ function compare(v1, v2) {
   return v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 }
 
-function sort(usuarios: Usuario[], column: string, direction: string): Usuario[] {
+function sort(desplegables: Desplegable[], column: string, direction: string): Desplegable[] {
   if (direction === '') {
-    return usuarios;
+    return desplegables;
   } else {
-    return [...usuarios].sort((a, b) => {
+    return [...desplegables].sort((a, b) => {
       const res = compare(a[column], b[column]);
       return direction === 'asc' ? res : -res;
     });
   }
 }
 
-function matches(usuario: Usuario, term: string, pipe: PipeTransform) {
-  return usuario.nombre_usuario.toLowerCase().includes(term.toLowerCase())
-    || pipe.transform(usuario.id_login).includes(term)
-    || pipe.transform(usuario.id_usuario).includes(term)
-    || pipe.transform(usuario.password).includes(term);
+function matches(desplegable: Desplegable, term: string, pipe: PipeTransform) {
+  return pipe.transform(desplegable.id_Desplegable).includes(term)
+    || desplegable.Filtro.toLowerCase().includes(term.toLowerCase())
+    || pipe.transform(desplegable.Codigo).includes(term)
+    || desplegable.Opcion.toLowerCase().includes(term.toLowerCase())
 }
 
 @Injectable({ providedIn: 'root' })
-export class UsuarioService {
+export class DesplegableService {
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
-  private _usuarios$ = new BehaviorSubject<Usuario[]>([]);
+  private _desplegables$ = new BehaviorSubject<Desplegable[]>([]);
   private _total$ = new BehaviorSubject<number>(0);
 
-  private USUARIOS: Usuario[];
+  private DESPLEGABLES: Desplegable[];
 
   private url: string
 
@@ -67,7 +67,7 @@ export class UsuarioService {
     private http: HttpClient,
     private pipe: DecimalPipe
   ) {
-    this.url = environment.api_url + '/log'
+    this.url = environment.api_url + '/des'
     this.tabla()
 
 
@@ -78,7 +78,7 @@ export class UsuarioService {
       delay(200),
       tap(() => this._loading$.next(false))
     ).subscribe(result => {
-      this._usuarios$.next(result.usuarios);
+      this._desplegables$.next(result.desplegables);
       this._total$.next(result.total);
     });
 
@@ -87,16 +87,16 @@ export class UsuarioService {
 
   tabla() {
     this.todos().subscribe(data => {
-      this.USUARIOS = data.rows
+      this.DESPLEGABLES = data.rows
     })
   }
-  crear(usuario: Usuario) {
-    // console.log(usuario);
+  crear(desplegable: Desplegable) {
+    // console.log(desplegable);
 
-    return this.http.post<JsonRes>(`${this.url}ins`, usuario)
+    return this.http.post<JsonRes>(`${this.url}ins`, desplegable)
   }
 
-  editar(id: string, changes: Partial<Usuario>) {
+  editar(id: string, changes: Partial<Desplegable>) {
     return this.http.put<JsonRes>(`${this.url}upd/${id}`, changes)
   }
 
@@ -113,7 +113,7 @@ export class UsuarioService {
   }
 
 
-  get usuarios$() { return this._usuarios$.asObservable(); }
+  get desplegables$() { return this._desplegables$.asObservable(); }
   get total$() { return this._total$.asObservable(); }
   get loading$() { return this._loading$.asObservable(); }
   get page() { return this._state.page; }
@@ -135,15 +135,15 @@ export class UsuarioService {
     const { sortColumn, sortDirection, pageSize, page, searchTerm } = this._state;
 
     // 1. sort
-    let usuarios = sort(this.USUARIOS, sortColumn, sortDirection);
+    let desplegables = sort(this.DESPLEGABLES, sortColumn, sortDirection);
 
     // 2. filter
-    usuarios = usuarios.filter(usuarios => matches(usuarios, searchTerm, this.pipe));
-    const total = usuarios.length;
+    desplegables = desplegables.filter(desplegable => matches(desplegable, searchTerm, this.pipe));
+    const total = desplegables.length;
 
     // 3. paginate
-    usuarios = usuarios.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
-    return of({ usuarios, total });
+    desplegables = desplegables.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
+    return of({ desplegables, total });
   }
 
 }

@@ -29,6 +29,10 @@ const routes: Routes = [
       {
         path: 'proceso',
         loadChildren: () => import('./proceso/proceso.module').then(p => p.ProcesoModule)
+      },
+      {
+        path: 'desplegable',
+        loadChildren: () => import('./desplegable/desplegable.module').then(d => d.DesplegableModule)
       }
     ]
   },

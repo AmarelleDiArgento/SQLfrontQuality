@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NuevoDesplegableComponent } from './nuevo-desplegable.component';
+import { CrearDesplegableComponent } from './crear-desplegable.component';
 
-describe('NuevoDesplegableComponent', () => {
-  let component: NuevoDesplegableComponent;
-  let fixture: ComponentFixture<NuevoDesplegableComponent>;
+describe('CrearDesplegableComponent', () => {
+  let component: CrearDesplegableComponent;
+  let fixture: ComponentFixture<CrearDesplegableComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NuevoDesplegableComponent ]
+      declarations: [ CrearDesplegableComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NuevoDesplegableComponent);
+    fixture = TestBed.createComponent(CrearDesplegableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

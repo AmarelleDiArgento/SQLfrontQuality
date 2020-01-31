@@ -1,19 +1,22 @@
 import { Component, OnInit, AfterContentInit, ViewChildren, QueryList } from '@angular/core';
-import { UsuarioService } from 'src/app/core/services/usuario.service';
+import { DesplegableService } from 'src/app/core/services/desplegable.service'
 import { SwalModalService } from 'src/app/core/swal-modal.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Usuario } from 'src/app/shared/interfaces/usuario';
+import { Desplegable } from 'src/app/shared/interfaces/desplegable';
 import { NgbdSortableHeader, SortEvent } from 'src/app/ng-bootstrap/directives/sortable.directive';
 
-@Component({
-  selector: 'app-listar-usuario',
-  templateUrl: './listar-usuario.component.html',
-  styleUrls: ['./listar-usuario.component.scss']
-})
-export class ListarUsuarioComponent implements OnInit {
 
-  usuarios$: Observable<Usuario[]>;
+
+
+@Component({
+  selector: 'app-listar-desplegable',
+  templateUrl: './listar-desplegable.component.html',
+  styleUrls: ['./listar-desplegable.component.scss']
+})
+export class ListarDesplegableComponent implements OnInit {
+
+  desplegables$: Observable<Desplegable[]>;
   total$: Observable<number>;
 
 
@@ -24,15 +27,14 @@ export class ListarUsuarioComponent implements OnInit {
   page = 1;
 
   constructor(
-    public service: UsuarioService,
+    public service: DesplegableService,
     private sw: SwalModalService
   ) {
-    this.usuarios$ = service.usuarios$;
-    this.total$ = service.total$;
-  }
+    this.desplegables$ = this.service.desplegables$
+    this.total$ = this.service.total$
+   }
 
   ngOnInit() {
-
   }
 
   onSort({ column, direction }: SortEvent) {
@@ -48,8 +50,8 @@ export class ListarUsuarioComponent implements OnInit {
     this.service.sortColumn = column;
     this.service.sortDirection = direction;
   }
-
-  eliminarUsuario(id: string) {
+  
+  eliminarDesplegable(id: string) {
     this.service.eliminar(id)
       .subscribe(data => {
         // console.log(data);

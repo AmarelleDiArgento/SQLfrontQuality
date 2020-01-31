@@ -19,7 +19,7 @@ export class CrearUsuarioComponent implements OnInit {
     private formBuilder: FormBuilder,
     private usuarioService: UsuarioService,
     private sw: SwalModalService,
-    private router: Router,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -46,6 +46,8 @@ export class CrearUsuarioComponent implements OnInit {
           if (val) {
             // console.log('Cargue');
             this.router.navigate(['usuario'])
+          } else {
+            this.submitted = false;
           }
         })
     }

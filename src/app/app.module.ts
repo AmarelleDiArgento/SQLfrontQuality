@@ -23,7 +23,6 @@ import { HomeModule } from './home/home.module';
   imports: [
     CoreModule,
     SharedModule,
-    HomeModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserModule,

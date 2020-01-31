@@ -1,0 +1,79 @@
+<form>
+
+    <div class="row text-center d-flex justify-content-between mb-3">
+  
+      <div class="col-12">
+        <h1>Desplegables.</h1>
+      </div>
+  
+      <div class="input-group mb-3 col-12 col-md-6">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">
+            <i class="fas fa-search"></i>
+          </span>
+        </div>
+        <input class="form-control col" type="text" name="searchTerm" [(ngModel)]="service.searchTerm"
+          placeholder="Buscar..." aria-label="Buscar" aria-describedby="basic-addon1" />
+        <span class="ml-3" *ngIf="service.loading$ | async"> Cargando... </span>
+  
+      </div>
+  
+      <button type="button" [routerLink]="['./nuevo']" class="btn btn-info">
+        <i class="fas fa-lg fa-plus"></i>
+      </button>
+  
+  
+    </div>
+  
+  
+    <table class="table table-striped text-center align-middle table-sm">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col" sortable="Filtro" (sort)="onSort($event)">Filtro</th>
+          <th scope=" col" sortable="Codigo" (sort)="onSort($event)">Codigo</th>
+          <th scope=" col" sortable="Opcion" (sort)="onSort($event)">Opcion</th>
+          <th scope=" col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor=" let d of desplegables$ | async">
+          <th scope="row" class="align-middle">{{ d.id_Desplegable }}</th>
+          <td class="align-middle">
+            <ngb-highlight [result]="d.Filtro" [term]="service.searchTerm"></ngb-highlight>
+          </td>
+  
+          <td class="align-middle">
+            <ngb-highlight [result]="d.Codigo | number" [term]="service.searchTerm"></ngb-highlight>
+          </td>
+  
+          <td class="align-middle">
+            <ngb-highlight [result]="d.Opcion" [term]="service.searchTerm"></ngb-highlight>
+          </td>
+  
+          <td class="align-middle">
+            <div class="btn-group" role="group" aria-label="Basic example">
+              <button type="button" [routerLink]="['.', d.id_Desplegable]" class="btn btn-primary">
+                <i class="fas fa-lg fa-pen"></i> </button>
+              <button type="button" (click)="eliminarDesplegable(d.id_Desplegable)" class="btn btn-danger">
+                <i class="far fa-lg fa-trash-alt"></i></button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div class="d-flex justify-content-between p-2">
+      <ngb-pagination [collectionSize]="total$ | async" [(page)]="service.page" [maxSize]="10" [rotate]="true" [pageSize]="service.pageSize">
+      </ngb-pagination>
+  
+      <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+        <option [ngValue]="10">10</option>
+        <option [ngValue]="20">20</option>
+        <option [ngValue]="50">50</option>
+        <option [ngValue]="100">100</option>
+      </select>
+    </div>
+  
+  </form>
+  
