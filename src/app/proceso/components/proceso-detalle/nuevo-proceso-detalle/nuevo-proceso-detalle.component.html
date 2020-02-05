@@ -1,1 +1,138 @@
-<p>nuevo-proceso-detalle works!</p>
+<div class="row">
+  <div class="col-12 offset-md-2 col-md-8 mt-md-5">
+    <div class="card">
+      <div class="card-header">
+        <h2>Nuevo Proceso Detalle</h2>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="nuevoProcesosdetalle" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="id_proceso">Proceso: </label>
+            <input type="number" autofocus class="form-control" id="id_proceso" formControlName="id_proceso"
+              [ngClass]="{ 'is-invalid': submitted && f.id_proceso.errors }" placeholder="Digite la id del proceso">
+            <span>
+              <div *ngIf="submitted && f.id_proceso.errors">
+                <div *ngIf="f.id_proceso.errors.required"> <label id="error">El id del proceso es requerido</label></div>
+              </div>
+            </span>
+          </div>      
+          
+          <div class="form-group">
+            <label for="codigo_detalle">Codigo Detalle: </label>
+            <input type="number" autofocus class="form-control" id="codigo_detalle" formControlName="codigo_detalle"
+              [ngClass]="{ 'is-invalid': submitted && f.codigo_detalle.errors }" placeholder="Digite el codigo del detalle">
+            <span>
+              <div *ngIf="submitted && f.codigo_detalle.errors">
+                <div *ngIf="f.codigo_detalle.errors.required"> <label id="error">El codigo del detalle es requerido</label></div>
+              </div>
+            </span>
+          </div> 
+          
+          <div class="form-group">
+              <label for="nombre_detalle">Nombre Detalle: </label>
+              <input type="text" autofocus class="form-control" id="nombre_detalle" formControlName="nombre_detalle"
+                [ngClass]="{ 'is-invalid': submitted && f.nombre_detalle.errors }" placeholder="Digite el nombre del detalle">
+              <span>
+                <div *ngIf="submitted && f.nombre_detalle.errors">
+                  <div *ngIf="f.nombre_detalle.errors.required"> <label id="error">El nombre del detalle es requerido</label></div>
+                </div>
+              </span>
+            </div> 
+
+            <div class="form-group">
+              <label for="tipo">Tipo: </label>
+              <input type="text" autofocus class="form-control" id="tipo" formControlName="tipo"
+                [ngClass]="{ 'is-invalid': submitted && f.tipo.errors }" placeholder="Digite el tipo">
+              <span>
+                <div *ngIf="submitted && f.tipo.errors">
+                  <div *ngIf="f.tipo.errors.required"> <label id="error">El tipo es requerido</label></div>
+                </div>
+              </span>
+            </div> 
+
+            <div class="form-group">
+              <label for="lista_desp">Lista Desplegable: </label>
+              <input type="text" autofocus class="form-control" id="lista_desp" formControlName="lista_desp"
+                [ngClass]="{ 'is-invalid': submitted && f.lista_desp.errors }" placeholder="Digite la lista desplegable">
+              <span>
+                <div *ngIf="submitted && f.lista_desp.errors">
+                  <div *ngIf="f.lista_desp.errors.required"> <label id="error">la lista desplegable es requerido</label></div>
+                </div>
+              </span>
+            </div> 
+
+            <div class="form-group">
+              <label for="tipo_M">Tipo M: </label>
+              <input type="text" autofocus class="form-control" id="tipo_M" formControlName="tipo_M"
+                [ngClass]="{ 'is-invalid': submitted && f.tipo_M.errors }" placeholder="Digite el tipo M">
+              <span>
+                <div *ngIf="submitted && f.tipo_M.errors">
+                  <div *ngIf="f.tipo_M.errors.required"> <label id="error">El tipo M es requerido</label></div>
+                </div>
+              </span>
+            </div> 
+
+            <div class="form-group">
+              <label for="porcentaje">Porcentaje: </label>
+              <input type="number" autofocus class="form-control" id="porcentaje" formControlName="porcentaje"
+                [ngClass]="{ 'is-invalid': submitted && f.porcentaje.errors }" placeholder="Digite el porcentaje">
+              <span>
+                <div *ngIf="submitted && f.porcentaje.errors">
+                  <div *ngIf="f.porcentaje.errors.required"> <label id="error">El porcentaje es requerido</label></div>
+                </div>
+              </span>
+            </div> 
+
+            <div class="form-group">
+              <label for="capitulo">Capitulo: </label>
+              <input type="number" autofocus class="form-control" id="capitulo" formControlName="capitulo"
+                [ngClass]="{ 'is-invalid': submitted && f.capitulo.errors }" placeholder="Digite el capitulo">
+              <span>
+                <div *ngIf="submitted && f.Codigo.errors">
+                  <div *ngIf="f.Codigo.errors.required"> <label id="error">El codigo es requerido</label></div>
+                </div>
+              </span>
+            </div> 
+
+            <div class="form-group">
+              <label for="Codigodetalle">Codigo Detalle: </label>
+              <input type="number" autofocus class="form-control" id="item" formControlName="Codigodetalle"
+                [ngClass]="{ 'is-invalid': submitted && f.Codigodetalle.errors }" placeholder="Digite el codigo del detalle">
+              <span>
+                <div *ngIf="submitted && f.Codigo.errors">
+                  <div *ngIf="f.Codigo.errors.required"> <label id="error">El codigo es requerido</label></div>
+                </div>
+              </span>
+            </div> 
+
+            <div class="form-group">
+              <label for="Codigodetalle">Codigo Detalle: </label>
+              <input type="number" autofocus class="form-control" id="Capitulo_Nombre" formControlName="Codigodetalle"
+                [ngClass]="{ 'is-invalid': submitted && f.Codigodetalle.errors }" placeholder="Digite el codigo del detalle">
+              <span>
+                <div *ngIf="submitted && f.Codigo.errors">
+                  <div *ngIf="f.Codigo.errors.required"> <label id="error">El codigo es requerido</label></div>
+                </div>
+              </span>
+            </div> 
+
+            <div class="form-group">
+              <label for="Codigodetalle">Codigo Detalle: </label>
+              <input type="number" autofocus class="form-control" id="grupo1" formControlName="Codigodetalle"
+                [ngClass]="{ 'is-invalid': submitted && f.Codigodetalle.errors }" placeholder="Digite el codigo del detalle">
+              <span>
+                <div *ngIf="submitted && f.Codigo.errors">
+                  <div *ngIf="f.Codigo.errors.required"> <label id="error">El codigo es requerido</label></div>
+                </div>
+              </span>
+            </div> 
+      
+
+          <button type="submit" class="btn btn-primary btn-lg btn-block btn-full">Crear</button>
+        
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,1 +1,111 @@
-<p>listar-proceso-detalle works!</p>
+<form>
+    <div class="row text-center d-flex justify-content-between mb-3">
+      <div class="col-12">
+        <h1>Procesos Detalle.</h1>
+      </div>
+      <div class="input-group mb-3 col-12 col-md-6">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">
+            <i class="fas fa-search"></i>
+          </span>
+        </div>
+        <input class="form-control col" type="text" name="searchTerm" [(ngModel)]="service.searchTerm"
+          placeholder="Buscar..." aria-label="Buscar" aria-describedby="basic-addon1" />
+        <span class="ml-3" *ngIf="service.loading$ | async"> Cargando... </span>
+      </div>
+      <button type="button" [routerLink]="['.']" class="btn btn-info">
+        <i class="fas fa-lg fa-plus"></i>
+      </button>
+    </div>
+    <table class="table table-striped text-center align-middle table-sm">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col" sortable="id_proceso" (sort)="onSort($event)">Proceso</th>
+          <th scope=" col" sortable="codigo_detalle" (sort)="onSort($event)">Codigo</th>
+          <th scope=" col" sortable="nombre_detalle" (sort)="onSort($event)">Nombre</th>
+          <th scope=" col" sortable="tipo" (sort)="onSort($event)">Tipo</th>
+          <th scope=" col" sortable="lista_desp" (sort)="onSort($event)">Lista Desp</th>
+          <th scope=" col" sortable="tipo_M" (sort)="onSort($event)">Tipo M</th>
+          <th scope=" col" sortable="porcentaje" (sort)="onSort($event)">%</th>
+          <th scope=" col" sortable="capitulo" (sort)="onSort($event)">Capitulo</th>
+          <th scope=" col" sortable="item" (sort)="onSort($event)">Item</th>
+          <th scope=" col" sortable="Capitulo_Nombre" (sort)="onSort($event)">Capitulo Nom</th>
+          <th scope=" col" sortable="grupo1" (sort)="onSort($event)">Grupo 1</th>
+          <th scope=" col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor=" let pd of procesosdetalle$ | async">
+          <th scope="row" class="align-middle">{{ pd.id_detalle }}</th>
+          <td class="align-middle">
+            <ngb-highlight [result]="pd.id_proceso | number" [term]="service.searchTerm"></ngb-highlight>
+          </td>
+  
+          <td class="align-middle">
+            <ngb-highlight [result]="pd.codigo_detalle | number" [term]="service.searchTerm"></ngb-highlight>
+          </td>
+  
+          <td class="align-middle">
+            <ngb-highlight [result]="pd.nombre_detalle" [term]="service.searchTerm"></ngb-highlight>
+          </td>
+
+          <td class="align-middle">
+            <ngb-highlight [result]="pd.tipo" [term]="service.searchTerm"></ngb-highlight>
+          </td>
+
+          <td class="align-middle">
+            <ngb-highlight [result]="pd.lista_desp" [term]="service.searchTerm"></ngb-highlight>
+          </td>
+
+          <td class="align-middle">
+            <ngb-highlight [result]="pd.tipo_M" [term]="service.searchTerm"></ngb-highlight>
+          </td>
+
+          <td class="align-middle">
+            <ngb-highlight [result]="pd.porcentaje | number" [term]="service.searchTerm"></ngb-highlight>
+          </td>
+
+          <td class="align-middle">
+            <ngb-highlight [result]="pd.capitulo | number" [term]="service.searchTerm"></ngb-highlight>
+          </td>
+
+          <td class="align-middle">
+            <ngb-highlight [result]="pd.item | number" [term]="service.searchTerm"></ngb-highlight>
+          </td>
+
+          
+          <td class="align-middle">
+            <ngb-highlight [result]="pd.Capitulo_Nombre" [term]="service.searchTerm"></ngb-highlight>
+          </td>
+
+          <td class="align-middle">
+            <ngb-highlight [result]="pd.grupo1" [term]="service.searchTerm"></ngb-highlight>
+          </td>
+          <td class="align-middle">
+            <div class="btn-group" role="group" aria-label="Basic example">
+              <button type="button" [routerLink]="['.', pd.id_detalle]" class="btn btn-primary">
+                <i class="fas fa-lg fa-pen"></i> </button>
+              <button type="button" (click)="eliminarProcesosDetalle(pd.id_detalle)" class="btn btn-danger">
+                <i class="far fa-lg fa-trash-alt"></i></button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div class="d-flex justify-content-between p-2">
+      <ngb-pagination [collectionSize]="total$ | async" [(page)]="service.page" [maxSize]="10" [rotate]="true" [pageSize]="service.pageSize">
+      </ngb-pagination>
+  
+      <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+        <option [ngValue]="10">10</option>
+        <option [ngValue]="20">20</option>
+        <option [ngValue]="50">50</option>
+        <option [ngValue]="100">100</option>
+      </select>
+    </div>
+</form>
+
+
+

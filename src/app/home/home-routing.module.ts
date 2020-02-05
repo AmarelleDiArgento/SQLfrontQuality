@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { DetallesComponent } from './components/detalles/detalles.component';
+import { DragDropComponent } from './components/drag-drop/drag-drop.component';
 
 
 const routes: Routes = [
@@ -13,6 +14,11 @@ const routes: Routes = [
   {
     path: 'detalles/:id',
     component: DetallesComponent
+  },
+
+  {
+    path: 'drag',
+    component: DragDropComponent
   }
 ];
 

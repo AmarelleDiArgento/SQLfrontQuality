@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ListarprocesoComponent } from './listar-proceso.component';
+import { DragDropComponent } from './drag-drop.component';
 
-describe('ListarProcesoComponent', () => {
-  let component: ListarprocesoComponent;
-  let fixture: ComponentFixture<ListarprocesoComponent>;
+describe('DragDropComponent', () => {
+  let component: DragDropComponent;
+  let fixture: ComponentFixture<DragDropComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ListarprocesoComponent ]
+      declarations: [ DragDropComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ListarprocesoComponent);
+    fixture = TestBed.createComponent(DragDropComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

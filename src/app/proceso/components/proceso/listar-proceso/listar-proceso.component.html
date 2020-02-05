@@ -1,51 +1,108 @@
-<div class="row text-right d-flex justify-content-between mb-3">
-  <h1>Procesos.</h1>
+<form>
+  <div class="row text-center d-flex justify-content-between mb-3">
 
-  <button type="button" [routerLink]="['./nuevo']" class="btn btn-info">
-    <i class="fas fa-lg fa-plus"></i>
-  </button>
-</div>
-<div class="row">
-  <table class=" table table-striped text-center align-middle table-sm">
+    <div class="col-12">
+      <h1>Proceso.</h1>
+    </div>
+
+    <div class="input-group mb-3 col-12 col-md-6">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">
+          <i class="fas fa-search"></i>
+        </span>
+      </div>
+      <input class="form-control col" type="text" name="searchTerm" [(ngModel)]="service.searchTerm"
+        placeholder="Buscar..." aria-label="Buscar" aria-describedby="basic-addon1" />
+      <span class="ml-3" *ngIf="service.loading$ | async"> Cargando... </span>
+
+    </div>
+
+    <button type="button" [routerLink]="['nuevo']" class="btn btn-info">
+      <i class="fas fa-lg fa-plus"></i>
+    </button>
+
+
+  </div>
+
+
+  <table class="table table-striped text-center align-middle table-sm">
     <thead class="thead-dark">
       <tr>
-        <th scope="col">Codigo</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Acciones</th>
+        <th scope="col">#</th>
+        <th scope="col" sortable="codigo_proceso" (sort)="onSort($event)">Codigo</th>
+        <th scope=" col" sortable="nombre_proceso" (sort)="onSort($event)">Proceso</th>
+        <th scope=" col" sortable="Personalizado1" (sort)="onSort($event)">P_1</th>
+        <th scope=" col" sortable="Personalizado2" (sort)="onSort($event)">P_2</th>
+        <th scope=" col" sortable="Personalizado3" (sort)="onSort($event)">P_3</th>
+        <th scope=" col" sortable="Personalizado4" (sort)="onSort($event)">P_4</th>
+        <th scope=" col" sortable="Personalizado5" (sort)="onSort($event)">P_5</th>
+        <th scope=" col" sortable="Personalizado1_Valor" (sort)="onSort($event)">Ponderado</th>
+        <th scope=" col">Acciones</th>
       </tr>
     </thead>
     <tbody>
+      <tr *ngFor=" let p of proceso$ | async">
+        <th scope="row" class="align-middle">{{ p.id_Proceso }}</th>
+        <td class="align-middle">
+          <ngb-highlight [result]="p.codigo_proceso | number" [term]="service.searchTerm"></ngb-highlight>
+        </td>
 
-      <!-- 
-          <th class="align-middle" scope="row">{{u.id_Proceso}}</th>
+        <td class="align-middle">
+          <ngb-highlight [result]="p.nombre_proceso" [term]="service.searchTerm"></ngb-highlight>
+        </td>
 
-          -->
-      <tr *ngFor="let u of procesos">
-        <th class="align-middle" scope="row">{{u.codigo_proceso}}</th>
-        <td class="align-middle text-capitalize">{{u.nombre_proceso}}</td>
+        <td class="align-middle">
+          <ngb-highlight [result]="p.Personalizado1" [term]="service.searchTerm"></ngb-highlight>
+        </td>
+
+        <td class="align-middle">
+          <ngb-highlight [result]="p.Personalizado2" [term]="service.searchTerm"></ngb-highlight>
+        </td>
+
+        <td class="align-middle">
+          <ngb-highlight [result]="p.Personalizado3" [term]="service.searchTerm"></ngb-highlight>
+        </td>
+
+        <td class="align-middle">
+          <ngb-highlight [result]="p.Personalizado4" [term]="service.searchTerm"></ngb-highlight>
+        </td>
+
+        <td class="align-middle">
+          <ngb-highlight [result]="p.Personalizado5" [term]="service.searchTerm"></ngb-highlight>
+        </td>
+
+        <td class="align-middle">
+          <ngb-highlight [result]="p.Personalizado1_Valor | number" [term]="service.searchTerm"></ngb-highlight>
+        </td>
+
         <td class="align-middle">
           <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" [routerLink]="['.', u.id_Proceso]" class="btn btn-primary">
+            <button type="button" [routerLink]="['proupd', p.id_Proceso]" class="btn btn-primary">
               <i class="fas fa-lg fa-pen"></i> </button>
-            <button type="button" (click)="eliminarProceso(u.id_Proceso)" class="btn btn-danger">
+            <button type="button" (click)="eliminarproceso(p.id_Proceso)" class="btn btn-danger">
               <i class="far fa-lg fa-trash-alt"></i></button>
           </div>
         </td>
       </tr>
     </tbody>
   </table>
-</div>
 
-<ng-template #noData>
-  <div class="row abs-center" *ngIf="data; else noData">
-    <div class="card border-0">
-      <img src="http://sasteedeals.com/assets/uploads/nodatafound.png" class="card-img-top" alt="...">
-      <div class="card-body">
-        <p class="card-text text-center">
-          Lo sentimos, no hay información para mostrar
-          <i class="fas fa-lg fa-frown-open"></i>
-        </p>
-      </div>
-    </div>
+  <div class="d-flex justify-content-between p-2">
+    <ngb-pagination [collectionSize]="total$ | async" [(page)]="service.page" [maxSize]="10" [rotate]="true" [pageSize]="service.pageSize">
+    </ngb-pagination>
+
+    <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+      <option [ngValue]="10">10</option>
+      <option [ngValue]="20">20</option>
+      <option [ngValue]="50">50</option>
+      <option [ngValue]="100">100</option>
+    </select>
   </div>
-</ng-template>
+
+</form>
+
+
+
+
+
+

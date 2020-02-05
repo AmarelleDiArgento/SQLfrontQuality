@@ -1,0 +1,21 @@
+<div class="wrapper">
+
+        <div class="container">
+          <h2>Movies</h2>
+          <div cdkDropList #moviesList="cdkDropList" [cdkDropListData]="MoviesList"
+           class="movie-list" (cdkDropListDropped)="onDrop($event)">
+
+            <div class="card mb-2" *ngFor="let moviesList of MoviesList; let i = index;" cdkDrag>
+              <h5 class="card-header">{{moviesList}}</h5>
+              <div class="card-body">
+              <h5 class="card-title">id: {{i}}</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+</div>

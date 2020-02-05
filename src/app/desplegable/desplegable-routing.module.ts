@@ -4,23 +4,20 @@ import { CrearDesplegableComponent } from './components/crear-desplegable/crear-
 import { EditarDesplegableComponent } from './components/editar-desplegable/editar-desplegable.component';
 import { ListarDesplegableComponent } from './components/listar-desplegable/listar-desplegable.component';
 
-
 const routes: Routes = [
   {
     path: 'nuevo',
     component: CrearDesplegableComponent
   },
   {
-    path: ':filtro',
+    path: 'filtro/:id',
     component: EditarDesplegableComponent
   },
   {
     path: '',
     component: ListarDesplegableComponent
   },
-
 ];
-
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]

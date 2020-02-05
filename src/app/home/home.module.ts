@@ -7,14 +7,21 @@ import { HomeComponent } from './components/home/home.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DetallesComponent } from './components/detalles/detalles.component';
 import { NgBootstrapModule } from '../ng-bootstrap/ng-bootstrap.module';
+import { DragDropComponent } from './components/drag-drop/drag-drop.component';
+
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
   declarations: [
     HomeComponent,
-    DetallesComponent
+    DetallesComponent,
+    DragDropComponent
   ],
   imports: [
+    DragDropModule,
+    NgbTabsetModule,
     CommonModule,
     HomeRoutingModule,
     GraphModule,

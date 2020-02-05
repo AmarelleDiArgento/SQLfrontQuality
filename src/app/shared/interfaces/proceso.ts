@@ -1,4 +1,4 @@
-export interface Proceso {
+export interface Procesos {
     id_Proceso: number,
     codigo_proceso: number,
     nombre_proceso: string,
@@ -7,5 +7,5 @@ export interface Proceso {
     Personalizado3: string,
     Personalizado4: string,
     Personalizado5: string,
-    Personalizado1_Valor: number,
+    Personalizado1_Valor: number
 }

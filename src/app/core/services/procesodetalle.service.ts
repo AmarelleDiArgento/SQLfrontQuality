@@ -2,7 +2,7 @@ import { Injectable, PipeTransform } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { JsonRes } from 'src/app/shared/interfaces/json-res';
-import { Desplegable } from 'src/app/shared/interfaces/desplegable';
+import { Procesos_Detalle } from 'src/app/shared/interfaces/procesosdetalle';
 import { environment } from 'src/environments/environment';
 import { SortDirection } from 'src/app/ng-bootstrap/directives/sortable.directive';
 import { BehaviorSubject, Subject, Observable, of } from 'rxjs';
@@ -10,7 +10,7 @@ import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
 import { DecimalPipe } from '@angular/common';
 
 interface SearchResult {
-  desplegables: Desplegable[];
+  procesosdetalle: Procesos_Detalle[];
   total: number;
 }
 
@@ -26,33 +26,39 @@ function compare(v1, v2) {
   return v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 }
 
-function sort(desplegables: Desplegable[], column: string, direction: string): Desplegable[] {
+function sort(procesosdetalle: Procesos_Detalle[], column: string, direction: string): Procesos_Detalle[] {
   if (direction === '') {
-    return desplegables;
+    return procesosdetalle;
   } else {
-    return [...desplegables].sort((a, b) => {
+    return [...procesosdetalle].sort((a, b) => {
       const res = compare(a[column], b[column]);
       return direction === 'asc' ? res : -res;
     });
   }
 }
 
-function matches(desplegable: Desplegable, term: string, pipe: PipeTransform) {
-  return pipe.transform(desplegable.id_Desplegable).includes(term)
-    || desplegable.Filtro.toLowerCase().includes(term.toLowerCase())
-    || pipe.transform(desplegable.Codigo).includes(term)
-    || desplegable.Opcion.toLowerCase().includes(term.toLowerCase())
+function matches(procesosdetalle: Procesos_Detalle, term: string, pipe: PipeTransform) {
+  return pipe.transform(procesosdetalle.id_proceso).includes(term)
+    || pipe.transform(procesosdetalle.codigo_detalle).includes(term)
+    || procesosdetalle.nombre_detalle.toLowerCase().includes(term.toLowerCase())
+    || procesosdetalle.tipo.toLowerCase().includes(term.toLowerCase())
+    || procesosdetalle.lista_desp.toLowerCase().includes(term.toLowerCase())
+    || procesosdetalle.tipo_M.toLowerCase().includes(term.toLowerCase())
+    || pipe.transform(procesosdetalle.porcentaje).includes(term)
+    || pipe.transform(procesosdetalle.capitulo).includes(term)
+    || pipe.transform(procesosdetalle.item).includes(term)
+    || procesosdetalle.Capitulo_Nombre.toLowerCase().includes(term.toLowerCase())
+    || procesosdetalle.grupo1.toLowerCase().includes(term.toLowerCase());
 }
 
 @Injectable({ providedIn: 'root' })
-export class DesplegableService {
+export class ProcesosDetalleService {
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
-  private _desplegables$ = new BehaviorSubject<Desplegable[]>([]);
+  private _procesosdetalle$ = new BehaviorSubject<Procesos_Detalle[]>([]);
   private _total$ = new BehaviorSubject<number>(0);
 
-  private DESPLEGABLES: Desplegable[];
-
+  private PROCESOSDETALLE: Procesos_Detalle[];
   private url: string;
 
   private _state: State = {
@@ -62,13 +68,12 @@ export class DesplegableService {
     sortColumn: '',
     sortDirection: ''
   };
-
   constructor(
     private http: HttpClient,
     private pipe: DecimalPipe
   ) {
-    this.url = environment.api_url + '/des';
-    this.tabla();
+    this.url = environment.api_url + '/pd';
+    this.tabla('0');
 
 
     this._search$.pipe(
@@ -78,34 +83,38 @@ export class DesplegableService {
       delay(200),
       tap(() => this._loading$.next(false))
     ).subscribe(result => {
-      this._desplegables$.next(result.desplegables);
+      this._procesosdetalle$.next(result.procesosdetalle);
       this._total$.next(result.total);
     });
 
     this._search$.next();
   }
 
-  tabla() {
-    this.todos().subscribe(data => {
-      this.DESPLEGABLES = data.rows
+  tabla(id: string) {
+    this.filtro(id).subscribe(data => {
+      this.PROCESOSDETALLE = data.rows;
     });
   }
-  crear(desplegable: Desplegable) {
-    // console.log(desplegable);
+  crear(Procesosdetalle: ProcesosDetalleService) {
+    // console.log(procesosdetalle);
 
-    return this.http.post<JsonRes>(`${this.url}ins`, desplegable)
+    return this.http.post<JsonRes>(`${this.url}ins`, Procesosdetalle);
   }
 
-  editar(id: string, changes: Partial<Desplegable>) {
-    return this.http.put<JsonRes>(`${this.url}upd/${id}`, changes)
+  editar(id: string, changes: Partial<Procesos_Detalle>) {
+    return this.http.put<JsonRes>(`${this.url}upd/${id}`, changes);
   }
 
   eliminar(id: string) {
-    return this.http.delete<JsonRes>(`${this.url}del/${id}`)
+    return this.http.delete<JsonRes>(`${this.url}del/${id}`);
   }
 
   optener(id: string) {
-    return this.http.post<JsonRes>(`${this.url}one/${id}`, id)
+    return this.http.post<JsonRes>(`${this.url}one/${id}`, id);
+  }
+
+  filtro(id: string) {
+    return this.http.post<JsonRes>(`${this.url}fil/${id}`, id);
   }
 
   todos() {
@@ -113,7 +122,7 @@ export class DesplegableService {
   }
 
 
-  get desplegables$() { return this._desplegables$.asObservable(); }
+  get procesosdetalle$() { return this._procesosdetalle$.asObservable(); }
   get total$() { return this._total$.asObservable(); }
   get loading$() { return this._loading$.asObservable(); }
   get page() { return this._state.page; }
@@ -130,20 +139,21 @@ export class DesplegableService {
     Object.assign(this._state, patch);
     this._search$.next();
   }
-
   private _search(): Observable<SearchResult> {
     const { sortColumn, sortDirection, pageSize, page, searchTerm } = this._state;
 
     // 1. sort
-    let desplegables = sort(this.DESPLEGABLES, sortColumn, sortDirection);
+    let procesosdetalle = sort(this.PROCESOSDETALLE, sortColumn, sortDirection);
 
     // 2. filter
-    desplegables = desplegables.filter(desplegable => matches(desplegable, searchTerm, this.pipe));
-    const total = desplegables.length;
+
+    procesosdetalle = procesosdetalle.filter(procesosdetalle => matches(procesosdetalle, searchTerm, this.pipe));
+    const total = procesosdetalle.length;
 
     // 3. paginate
-    desplegables = desplegables.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
-    return of({ desplegables, total });
+    procesosdetalle = procesosdetalle.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
+    return of({ procesosdetalle, total });
   }
 
 }
+

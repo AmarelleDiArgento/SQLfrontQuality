@@ -1,56 +1,65 @@
-import { Component, OnInit, AfterContentInit } from '@angular/core';
-import { SwalModalService } from 'src/app/core/swal-modal.service';
+import { Component, OnInit, AfterContentInit, ViewChildren, QueryList } from '@angular/core';
 import { ProcesoService } from 'src/app/core/services/proceso.service';
+import { SwalModalService } from 'src/app/core/swal-modal.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { Procesos } from 'src/app/shared/interfaces/proceso';
+import { NgbdSortableHeader, SortEvent } from 'src/app/ng-bootstrap/directives/sortable.directive';
+
 
 @Component({
   selector: 'app-listar-proceso',
   templateUrl: './listar-proceso.component.html',
   styleUrls: ['./listar-proceso.component.scss']
 })
-export class ListarProcesoComponent implements OnInit, AfterContentInit {
-  ngAfterContentInit() {
-    this.getProcesos()
-  }
 
-  procesos: []
+export class ListarprocesoComponent implements OnInit {
+
+  proceso$: Observable<Procesos[]>;
+  total$: Observable<number>;
+
+
+  @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
+
   data = false;
 
-  constructor(
-    private procesoService: ProcesoService,
-    private sw: SwalModalService,
-    private router: Router
-  ) {
+  page = 1;
 
-  }
+  constructor(
+    public service: ProcesoService,
+    private sw: SwalModalService
+  ) {
+    this.proceso$ = this.service.proceso$
+    this.total$ = this.service.total$
+   }
 
   ngOnInit() {
-
   }
 
-  getProcesos() {
-    this.procesoService.todos()
-      .subscribe(data => {
-        // console.log(data);
+  onSort({ column, direction }: SortEvent) {
+    console.log('click');
+    // resetting other headers
+    this.headers.forEach(header => {
+      if (header.sortable !== column) {
+        header.direction = '';
+      }
+    });
 
-        this.procesos = data.rows
-        this.data = data.respuesta === 'success'
-        // console.log(this.procesos);
-      })
-
+    this.service.sortColumn = column;
+    this.service.sortDirection = direction;
   }
-
-  eliminarProceso(id: string) {
-    this.procesoService.eliminar(id)
+  eliminarproceso(id: string) {
+    this.service.eliminar(id)
       .subscribe(data => {
         // console.log(data);
-        let val = this.sw.modal(data)
+        let val = this.sw.modal(data);
         if (val) {
           // console.log('Cargue');
 
-          this.getProcesos()
+          // this.()
         }
-      })
+      });
 
   }
+
 }

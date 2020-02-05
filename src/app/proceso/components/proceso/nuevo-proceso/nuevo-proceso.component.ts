@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProcesoService } from 'src/app/core/services/proceso.service';
-import { SwalModalService } from 'src/app/core/swal-modal.service';
 import { Router } from '@angular/router';
-
+import { SwalModalService } from 'src/app/core/swal-modal.service';
 @Component({
   selector: 'app-nuevo-proceso',
   templateUrl: './nuevo-proceso.component.html',
   styleUrls: ['./nuevo-proceso.component.scss']
 })
 export class NuevoProcesoComponent implements OnInit {
-
   // var form
   nuevoProceso: FormGroup;
   submitted = false;
@@ -25,9 +23,16 @@ export class NuevoProcesoComponent implements OnInit {
   ngOnInit() {
     // init form
     this.nuevoProceso = this.formBuilder.group({
-      id_proceso: ['', Validators.required],
-      nombre_proceso: ['', Validators.required]
-    });
+      codigo_proceso: ['', Validators.required],
+      nombre_proceso: ['', Validators.required],
+      Personalizado1: ['', Validators.required],
+      Personalizado2: ['', Validators.required],
+      Personalizado3: ['', Validators.required],
+      Personalizado4: ['', Validators.required],
+      Personalizado5: ['', Validators.required],
+      Personalizado1_Valor: ['', Validators.required]
+
+    })
 
   }
   // get form controls
@@ -36,7 +41,7 @@ export class NuevoProcesoComponent implements OnInit {
 
   onSubmit() {
     // error here if form is invalid
-    if (this.nuevoProceso.valid) {
+    if (this.nuevoProceso.valid ) {
       // console.log('valido');
       this.submitted = true;
       this.procesoService.crear(this.nuevoProceso.value)
@@ -46,6 +51,8 @@ export class NuevoProcesoComponent implements OnInit {
           if (val) {
             // console.log('Cargue');
             this.router.navigate(['proceso'])
+          }else{
+            this.submitted = false;
           }
         })
     }

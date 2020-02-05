@@ -3,6 +3,7 @@ import { CommonModule, DecimalPipe } from '@angular/common';
 
 import { UsuarioService } from './services/usuario.service';
 
+
 @NgModule({
   declarations: [],
   imports: [

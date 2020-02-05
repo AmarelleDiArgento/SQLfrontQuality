@@ -1,109 +1,103 @@
 <div class="row">
   <div class="col-12 offset-md-2 col-md-8 mt-md-5">
-
     <div class="card">
       <div class="card-header">
         <h2>Nuevo proceso</h2>
       </div>
       <div class="card-body">
         <form [formGroup]="nuevoProceso" (ngSubmit)="onSubmit()">
-
           <div class="form-group">
-            <label for="codigo_proceso">Codigo: </label>
-            <input type="text" autofocus class="form-control" id="codigo_proceso" formControlName="codigo_proceso"
-              [ngClass]="{ 'is-invalid': submitted && f.codigo_proceso.errors }"
-              placeholder="Digite el codigo de empleado">
+            <label for="codigo_proceso">Codigo Proceso: </label>
+            <input type="number" autofocus class="form-control" id="codigo_proceso" formControlName="codigo_proceso"
+              [ngClass]="{ 'is-invalid': submitted && f.codigo_proceso.errors }" placeholder="Digite el codigo del proceso">
             <span>
               <div *ngIf="submitted && f.codigo_proceso.errors">
-                <div *ngIf="f.codigo_proceso.errors.required"> <label id="error">El codigo es requerido</label></div>
+                <div *ngIf="f.codigo_proceso.errors.required"> <label id="error">El codigo del proceso es requerido</label></div>
               </div>
             </span>
-          </div>
-
+          </div>      
+          
           <div class="form-group">
-            <label for="nombre_proceso">Nombre: </label>
-            <input type="text" class="form-control" id="nombre_proceso" formControlName="nombre_proceso"
-              [ngClass]="{ 'is-invalid': submitted && f.nombre_proceso.errors }" placeholder="Personalizado">
+            <label for="nombre_proceso">Proceso: </label>
+            <input type="text" autofocus class="form-control" id="nombre_proceso" formControlName="nombre_proceso"
+              [ngClass]="{ 'is-invalid': submitted && f.nombre_proceso.errors }" placeholder="Digite el nombre del proceso">
             <span>
               <div *ngIf="submitted && f.nombre_proceso.errors">
-                <div *ngIf="f.nombre_proceso.errors.required"> <label id="error">El codigo es requerido</label></div>
+                <div *ngIf="f.nombre_proceso.errors.required"> <label id="error">El nombre del proceso es requerido</label></div>
               </div>
             </span>
-          </div>
-
+          </div>       
+          
           <div class="form-group">
-            <label for="Personalizado1">Personalizado: </label>
-            <input type="text" class="form-control" id="Personalizado1" formControlName="Personalizado1"
-              [ngClass]="{ 'is-invalid': submitted && f.Personalizado1.errors }" placeholder="Personalizado">
+            <label for="Personalizado1">P_1: </label>
+            <input type="text" autofocus class="form-control" id="Personalizado1" formControlName="Personalizado1"
+              [ngClass]="{ 'is-invalid': submitted && f.Personalizado1.errors }" placeholder="Digite el P_1">
             <span>
               <div *ngIf="submitted && f.Personalizado1.errors">
-                <div *ngIf="f.Personalizado1.errors.required"> <label id="error">El codigo es requerido</label></div>
+                <div *ngIf="f.Personalizado1.errors.required"> <label id="error">El P_1 es requerida</label></div>
               </div>
             </span>
-          </div>
-
+          </div>   
+          
           <div class="form-group">
-            <label for="Personalizado2">Personalizado: </label>
-            <input type="text" class="form-control" id="Personalizado2" formControlName="Personalizado2"
-              [ngClass]="{ 'is-invalid': submitted && f.Personalizado2.errors }" placeholder="Personalizado">
+            <label for="Personalizado2">P_2: </label>
+            <input type="text" autofocus class="form-control" id="Personalizado2" formControlName="Personalizado2"
+              [ngClass]="{ 'is-invalid': submitted && f.Personalizado2.errors }" placeholder="Digite el P_2">
             <span>
               <div *ngIf="submitted && f.Personalizado2.errors">
-                <div *ngIf="f.Personalizado2.errors.required"> <label id="error">El codigo es requerido</label></div>
+                <div *ngIf="f.Personalizado2.errors.required"> <label id="error">El P_2 es requerida</label></div>
               </div>
             </span>
-          </div>
+          </div> 
 
           <div class="form-group">
-            <label for="Personalizado3">Personalizado: </label>
-            <input type="text" class="form-control" id="Personalizado3" formControlName="Personalizado3"
-              [ngClass]="{ 'is-invalid': submitted && f.Personalizado3.errors }" placeholder="Personalizado">
+            <label for="Personalizado3">P_3: </label>
+            <input type="text" autofocus class="form-control" id="Personalizado3" formControlName="Personalizado3"
+              [ngClass]="{ 'is-invalid': submitted && f.Personalizado3.errors }" placeholder="Digite el P_3">
             <span>
               <div *ngIf="submitted && f.Personalizado3.errors">
-                <div *ngIf="f.Personalizado3.errors.required"> <label id="error">El codigo es requerido</label></div>
+                <div *ngIf="f.Personalizado3.errors.required"> <label id="error">El P_3 es requerida</label></div>
               </div>
             </span>
-          </div>
+          </div> 
 
           <div class="form-group">
-            <label for="Personalizado4">Personalizado: </label>
-            <input type="text" class="form-control" id="Personalizado4" formControlName="Personalizado4"
-              [ngClass]="{ 'is-invalid': submitted && f.Personalizado4.errors }" placeholder="Personalizado">
+            <label for="Personalizado4">P_4: </label>
+            <input type="text" autofocus class="form-control" id="Personalizado4" formControlName="Personalizado4"
+              [ngClass]="{ 'is-invalid': submitted && f.Personalizado4.errors }" placeholder="Digite el P_4">
             <span>
               <div *ngIf="submitted && f.Personalizado4.errors">
-                <div *ngIf="f.Personalizado4.errors.required"> <label id="error">El codigo es requerido</label></div>
+                <div *ngIf="f.Personalizado4.errors.required"> <label id="error">El P_4 es requerida</label></div>
               </div>
             </span>
-          </div>
+          </div> 
 
           <div class="form-group">
-            <label for="Personalizado5">Personalizado: </label>
-            <input type="text" class="form-control" id="Personalizado5" formControlName="Personalizado5"
-              [ngClass]="{ 'is-invalid': submitted && f.Personalizado5.errors }" placeholder="Personalizado">
+            <label for="Personalizado5">P_5: </label>
+            <input type="text" autofocus class="form-control" id="Personalizado5" formControlName="Personalizado5"
+              [ngClass]="{ 'is-invalid': submitted && f.Personalizado5.errors }" placeholder="Digite el P_5">
             <span>
               <div *ngIf="submitted && f.Personalizado5.errors">
-                <div *ngIf="f.Personalizado5.errors.required"> <label id="error">El codigo es requerido</label></div>
+                <div *ngIf="f.Personalizado5.errors.required"> <label id="error">El P_5 es requerida</label></div>
               </div>
             </span>
-          </div>
-
+          </div> 
 
           <div class="form-group">
-            <label for="Personalizado1_Valor">Valor: </label>
-            <input type="text" class="form-control" id="Personalizado1_Valor" formControlName="Personalizado1_Valor"
-              [ngClass]="{ 'is-invalid': submitted && f.Personalizado1_Valor.errors }" placeholder="Personalizado">
+            <label for="Personalizado1_Valor">Ponderado: </label>
+            <input type="number" autofocus class="form-control" id="Personalizado1_Valor" formControlName="Personalizado1_Valor"
+              [ngClass]="{ 'is-invalid': submitted && f.Personalizado1_Valor.errors }" placeholder="Digite el ponderado">
             <span>
               <div *ngIf="submitted && f.Personalizado1_Valor.errors">
-                <div *ngIf="f.Personalizado1_Valor.errors.required"> <label id="error">El codigo es requerido</label>
-                </div>
+                <div *ngIf="f.Personalizado1_Valor.errors.required"> <label id="error">El Ponderado es requerida</label></div>
               </div>
             </span>
-          </div>
+          </div> 
 
-          <button type="submit" class="btn btn-primary btn-lg btn-block btn-full">Actualizar</button>
-
+          <button type="submit" class="btn btn-primary btn-lg btn-block btn-full">Crear</button>
+        
         </form>
       </div>
     </div>
-
   </div>
 </div>

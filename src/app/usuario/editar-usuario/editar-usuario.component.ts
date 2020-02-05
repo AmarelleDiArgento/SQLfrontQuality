@@ -4,7 +4,7 @@ import { UsuarioService } from 'src/app/core/services/usuario.service';
 import { Usuario } from 'src/app/shared/interfaces/usuario';
 import { HttpParams } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import { SwalModalService } from 'src/app/core/swal-modal.service';
 
 @Component({
@@ -19,7 +19,7 @@ export class EditarUsuarioComponent implements OnInit {
   usuario
   id
   submitted = false;
-  data = false
+  data = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -38,7 +38,7 @@ export class EditarUsuarioComponent implements OnInit {
       id_usuario: ['', Validators.required],
       nombre_usuario: ['', Validators.required]
     });
-    this.optenerUno()
+    this.optenerUno();
   }
 
   // get form controls
@@ -46,11 +46,11 @@ export class EditarUsuarioComponent implements OnInit {
 
   optenerUno() {
     this.activatedRoute.params.subscribe((params: Params) => {
-      this.id = params.id
+      this.id = params.id;
       this.usuarioService.optener(this.id)
         .subscribe(data => {
 
-          this.data = data.respuesta === 'success'
+          this.data = data.respuesta === 'success';
           if (this.data) {
             // console.log(data);
             this.editarUsuario = this.formBuilder.group(data.rows);
@@ -80,12 +80,12 @@ export class EditarUsuarioComponent implements OnInit {
       this.usuarioService.editar(this.id, this.editarUsuario.value)
         .subscribe(data => {
           // console.log(data);
-          let val = this.sw.modal(data)
+          let val = this.sw.modal(data);
           if (val) {
             // console.log('Cargue');
-            this.router.navigate(['usuario'])
+            this.router.navigate(['usuario']);
           }
-        })
+        });
     }
   }
 }

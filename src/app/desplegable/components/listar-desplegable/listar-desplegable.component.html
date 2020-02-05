@@ -53,7 +53,7 @@
   
           <td class="align-middle">
             <div class="btn-group" role="group" aria-label="Basic example">
-              <button type="button" [routerLink]="['.', d.id_Desplegable]" class="btn btn-primary">
+              <button type="button" [routerLink]="['./filtro', d.id_Desplegable]" class="btn btn-primary">
                 <i class="fas fa-lg fa-pen"></i> </button>
               <button type="button" (click)="eliminarDesplegable(d.id_Desplegable)" class="btn btn-danger">
                 <i class="far fa-lg fa-trash-alt"></i></button>

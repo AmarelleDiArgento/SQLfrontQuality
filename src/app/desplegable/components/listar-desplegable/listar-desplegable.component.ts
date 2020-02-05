@@ -39,7 +39,6 @@ export class ListarDesplegableComponent implements OnInit {
 
   onSort({ column, direction }: SortEvent) {
     console.log('click');
-    
     // resetting other headers
     this.headers.forEach(header => {
       if (header.sortable !== column) {
@@ -50,7 +49,6 @@ export class ListarDesplegableComponent implements OnInit {
     this.service.sortColumn = column;
     this.service.sortDirection = direction;
   }
-  
   eliminarDesplegable(id: string) {
     this.service.eliminar(id)
       .subscribe(data => {

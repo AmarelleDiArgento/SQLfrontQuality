@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { ProcesoService } from 'src/app/core/services/proceso.service';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { SwalModalService } from 'src/app/core/swal-modal.service';
+import { Procesos } from 'src/app/shared/interfaces/proceso';
+import { HttpParams } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import Swal from 'sweetalert2';
+import { SwalModalService } from 'src/app/core/swal-modal.service';
 
 @Component({
   selector: 'app-editar-proceso',
@@ -14,10 +16,10 @@ export class EditarProcesoComponent implements OnInit {
 
   // var form
   editarProceso: FormGroup;
-  proceso
-  id
+  proceso;
+  id;
   submitted = false;
-  data = false
+  data = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -40,10 +42,9 @@ export class EditarProcesoComponent implements OnInit {
       Personalizado3: ['', Validators.required],
       Personalizado4: ['', Validators.required],
       Personalizado5: ['', Validators.required],
-      Personalizado1_Valor: ['', Validators.required],
-      
+      Personalizado1_Valor: ['', Validators.required]
     });
-    this.optenerUno()
+    this.optenerUno();
   }
 
   // get form controls
@@ -51,11 +52,11 @@ export class EditarProcesoComponent implements OnInit {
 
   optenerUno() {
     this.activatedRoute.params.subscribe((params: Params) => {
-      this.id = params.id
+      this.id = params.id;
       this.procesoService.optener(this.id)
         .subscribe(data => {
 
-          this.data = data.respuesta === 'success'
+          this.data = data.respuesta === 'success';
           if (this.data) {
             // console.log(data);
             this.editarProceso = this.formBuilder.group(data.rows);
@@ -71,10 +72,10 @@ export class EditarProcesoComponent implements OnInit {
             })
               .then(() => {
                 this.router.navigate(['proceso']);
-              })
+              });
           }
-        })
-    })
+        });
+    });
 
   }
   onSubmit() {
@@ -85,12 +86,12 @@ export class EditarProcesoComponent implements OnInit {
       this.procesoService.editar(this.id, this.editarProceso.value)
         .subscribe(data => {
           // console.log(data);
-          let val = this.sw.modal(data)
+          let val = this.sw.modal(data);
           if (val) {
             // console.log('Cargue');
-            this.router.navigate(['proceso'])
+            this.router.navigate(['proceso']);
           }
-        })
+        });
     }
   }
 }
