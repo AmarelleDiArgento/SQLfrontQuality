@@ -8,6 +8,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 
 const routes: Routes = [
 
+
+
   {
 
     path: '',
@@ -33,6 +35,14 @@ const routes: Routes = [
       {
         path: 'desplegable',
         loadChildren: () => import('./desplegable/desplegable.module').then(d => d.DesplegableModule)
+      },
+      {
+        path: 'capturador',
+        loadChildren: () => import('./capturador/capturador.module').then(c => c.CapturadorModule)
+      },
+      {
+        path: 'auth',
+        loadChildren: () => import('./auth/auth.module').then(a => a.AuthModule)
       }
     ]
   },
