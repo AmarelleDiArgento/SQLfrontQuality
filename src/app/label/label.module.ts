@@ -13,12 +13,12 @@ import { ImpresionComponent } from './components/impresion/impresion.component';
   declarations: [
     LabelComponent,
     LectorcsvComponent,
-    ImpresionComponent,
-    QRCodeModule    
+    ImpresionComponent,  
   ],
   imports: [
     CommonModule,
-    LabelRoutingModule    
+    LabelRoutingModule,
+    QRCodeModule       
   ],
   exports: [
     LectorcsvComponent,

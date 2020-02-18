@@ -39,6 +39,8 @@ export class GraficaComponent implements OnInit {
   genGrafLineal() {
     this.tipo = this.ajuste(this.dataGraf.tipo, this.dataGraf.labels.length)
     console.log(this.tipo);
+    console.log((isUndefined(this.dataGraf.full)) ? '' : this.dataGraf.full[0][0]);
+    
 
     var dataset = this.dataSet()
     this.lineal = new Chart(this.element, {
@@ -91,7 +93,7 @@ export class GraficaComponent implements OnInit {
             bottom: 0
           }
         }
-
+        
 
         return 'doughnut'
 

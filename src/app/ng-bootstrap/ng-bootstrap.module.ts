@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { NgbCollapseModule, NgbModule, NgbPaginationModule, NgbTypeaheadModule, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCollapseModule, NgbModule, NgbPaginationModule, NgbTypeaheadModule, NgbDatepickerModule, NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbdSortableHeader } from './directives/sortable.directive';
 import { CalendarioComponent } from './components/calendario/calendario.component';
 
@@ -16,14 +16,16 @@ import { CalendarioComponent } from './components/calendario/calendario.componen
     NgbCollapseModule,
     NgbPaginationModule,
     NgbTypeaheadModule,
-    NgbDatepickerModule
+    NgbDatepickerModule,
+    NgbPopoverModule
   ],
   exports: [
     CalendarioComponent,
     NgbCollapseModule,
     NgbPaginationModule,
     NgbTypeaheadModule,
-    NgbDatepickerModule
+    NgbDatepickerModule,
+    NgbPopoverModule
   ]
 })
 export class NgBootstrapModule { }

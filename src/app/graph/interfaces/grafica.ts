@@ -5,6 +5,7 @@ export interface Grafica {
     titulo: string,
     item: string,
     labels: string[],
+    full: string[],
     series: string[],
     data: number[][],
     background: string[],

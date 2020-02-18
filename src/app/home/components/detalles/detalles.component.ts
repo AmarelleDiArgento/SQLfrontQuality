@@ -3,7 +3,7 @@ import { GraficaInfo } from 'src/app/shared/interfaces/grafica-info';
 import { DataService } from 'src/app/core/services/data.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Grafica } from 'src/app/graph/interfaces/grafica';
-import { isNull, isUndefined } from 'util';
+import { isNull, isUndefined, log } from 'util';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -52,6 +52,7 @@ export class DetallesComponent implements OnInit, AfterViewInit {
 
   public labels = [];
   public datas = [];
+  public full = [];
 
 
   constructor(
@@ -63,6 +64,10 @@ export class DetallesComponent implements OnInit, AfterViewInit {
       this.loc = params.loc;
       this.det = params.id;
       // console.log(params);
+
+      this.grafGen = JSON.parse(localStorage.getItem("G" + this.loc + "-" + this.det)) as Grafica;
+      this.graficas = JSON.parse(localStorage.getItem(this.loc + "-" + this.det)) as Grafica[];
+
 
     })
 
@@ -83,10 +88,6 @@ export class DetallesComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-
-
-
-
     let datos = this.optenerLabels(this.Origen.procesos, 'proceso')
     this.grafGen = {
       tipo: 'radar',
@@ -94,29 +95,34 @@ export class DetallesComponent implements OnInit, AfterViewInit {
       titulo: this.Origen.origen,
       item: 'general',
       labels: datos[0],
+      full: this.full[0],
       series: ['cumplimiento'],
       data: [datos[1]],
       background: this.backgroundColor,
       border: this.borderColor,
     }
+    localStorage.setItem("G" + this.loc + "-" + this.det, JSON.stringify(this.grafGen));
     this.generarGraficas(this.Origen.procesos)
-
   }
 
   optenerLabels(datos, name): any[] {
+
     let labels = []
     let datas = []
+    let full = []
     for (const p of datos) {
+      console.log(p);
       if (!isNaN(p.cumplimiento) && !isNull(p.cumplimiento) && !isUndefined(p.cumplimiento)) {
 
         labels.push(p[name]);
         let porc = (p.cumplimiento * 100).toFixed(1);
         datas.push(porc);
+        full.push(isUndefined(p.items) ? '' : p.items[0].item)
       }
     }
     //  console.log(labels, datas);
 
-    return [labels, datas]
+    return [labels, datas, full]
 
   }
 
@@ -130,8 +136,6 @@ export class DetallesComponent implements OnInit, AfterViewInit {
       let item = 'graf' + id++;
 
       // console.log(p.shorts);
-
-
       let etiquetas = this.optenerLabels(p.shorts, 'short')
       let g = {
         tipo: 'radar',
@@ -139,16 +143,17 @@ export class DetallesComponent implements OnInit, AfterViewInit {
         titulo: p.proceso,
         item: item,
         labels: etiquetas[0],
+        full: etiquetas[2],
         series: ['cumplimiento'],
         data: [etiquetas[1]],
         background: this.backgroundColor,
         border: this.borderColor
       }
       // console.log(g);
-
       gr.push(g)
 
     }
+    localStorage.setItem(this.loc + "-" + this.det, JSON.stringify(gr))
     this.graficas = gr
 
   }

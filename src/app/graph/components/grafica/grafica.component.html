@@ -17,15 +17,16 @@
             <table class="table table-hover m-2 text-center">
               <thead class="thead-inverse table-dark">
                 <tr>
-                  <th>No.</th>
                   <th>Item</th>
                   <th>Cumplimiento</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let l of dataGraf.labels; let i = index"
-                  class="alert-{{backgroundRow(dataGraf.data[0][i])}}">
-                  <td scope="row">{{i+1}}</td>
+                  class="alert-{{backgroundRow(dataGraf.data[0][i])}}"
+                  popoverTitle="{{l}}" ngbPopover="{{(dataGraf.full === undefined) ? '' : dataGraf.full[i]}}" [openDelay]="300"
+                  [closeDelay]="1500" triggers="mouseenter:mouseleave"  >
+                  
                   <td>{{l}}</td>
                   <td class="porciento">{{dataGraf.data[0][i]}}</td>
                 </tr>
@@ -36,7 +37,7 @@
 
 
 
-        
+
       </div>
     </div>
   </div>
