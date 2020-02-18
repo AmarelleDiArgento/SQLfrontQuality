@@ -88,10 +88,11 @@ export class UsuarioService {
   tabla() {
     this.todos().subscribe(data => {
       this.USUARIOS = data.rows
+
+      this._usuarios$.next(this.USUARIOS);
     })
   }
   crear(usuario: Usuario) {
-    // console.log(usuario);
 
     return this.http.post<JsonRes>(`${this.url}ins`, usuario)
   }

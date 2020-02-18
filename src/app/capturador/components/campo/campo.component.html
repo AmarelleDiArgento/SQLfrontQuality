@@ -1,0 +1,57 @@
+<div [ngSwitch]="campo.tipo">
+
+  <div *ngSwitchCase="'CBX'">
+    <div class="form-group">
+      <label for="exampleInputEmail1">{{campo.nombre_detalle}}:</label>
+      <input id="{{campo.nombre_detalle}}-{{campo.item}}" type="text" class="form-control" [ngbTypeahead]="search"
+        aria-describedby="emailHelp" placeholder="{{campo.nombre_detalle}}">
+      <small id="emailHelp" class="form-text text-muted">Ponga su texto de ayuda aqui :D.</small>
+    </div>
+  </div>
+  <div *ngSwitchCase="'ETN'">
+    <div class="form-group">
+      <label for="exampleInputEmail1">{{campo.nombre_detalle}}:</label>
+      <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+        placeholder="{{campo.nombre_detalle}}">
+      <small id="emailHelp" class="form-text text-muted">Ponga su texto de ayuda aqui :D.</small>
+    </div>
+  </div>
+  <div *ngSwitchCase="'ETA'">
+    <div class="form-group">
+      <label for="exampleInputEmail1">{{campo.nombre_detalle}}:</label>
+      <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+        placeholder="{{campo.nombre_detalle}}">
+      <small id="emailHelp" class="form-text text-muted">Ponga su texto de ayuda aqui :D.</small>
+    </div>
+  </div>
+  <div *ngSwitchCase="'FIL'">
+    <input id="{{campo.nombre_detalle}}-{{campo.item}}" type="text" class="form-control" [ngbTypeahead]="search"
+      aria-describedby="emailHelp" placeholder="{{campo.nombre_detalle}}">
+  </div>
+  <div *ngSwitchCase="'RB'">
+    <div *ngFor="let d of desplegable; let i = index" class="custom-control custom-radio custom-control-lg">
+      <input type="radio" id="radio-{{campo.codigo_detalle}}-{{i}}" name="radio-{{campo.codigo_detalle}}"
+        class="custom-control-input">
+      <label class="custom-control-label {{colorLabel(i)}}"
+        for="radio-{{campo.codigo_detalle}}-{{i}}">{{d.Opcion}}</label>
+    </div>
+
+  </div>
+  <div *ngSwitchCase="'RS'">
+    <div class="form-group">
+      <label for="exampleInputEmail1">{{campo.nombre_detalle}}:</label>
+      <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+        placeholder="{{campo.nombre_detalle}}">
+      <small id="emailHelp" class="form-text text-muted">Ponga su texto de ayuda aqui :D.</small>
+    </div>
+  </div>
+  <div *ngSwitchCase="'SCN'">
+    <div class="form-group">
+      <label for="exampleInputEmail1">{{campo.nombre_detalle}}:</label>
+      <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+        placeholder="{{campo.nombre_detalle}}">
+      <small id="emailHelp" class="form-text text-muted">Ponga su texto de ayuda aqui :D.</small>
+    </div>
+  </div>
+  <div *ngSwitchDefault>No se que tipo de campo sea: {{campo.tipo}}</div>
+</div>

@@ -93,6 +93,7 @@ export class ProcesosDetalleService {
   tabla(id: string) {
     this.filtro(id).subscribe(data => {
       this.PROCESOSDETALLE = data.rows;
+      this._procesosdetalle$.next(this.PROCESOSDETALLE);
     });
   }
   crear(Procesosdetalle: ProcesosDetalleService) {

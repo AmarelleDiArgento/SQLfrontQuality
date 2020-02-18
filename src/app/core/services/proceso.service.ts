@@ -97,7 +97,6 @@ export class ProcesoService {
     });
   }
   crear(proceso: Procesos) {
-    // console.log(Proceso);
 
     return this.http.post<JsonRes>(`${this.url}ins`, proceso);
   }

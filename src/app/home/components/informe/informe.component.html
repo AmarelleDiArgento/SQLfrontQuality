@@ -1,0 +1,31 @@
+<div class="col-12">
+  <h1 class="ml-4 text-center">SEGUIMIENTO GENERAL {{Origen}}:</h1>
+</div>
+
+
+<ng-container *ngFor="let g of Graf$ | async ">
+
+  <div *ngIf="g.origen !== 'NULL'" class="card mt-2 border-{{backgroundRow(g.cumplimiento)}}">
+    <div class="card-header bg-{{backgroundRow(g.cumplimiento)}} d-flex justify-content-between"
+      (click)="g.activo = !g.activo" [attr.aria-expanded]="!g.activo">
+      <div class="text-uppercase">{{g.origen}}</div>
+      <div class="font-weight-bold">{{(g.cumplimiento * 100).toFixed(1)}} %</div>
+    </div>
+    <div class="card-body" [ngbCollapse]="g.activo">
+      <h5 class="card-title">Procesos monitoreados:
+        <div class="small">
+
+          <button type="button" class="btn btn-link" data-toggle="tooltip" data-placement="bottom"
+            title="Tooltip on bottom" [routerLink]="['./', g.id]">Ver detalles</button>
+        </div>
+      </h5>
+      <div *ngFor="let p of g.procesos"
+        class="alert alert-{{backgroundRow(p.cumplimiento)}} d-flex justify-content-between text-uppercase"
+        role="alert">
+
+        <div class="text-uppercase">{{p.proceso}}</div>
+        <div class="font-weight-bold">{{(p.cumplimiento * 100).toFixed(1)}} %</div>
+      </div>
+    </div>
+  </div>
+</ng-container>

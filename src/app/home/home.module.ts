@@ -1,27 +1,35 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { CoreModule } from '../core/core.module';
 import { GraphModule } from '../graph/graph.module';
 import { HomeRoutingModule } from './home-routing.module';
-import { HomeComponent } from './components/home/home.component';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { DetallesComponent } from './components/detalles/detalles.component';
-import { NgBootstrapModule } from '../ng-bootstrap/ng-bootstrap.module';
-import { DragDropComponent } from './components/drag-drop/drag-drop.component';
-
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NgBootstrapModule } from '../ng-bootstrap/ng-bootstrap.module';
+
+import { HomeComponent } from './components/home/home.component';
+import { DetallesComponent } from './components/detalles/detalles.component';
+import { DragDropComponent } from './components/drag-drop/drag-drop.component';
+import { AuditoriaComponent } from './components/auditoria/auditoria.component';
+import { SharedModule } from '../shared/shared.module';
+import { InformeComponent } from './components/informe/informe.component';
+import { LaunchingComponent } from './components/launching/launching.component';
 
 
 @NgModule({
   declarations: [
     HomeComponent,
     DetallesComponent,
-    DragDropComponent
+    DragDropComponent,
+    AuditoriaComponent,
+    InformeComponent,
+    HomeComponent,
+    LaunchingComponent
   ],
   imports: [
+    CoreModule,
+    SharedModule,
     DragDropModule,
-    NgbTabsetModule,
     CommonModule,
     HomeRoutingModule,
     GraphModule,

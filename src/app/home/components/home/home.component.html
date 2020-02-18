@@ -1,31 +1,34 @@
-<div class="col-12">
-  <h1 class="ml-4 text-center">SEGUIMIENTO GENERAL POSTCOSECHAS: </h1>
-</div>
+<div class="row d-flex justify-content-center align-items-center full">
 
+  <div class="card col-md-4 col-12">
+    <img src="assets/img/svg/arbol.svg" class="card-img-top img-card mt-4" alt="...">
 
-<ng-container *ngFor="let g of Graf$ | async ">
-
-  <div *ngIf="g.postcosecha !== 'NULL'" class="card mt-2 border-{{backgroundRow(g.cumplimiento)}}">
-    <div class="card-header bg-{{backgroundRow(g.cumplimiento)}} d-flex justify-content-between"
-      (click)="g.activo = !g.activo" [attr.aria-expanded]="!g.activo">
-      <div class="text-uppercase">{{g.postcosecha}}</div>
-      <div class="font-weight-bold">{{(g.cumplimiento * 100).toFixed(1)}} %</div>
-    </div>
-    <div class="card-body" [ngbCollapse]="g.activo">
-      <h5 class="card-title">Procesos monitoreados:
-        <div class="small">
-
-          <button type="button" class="btn btn-link" data-toggle="tooltip" data-placement="bottom"
-            title="Tooltip on bottom" [routerLink]="['detalles/', g.id]">Ver detalles</button>
-        </div>
-      </h5>
-      <div *ngFor="let p of g.procesos"
-        class="alert alert-{{backgroundRow(p.cumplimiento)}} d-flex justify-content-between text-uppercase"
-        role="alert">
-
-        <div class="text-uppercase">{{p.proceso}}</div>
-        <div class="font-weight-bold">{{(p.cumplimiento * 100).toFixed(1)}} %</div>
-      </div>
+    <div class="card-body">
+      <h5 class="card-title">Cultivo.</h5>
+      <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+      <button class="btn btn-success btn-block" [routerLink]="['detalles', 'C']" routerLinkActive="router-link-active"> Ir
+      </button>
     </div>
   </div>
-</ng-container>
+  <div class="card col-md-4 col-12">
+    <img src="assets/img/svg/invernadero.svg" class="card-img-top img-card mt-4" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">Postcosecha.</h5>
+      <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+      <button class="btn btn-success btn-block" [routerLink]="['detalles', 'P']" routerLinkActive="router-link-active"> Ir
+      </button>
+    </div>
+
+  </div>
+  <div class="card col-md-4 col-12">
+    <img src="assets/img/svg/ramo.svg" class="card-img-top img-card mt-4" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">Bouquetera.</h5>
+      <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+      <button class="btn btn-success btn-block" [routerLink]="['detalles', 'B']" routerLinkActive="router-link-active"> Ir
+      </button>
+    </div>
+
+  </div>
+
+</div>

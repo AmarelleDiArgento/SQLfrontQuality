@@ -1,1 +1,43 @@
-<p>formularios works!</p>
+<div class="card">
+  <div class="card-header">
+    Formularios asignados:
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Seleccione: </h5>
+
+    <div class="input-group mb-3 col-12 col-md-6">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">
+          <i class="fas fa-search"></i>
+        </span>
+      </div>
+      <input class="form-control col" type="text" name="searchTerm" [(ngModel)]="serProceso.searchTerm"
+        placeholder="Buscar..." aria-label="Buscar" aria-describedby="basic-addon1" />
+      <span class="ml-3" *ngIf="serProceso.loading$ | async"> Cargando... </span>
+
+    </div>
+
+
+    <button *ngFor="let p of proceso$ | async" type="button" class="btn btn-success btn-lg btn-block text-uppercase"
+      [routerLink]="['./', p.codigo_proceso]" routerLinkActive="router-link-active">{{p.nombre_proceso}}
+    </button>
+
+
+    <div class="card-footer">
+
+      <div class="d-flex justify-content-between p-2">
+        <ngb-pagination [collectionSize]="total$ | async" [(page)]="serProceso.page" [maxSize]="10" [rotate]="true"
+          [pageSize]="serProceso.pageSize">
+        </ngb-pagination>
+
+        <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="serProceso.pageSize">
+          <option [ngValue]="10">10</option>
+          <option [ngValue]="20">20</option>
+          <option [ngValue]="50">50</option>
+          <option [ngValue]="100">100</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+</div>

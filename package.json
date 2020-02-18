@@ -23,6 +23,7 @@
     "@fortawesome/fontawesome-free": "^5.10.2",
     "@ng-bootstrap/ng-bootstrap": "^5.1.5",
     "@sweetalert2/theme-bootstrap-4": "^3.1.0",
+    "angularx-qrcode": "^2.1.0",
     "bootstrap": "^4.4.1",
     "chart.js": "^2.9.3",
     "file-saver": "^2.0.2",

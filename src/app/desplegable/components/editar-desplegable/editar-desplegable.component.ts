@@ -49,11 +49,8 @@ export class EditarDesplegableComponent implements OnInit {
 
           this.data = data.respuesta === 'success';
           if (this.data) {
-            // console.log(data);
             this.editarDesplegable = this.formBuilder.group(data.rows);
           } else {
-            // console.log(data);
-
             Swal.fire({
               icon: data.respuesta,
               title: data.output.mensaje,
@@ -76,10 +73,8 @@ export class EditarDesplegableComponent implements OnInit {
       this.submitted = true;
       this.desplegableService.editar(this.id, this.editarDesplegable.value)
         .subscribe(data => {
-          // console.log(data);
           let val = this.sw.modal(data);
           if (val) {
-            // console.log('Cargue');
             this.router.navigate(['desplegable']);
           }
         });

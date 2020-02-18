@@ -41,10 +41,14 @@ const routes: Routes = [
         loadChildren: () => import('./capturador/capturador.module').then(c => c.CapturadorModule)
       },
       {
-        path: 'auth',
-        loadChildren: () => import('./auth/auth.module').then(a => a.AuthModule)
+        path: 'labels',
+        loadChildren: () => import('./label/label.module').then(l => l.LabelModule)
       }
     ]
+  },
+  {
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then(a => a.AuthModule)
   },
   {
     path: '**',

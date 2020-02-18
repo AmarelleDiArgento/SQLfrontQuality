@@ -16,56 +16,58 @@ export class GraficaComponent implements OnInit {
 
   public lineal: any = null;
   private options;
+  private tipo;
 
   @Input() dataGraf: Grafica;
 
   public element: HTMLElement;
   constructor() {
 
-    console.log('Hola :D', this.dataGraf);
+    // console.log('Hola :D', this.dataGraf);
   }
 
   ngAfterViewInit() {
 
     this.element = document.getElementById(this.dataGraf.item) as HTMLElement;
-    this.genGrafLineal(this.element)
+    this.genGrafLineal()
   }
   ngOnInit() {
 
     //  (this.dataGraf.tipo === 'radar') ? this.escala : {}
   }
 
-  genGrafLineal(elemento: HTMLElement) {
+  genGrafLineal() {
+    this.tipo = this.ajuste(this.dataGraf.tipo, this.dataGraf.labels.length)
+    console.log(this.tipo);
 
     var dataset = this.dataSet()
     this.lineal = new Chart(this.element, {
-      type: this.ajuste(this.dataGraf.tipo, this.dataGraf.labels.length),
+      type: this.tipo,
       data: {
         labels: this.recortar(this.dataGraf.labels),
         datasets: dataset
       },
       options: this.options
     });
-    console.log(this.lineal);
+    // console.log(this.lineal);
 
   }
 
   dataSet(): any[] {
     var dataset = []
-    console.log(this.dataGraf.series.length);
+    // console.log(this.dataGraf.series.length);
 
     for (let i = 0; i < this.dataGraf.series.length; i++) {
 
       dataset.push({
         label: this.dataGraf.series[i], // Name the series
-        data: this.dataGraf.data[i], // Specify the data values array
+        data: (this.tipo === 'doughnut') ? [this.dataGraf.data[i][0], (100 - this.dataGraf.data[i][0])] : this.dataGraf.data[i], // Specify the data values array
         fill: this.dataGraf.relleno,
-        borderColor: this.dataGraf.border[i], // Add custom color border (Line)
-        backgroundColor: this.dataGraf.background[i], // Add custom color background (Points and Fill)
+        borderColor: (this.tipo === 'doughnut') ? [this.dataGraf.border[i], '#6c757d'] : this.dataGraf.border[i], // Add custom color border (Line)
+        backgroundColor: (this.tipo === 'doughnut') ? [this.dataGraf.background[i], '#6c757d80'] : this.dataGraf.background[i], // Add custom color background (Points and Fill)
         borderWidth: 1 // Specify bar border width
       })
     }
-    console.log('dataset: ', dataset);
 
     return dataset
   }
@@ -89,6 +91,8 @@ export class GraficaComponent implements OnInit {
             bottom: 0
           }
         }
+
+
         return 'doughnut'
 
 

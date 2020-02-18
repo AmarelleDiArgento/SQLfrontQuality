@@ -1,1 +1,21 @@
-<p>capturador works!</p>
+<div class="row">
+  <div class="col">
+    <h1>
+      Formulario: XXXXXXXXX
+    </h1>
+  </div>
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <app-encabezado [encabezado]="encabezado"></app-encabezado>
+    </div>
+    <div class="col-12 col-md-6">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item" *ngFor="let p of preguntas">
+          <app-pregunta [pregunta]="p">
+          </app-pregunta>
+
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

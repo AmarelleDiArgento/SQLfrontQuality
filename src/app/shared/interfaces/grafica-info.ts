@@ -1,7 +1,7 @@
 
-export interface GraficaPostco {
+export interface GraficaInfo {
     id: number
-    postcosecha: string,
+    origen: string,
     Si: number,
     No: number,
     cumplimiento: number,

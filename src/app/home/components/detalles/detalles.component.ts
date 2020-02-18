@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
-import { GraficaPostco } from 'src/app/shared/interfaces/grafica-postco';
+import { GraficaInfo } from 'src/app/shared/interfaces/grafica-info';
 import { DataService } from 'src/app/core/services/data.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Grafica } from 'src/app/graph/interfaces/grafica';
@@ -18,13 +18,14 @@ export class DetallesComponent implements OnInit, AfterViewInit {
 
 
 
-  public Graf$: Observable<GraficaPostco[]>;
+  public Graf$: Observable<GraficaInfo[]>;
 
 
-  postco: number;
+  det: number;
+  loc: string;
 
 
-  public Postcosecha;
+  public Origen;
 
   public backgroundColor = [
     "rgba(54, 162, 235, 0.6)",
@@ -58,19 +59,26 @@ export class DetallesComponent implements OnInit, AfterViewInit {
     private activatedRoute: ActivatedRoute,
 
   ) {
+    this.activatedRoute.params.subscribe((params: Params) => {
+      this.loc = params.loc;
+      this.det = params.id;
+      // console.log(params);
+
+    })
+
+
+
     if (this.data.graph$ !== null) {
       this.Graf$ = this.data.graph$
     } else {
-      this.data.cargar()
+      this.data.cargar(this.loc)
       this.Graf$ = this.data.graph$
     }
 
-    this.activatedRoute.params.subscribe((params: Params) => {
-      this.postco = params.id
-    })
+
 
     this.Graf$.subscribe(grafs => {
-      this.Postcosecha = grafs[this.postco];
+      this.Origen = grafs[this.det];
     })
   }
 
@@ -79,11 +87,11 @@ export class DetallesComponent implements OnInit, AfterViewInit {
 
 
 
-    let datos = this.optenerLabels(this.Postcosecha.procesos, 'proceso')
+    let datos = this.optenerLabels(this.Origen.procesos, 'proceso')
     this.grafGen = {
       tipo: 'radar',
       relleno: true,
-      titulo: this.Postcosecha.postcosecha,
+      titulo: this.Origen.origen,
       item: 'general',
       labels: datos[0],
       series: ['cumplimiento'],
@@ -91,7 +99,7 @@ export class DetallesComponent implements OnInit, AfterViewInit {
       background: this.backgroundColor,
       border: this.borderColor,
     }
-    this.generarGraficas(this.Postcosecha.procesos)
+    this.generarGraficas(this.Origen.procesos)
 
   }
 
@@ -106,14 +114,14 @@ export class DetallesComponent implements OnInit, AfterViewInit {
         datas.push(porc);
       }
     }
-    console.log(labels, datas);
+    //  console.log(labels, datas);
 
     return [labels, datas]
 
   }
 
   generarGraficas(datos) {
-    console.log(datos);
+    // console.log(datos);
 
     let gr = []
     let id = 0;
@@ -121,7 +129,7 @@ export class DetallesComponent implements OnInit, AfterViewInit {
 
       let item = 'graf' + id++;
 
-      console.log(p.shorts);
+      // console.log(p.shorts);
 
 
       let etiquetas = this.optenerLabels(p.shorts, 'short')
@@ -136,7 +144,7 @@ export class DetallesComponent implements OnInit, AfterViewInit {
         background: this.backgroundColor,
         border: this.borderColor
       }
-      console.log(g);
+      // console.log(g);
 
       gr.push(g)
 

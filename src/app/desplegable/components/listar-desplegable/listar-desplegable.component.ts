@@ -32,7 +32,7 @@ export class ListarDesplegableComponent implements OnInit {
   ) {
     this.desplegables$ = this.service.desplegables$
     this.total$ = this.service.total$
-   }
+  }
 
   ngOnInit() {
   }
@@ -52,12 +52,9 @@ export class ListarDesplegableComponent implements OnInit {
   eliminarDesplegable(id: string) {
     this.service.eliminar(id)
       .subscribe(data => {
-        // console.log(data);
         let val = this.sw.modal(data)
         if (val) {
-          // console.log('Cargue');
-
-          // this.()
+          this.service.tabla
         }
       })
 

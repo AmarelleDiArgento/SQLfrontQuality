@@ -91,7 +91,6 @@ export class DesplegableService {
     });
   }
   crear(desplegable: Desplegable) {
-    // console.log(desplegable);
 
     return this.http.post<JsonRes>(`${this.url}ins`, desplegable)
   }
@@ -106,6 +105,10 @@ export class DesplegableService {
 
   optener(id: string) {
     return this.http.post<JsonRes>(`${this.url}one/${id}`, id)
+  }
+
+  filtro(filtro: string) {
+    return this.http.post<JsonRes>(`${this.url}fil/${filtro}`, filtro)
   }
 
   todos() {

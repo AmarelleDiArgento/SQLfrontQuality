@@ -1,0 +1,20 @@
+.custom-control-input:checked~.custom-control-label::before {
+  color: #fff;
+  border-color: #7B1FA2;
+}
+
+.custom-control-input:checked~.custom-control-label.red::before {
+  background-color: #ce1313;
+}
+
+.custom-control-input:checked~.custom-control-label.green::before {
+  background-color: #31c031;
+}
+
+.custom-control-input:checked~.custom-control-label.grey::before {
+  background-color: #888383;
+}
+
+.custom-control-input:checked~.custom-control-label.orange::before {
+  background-color: #ff8800;
+}
