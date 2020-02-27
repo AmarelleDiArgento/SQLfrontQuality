@@ -1,4 +1,43 @@
+<div class="container-fluid">
 
-<img src="assets/img/composicion-flores-rosadas_23-2147804454.jpg" alt="">
+  <div class="row d-flex justify-content-center align-items-center full log-image">
+    <form class="form-signin text-center" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
 
+      <img class="mb-4" src="assets/favicon/apple-icon-120x120.png" alt="" width="120" height="120">
+      <h1 class="h2 mb-3 font-weight-normal text-light">Bienvenido</h1>
+
+      <ng-container *ngFor="let err of errorMessage.usuario">
+        <div class="alert alert-danger p-0 m-1"
+          *ngIf="f.usuario.hasError(err.type) && (f.usuario.dirty || f.usuario.touched)">
+          {{err.message}}
+        </div>
+      </ng-container>
+
+      <ng-container *ngFor="let err of errorMessage.password">
+        <div class="alert alert-danger p-0 m-1"
+          *ngIf="f.password.hasError(err.type) && (f.password.dirty || f.password.touched)">
+          {{err.message}}
+        </div>
+      </ng-container>
+
+      <label for="usuario" class="sr-only">Usuario</label>
+      <input type="number" id="usuario" formControlName="usuario" class="form-control text-center mb-1"
+        placeholder="Usuario" required autofocus>
+
+      <label for="inputPassword" class="sr-only">Contraseña</label>
+      <input type="password" id="inputPassword" formControlName="password" class="form-control text-center mb-2"
+        placeholder="Contraseña" required>
+
+      <div class="checkbox mb-2 text-light">
+        <label>
+          <input type="checkbox" value="remember-me"> Recuérdame
+        </label>
+      </div>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar</button>
+      <p class="mt-2 mb-1 text-light">&copy; 2020</p>
+    </form>
+  </div>
+
+
+</div>

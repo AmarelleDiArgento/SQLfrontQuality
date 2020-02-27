@@ -3,6 +3,7 @@ import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
 import { LayoutComponent } from './layout/layout.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AuthGuard } from './shared/Guards/auth.guard';
 
 
 
@@ -44,7 +45,8 @@ const routes: Routes = [
         path: 'labels',
         loadChildren: () => import('./label/label.module').then(l => l.LabelModule)
       }
-    ]
+    ],
+    canActivate: [AuthGuard]
   },
   {
     path: 'auth',

@@ -109,6 +109,10 @@ export class UsuarioService {
     return this.http.post<JsonRes>(`${this.url}one/${id}`, id)
   }
 
+  login(logger: Partial<Usuario>) {
+    return this.http.post<JsonRes>(`${this.url}in`, logger)
+  }
+
   todos() {
     return this.http.get<JsonRes>(`${this.url}all`)
   }

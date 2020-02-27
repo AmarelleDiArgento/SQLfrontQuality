@@ -13,6 +13,7 @@ import { CalendarioComponent } from './components/calendario/calendario.componen
   ],
   imports: [
     NgbModule,
+    CommonModule,
     NgbCollapseModule,
     NgbPaginationModule,
     NgbTypeaheadModule,
