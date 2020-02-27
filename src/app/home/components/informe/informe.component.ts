@@ -4,6 +4,8 @@ import { GraficaInfo, Procesos, Shorts, Items } from 'src/app/shared/interfaces/
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { NgbCalendar, NgbDateParserFormatter, NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { CalendarioService } from 'src/app/core/services/calendario.service';
 
 @Component({
   selector: 'app-informe',
@@ -27,22 +29,36 @@ export class InformeComponent implements OnInit, AfterViewInit {
 
 
   public Origen
+  public loc;
+
+
+  hoveredDate: NgbDate;
+  fromDate: NgbDate;
+  toDate: NgbDate;
+
 
 
   constructor(
     private formBuilder: FormBuilder,
     private data: DataService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private calendar: NgbCalendar,
+    public formatter: NgbDateParserFormatter,
+    public calendarioServ: CalendarioService
   ) {
-
-
     this.activatedRoute.params.subscribe((params: Params) => {
       // console.log(params);
-      this.titulo(params.loc);
-      this.data.cargar(params.loc)
+      this.loc = params.loc
+      this.titulo(this.loc);
+
+      this.fromDate = calendar.getNext(calendar.getToday(), 'd', (this.loc == 'C') ? -6 : 0);
+      this.toDate = calendar.getToday();
+
+      this.data.cargar(this.loc, this.returnDateRange())
       this.Graf$ = this.data.graph$
       this.informes$ = this.data.post$
+
       this.cambioPoscto = this.formBuilder.group({
         seleccionado: [3, Validators.required]
       });
@@ -50,7 +66,17 @@ export class InformeComponent implements OnInit, AfterViewInit {
     })
   }
 
+  recargar() {
+console.log('Recargando... ');
+
+    this.data.cargar(this.loc, this.returnDateRange())
+    this.Graf$ = this.data.graph$
+    this.informes$ = this.data.post$
+  }
+
   titulo(origen: string) {
+    console.log(origen);
+    
     switch (origen) {
       case 'C':
         this.Origen = "CULTIVO"
@@ -103,17 +129,71 @@ export class InformeComponent implements OnInit, AfterViewInit {
     // // console.log('Menor que 75: ', data <= 75);
     // // console.log('Entre 75 y 85: ', data > 75 && data <= 85);
     // // console.log('Mayor que 85: ', data > 85);
-
     switch (true) {
-      case data <= 0.75:
+      case data <= 0.79:
         return 'danger'
-      case data > 0.75 && data <= 0.85:
+      case data > 0.79 && data <= 0.89:
         return 'warning'
-      case data > 0.85:
+      case data > 0.89:
         return 'success'
       default:
         return 'light'
+
     }
   }
+
+  small = () => {
+    return (this.formatter.format(this.toDate) !== "") ?
+      'Del ' + this.formatter.format(this.toDate) + ' al ' + this.formatter.format(this.toDate) :
+      'El ' + this.formatter.format(this.fromDate)
+  };
+
+  onDateSelection(date: NgbDate) {
+
+    if (!this.fromDate && !this.toDate) {
+      this.fromDate = date;
+    } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
+      this.toDate = date;
+    } else {
+      this.toDate = null;
+      this.fromDate = date;
+    }
+    console.log(this.returnDateRange());
+    this.recargar()
+
+  }
+
+  isHovered(date: NgbDate) {
+    return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate);
+  }
+
+  isInside(date: NgbDate) {
+    return date.after(this.fromDate) && date.before(this.toDate);
+  }
+
+  isRange(date: NgbDate) {
+    return date.equals(this.fromDate) || date.equals(this.toDate) || this.isInside(date) || this.isHovered(date);
+  }
+
+  validateInput(currentValue: NgbDate, input: string): NgbDate {
+    const parsed = this.formatter.parse(input);
+    return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
+  }
+
+  returnDateRange(): any[] {
+
+    return [
+      {
+        ... this.fromDate,
+        formatoSql: this.formatter.format(this.fromDate)
+      },
+      {
+        ... (this.toDate !== null) ? this.toDate : this.fromDate,
+        formatoSql: this.formatter.format((this.toDate !== null) ? this.toDate : this.fromDate)
+      }
+    ];
+  }
+
+
 }
 

@@ -57,11 +57,13 @@ export class DataService {
   //   return this.http.post<JsonRes>(`${this.url}one/${id}`, id)
   // }
 
-  postcosecha() {
-    return this.http.get<JsonRes>(`${this.url}pos`)
+  postcosecha(fecha) {
+    console.log('Hola Postco :D');
+    return this.http.post<JsonRes>(`${this.url}pos`, fecha)
   }
-  cultivo() {
-    return this.http.get<JsonRes>(`${this.url}cul`)
+  cultivo(fecha) {
+    console.log('Hola cultivo :D');
+    return this.http.post<JsonRes>(`${this.url}cul`, fecha)
   }
 
 
@@ -69,12 +71,14 @@ export class DataService {
     return this.http.post<JsonRes>(`${this.url}exp`, rango)
   }
 
-  cargar(origen: string) {
+  cargar(origen: string, fecha: any[]) {
+    console.log('Hola :D', origen);
+    
     this.Graph = [];
     this.graph.next(this.Graph)
     switch (origen) {
       case 'C':
-        this.cultivo().subscribe(i => {
+        this.cultivo(fecha).subscribe(i => {
           this.dat = i.rows
           console.log(i.rows);
 
@@ -83,7 +87,7 @@ export class DataService {
         })
         break;
       case 'P':
-        this.postcosecha().subscribe(i => {
+        this.postcosecha(fecha).subscribe(i => {
           this.dat = i.rows
           this.datas.next(this.dat)
           this.DataPostco()

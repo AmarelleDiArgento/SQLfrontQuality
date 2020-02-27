@@ -21,12 +21,12 @@ import { CalendarioComponent } from './components/calendario/calendario.componen
     NgbPopoverModule
   ],
   exports: [
-    CalendarioComponent,
     NgbCollapseModule,
     NgbPaginationModule,
     NgbTypeaheadModule,
     NgbDatepickerModule,
-    NgbPopoverModule
+    NgbPopoverModule,
+    CalendarioComponent
   ]
 })
 export class NgBootstrapModule { }

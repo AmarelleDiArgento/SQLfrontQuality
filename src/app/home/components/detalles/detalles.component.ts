@@ -76,7 +76,7 @@ export class DetallesComponent implements OnInit, AfterViewInit {
     if (this.data.graph$ !== null) {
       this.Graf$ = this.data.graph$
     } else {
-      this.data.cargar(this.loc)
+      this.data.cargar(this.loc, [])
       this.Graf$ = this.data.graph$
     }
 

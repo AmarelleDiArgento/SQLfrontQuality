@@ -154,11 +154,11 @@ export class GraficaComponent implements OnInit {
     // console.log('Mayor que 85: ', data > 85);
 
     switch (true) {
-      case data <= 75:
+      case data <= 79:
         return 'danger'
-      case data > 75 && data <= 85:
+      case data > 79 && data <= 89:
         return 'warning'
-      case data > 85:
+      case data > 89:
         return 'success'
       default:
         return 'light'

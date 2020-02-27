@@ -1,6 +1,6 @@
 <div class="form-group hidden">
   <div class="input-group">
-    <input name="datepicker" class="form-control" ngbDatepicker #datepicker="ngbDatepicker" [autoClose]="'outside'"
+    <input name="datepicker" class="form-control inputcero" ngbDatepicker #datepicker="ngbDatepicker" [autoClose]="'outside'"
       (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden"
       [startDate]="fromDate">
     <ng-template #t let-date let-focused="focused">
