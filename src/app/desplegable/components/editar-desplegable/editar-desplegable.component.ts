@@ -5,7 +5,7 @@ import { Desplegable } from 'src/app/shared/interfaces/desplegable';
 import { HttpParams } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import Swal from 'sweetalert2';
-import { SwalModalService } from 'src/app/core/swal-modal.service';
+import { SwalModalService } from 'src/app/core/services/swal-modal.service';
 
 @Component({
   selector: 'app-editar-desplegable',

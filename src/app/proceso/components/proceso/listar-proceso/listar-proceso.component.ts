@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterContentInit, ViewChildren, QueryList } from '@angular/core';
 import { ProcesoService } from 'src/app/core/services/proceso.service';
-import { SwalModalService } from 'src/app/core/swal-modal.service';
+import { SwalModalService } from 'src/app/core/services/swal-modal.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Procesos } from 'src/app/shared/interfaces/proceso';

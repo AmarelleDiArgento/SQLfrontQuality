@@ -5,8 +5,6 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './components/login/login.component';
 import { NgBootstrapModule } from '../ng-bootstrap/ng-bootstrap.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { CoreModule } from '../core/core.module';
-import {NgxWebstorageModule} from 'ngx-webstorage';
 
 
 @NgModule({
@@ -18,8 +16,7 @@ import {NgxWebstorageModule} from 'ngx-webstorage';
     AuthRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    NgBootstrapModule,
-    NgxWebstorageModule.forRoot(),
+    NgBootstrapModule
   ]
 })
 export class AuthModule { }

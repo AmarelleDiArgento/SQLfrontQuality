@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2'
-import { JsonRes } from '../shared/interfaces/json-res';
+import { JsonRes } from '../../shared/interfaces/json-res';
 
 
 @Injectable({

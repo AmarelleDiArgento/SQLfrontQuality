@@ -4,8 +4,7 @@ import { UsuarioService } from 'src/app/core/services/usuario.service';
 import { Usuario } from 'src/app/shared/interfaces/usuario';
 import { HttpParams } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import Swal from 'sweetalert2';
-import { SwalModalService } from 'src/app/core/swal-modal.service';
+import { SwalModalService } from 'src/app/core/services/swal-modal.service';
 
 @Component({
   selector: 'app-editar-usuario',
@@ -57,17 +56,8 @@ export class EditarUsuarioComponent implements OnInit {
           } else {
             // console.log(data);
 
-            Swal.fire({
-              icon: data.respuesta,
-              title: data.output.mensaje,
-              text: `${JSON.stringify(data.output.detalle)}
-              C: ${data.output.code}`,
-              timer: 3000
-            })
-              .then(() => {
                 this.router.navigate(['usuario']);
-              })
-          }
+                        }
         })
     })
 

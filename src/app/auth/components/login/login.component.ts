@@ -4,9 +4,9 @@ import { UsuarioService } from 'src/app/core/services/usuario.service';
 import { Session } from 'src/app/shared/interfaces/session';
 import { Permiso } from 'src/app/shared/interfaces/permiso';
 import { Router } from '@angular/router';
-import { SwalModalService } from 'src/app/core/swal-modal.service';
+import { SwalModalService } from 'src/app/core/services/swal-modal.service';
 import { isUndefined } from 'util';
-import { SessionStorageService } from 'ngx-webstorage';
+import { CryptoService } from 'src/app/core/services/crypto.service';
 
 
 
@@ -34,13 +34,13 @@ export class LoginComponent implements OnInit {
     private form: FormBuilder,
     private serUsuario: UsuarioService,
     private swal: SwalModalService,
-    private router: Router,
-    private sessionStorage: SessionStorageService
+    private crypto: CryptoService,
+    private router: Router
   ) {
 
     this.loginForm = this.form.group({
-      usuario: ['', [Validators.required, Validators.minLength(3)]],
-      password: ['', [Validators.required, Validators.minLength(3)]],
+      usuario: ['', [Validators.required, Validators.minLength(2)]],
+      password: ['', [Validators.required, Validators.minLength(2)]],
     })
 
   }
@@ -64,16 +64,19 @@ export class LoginComponent implements OnInit {
 
   generarSession(data: any[]) {
     var arr: boolean = !isUndefined(data.length);
-    var permisos =
       console.log(arr);
 
     this.session = {
       usuario: (arr) ? data[0].id_usuario : data['id_usuario'],
       nombre: (arr) ? data[0].nombre_usuario : data['nombre_usuario'],
       grupo: (arr) ? data[0].Grupo1 : data['Grupo1'],
+      area: (arr) ? data[0].Grupo2 : data['Grupo2'],
+      ubicacion: (arr) ? data[0].Grupo3 : data['Grupo3'],
       permisos: this.empaquetarPermisos(data, arr)
     }
-    localStorage.setItem('Session', JSON.stringify(this.session))
+    localStorage.setItem('Session', this.crypto.encriptar(JSON.stringify(this.session)))
+    console.log(this.session);
+    
     this.router.navigate(['home']);
 
 

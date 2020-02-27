@@ -6,6 +6,9 @@ import { ProcesosDetalleService } from './services/procesodetalle.service';
 import { ProcesoService } from './services/proceso.service';
 import { DesplegableService } from './services/desplegable.service';
 import { DataService } from './services/data.service';
+import { SwalModalService } from './services/swal-modal.service';
+import { CryptoService } from './services/crypto.service';
+
 
 
 @NgModule({
@@ -20,7 +23,9 @@ import { DataService } from './services/data.service';
     ProcesosDetalleService,
     ProcesoService,
     DesplegableService,
-    DataService
+    DataService,
+    SwalModalService,
+    CryptoService
   ]
 
 })

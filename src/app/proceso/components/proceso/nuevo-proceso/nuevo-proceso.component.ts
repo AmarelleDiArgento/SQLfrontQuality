@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProcesoService } from 'src/app/core/services/proceso.service';
 import { Router } from '@angular/router';
-import { SwalModalService } from 'src/app/core/swal-modal.service';
+import { SwalModalService } from 'src/app/core/services/swal-modal.service';
 @Component({
   selector: 'app-nuevo-proceso',
   templateUrl: './nuevo-proceso.component.html',

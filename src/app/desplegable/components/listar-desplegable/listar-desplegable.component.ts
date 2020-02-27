@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterContentInit, ViewChildren, QueryList } from '@angular/core';
 import { DesplegableService } from 'src/app/core/services/desplegable.service'
-import { SwalModalService } from 'src/app/core/swal-modal.service';
+import { SwalModalService } from 'src/app/core/services/swal-modal.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Desplegable } from 'src/app/shared/interfaces/desplegable';
