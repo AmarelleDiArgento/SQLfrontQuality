@@ -11,6 +11,8 @@ import { NgbdSortableHeader, SortEvent } from 'src/app/ng-bootstrap/directives/s
   templateUrl: './listar-usuario.component.html',
   styleUrls: ['./listar-usuario.component.scss']
 })
+
+
 export class ListarUsuarioComponent implements OnInit {
 
   usuarios$: Observable<Usuario[]>;

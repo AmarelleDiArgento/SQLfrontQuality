@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { GraficaInfo, Items, Shorts, Procesos } from 'src/app/shared/interfaces/grafica-info';
 import { JsonRes } from 'src/app/shared/interfaces/json-res';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { tap, debounceTime, switchMap, delay } from 'rxjs/operators';
 
 
 @Injectable({
@@ -30,32 +31,60 @@ export class DataService {
   public finc = new BehaviorSubject<any[]>([]);
   public finc$ = this.finc.asObservable();
 
+  private _loading$ = new BehaviorSubject<boolean>(true);
 
+  private _searchPost$ = new Subject<void>();
+  private _postcosechas$ = new BehaviorSubject<any[]>([]);
 
+  private _searchCult$ = new Subject<void>();
+  private _cultivo$ = new BehaviorSubject<any[]>([]);
 
+  private fecha: [{ year: 2020, month: 2, day: 25, formatoSql: "2020-02-25" }, { year: 2020, month: 2, day: 28, formatoSql: "2020-02-28" }]
   constructor(
     private http: HttpClient,
+
   ) {
 
     this.url = environment.api_url + '/gra'
+
+    this._searchPost$.pipe(
+      tap(() => this._loading$.next(true)),
+      debounceTime(200),
+      switchMap(() => this._searchPost(this.fecha)),
+      delay(200),
+      tap(() => this._loading$.next(false))
+    ).subscribe(result => {
+      this._postcosechas$.next(result.rows);
+    });
+
+    this._searchCult$.pipe(
+      tap(() => this._loading$.next(true)),
+      debounceTime(200),
+      switchMap(() => this._searchCult(this.fecha)),
+      delay(200),
+      tap(() => this._loading$.next(false))
+    ).subscribe(result => {
+      this._cultivo$.next(result.rows);
+    });
+
   }
 
-  // crear(graP: GraficaInfo) {
+  private _searchPost(fecha): Observable<JsonRes> {
+    return this.http.post<JsonRes>(`${this.url}pos`, fecha)
+  }
 
-  //   return this.http.post<JsonRes>(`${this.url}ins`, graP)
-  // }
 
-  // editar(id: string, changes: Partial<GraficaInfo>) {
-  //   return this.http.put<JsonRes>(`${this.url}upd/${id}`, changes)
-  // }
+  private _searchCult(fecha): Observable<JsonRes> {
+    return this.http.post<JsonRes>(`${this.url}cul`, fecha)
+  }
 
-  // eliminar(id: string) {
-  //   return this.http.delete<JsonRes>(`${this.url}del/${id}`)
-  // }
 
-  // optener(id: string) {
-  //   return this.http.post<JsonRes>(`${this.url}one/${id}`, id)
-  // }
+  get postcosecha$() { return this._postcosechas$.asObservable(); }
+  get cultivo$() { return this._cultivo$.asObservable(); }
+
+  get loading$() { return this._loading$.asObservable(); }
+
+
 
   postcosecha(fecha) {
     console.log('Hola Postco :D');
@@ -73,7 +102,7 @@ export class DataService {
 
   cargar(origen: string, fecha: any[]) {
     console.log('Hola :D', origen);
-    
+
     this.Graph = [];
     this.graph.next(this.Graph)
     switch (origen) {
@@ -115,6 +144,7 @@ export class DataService {
     this.postcosechas = []
 
     this.dat.map(r => {
+
       let AgregoPostco = false;
 
       for (const i of this.Graph) {

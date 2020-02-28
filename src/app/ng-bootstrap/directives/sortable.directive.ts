@@ -1,7 +1,7 @@
-import {Directive, EventEmitter, Input, Output} from '@angular/core';
+import { Directive, EventEmitter, Input, Output } from '@angular/core';
 
 export type SortDirection = 'asc' | 'desc' | '';
-const rotate: {[key: string]: SortDirection} = { 'asc': 'desc', 'desc': '', '': 'asc' };
+const rotate: { [key: string]: SortDirection } = { 'asc': 'desc', 'desc': '', '': 'asc' };
 
 export interface SortEvent {
   column: string;
@@ -21,9 +21,14 @@ export class NgbdSortableHeader {
   @Input() sortable: string;
   @Input() direction: SortDirection = '';
   @Output() sort = new EventEmitter<SortEvent>();
+  constructor() {
 
+    console.log('clic');
+  }
   rotate() {
+    console.log('clic');
+
     this.direction = rotate[this.direction];
-    this.sort.emit({column: this.sortable, direction: this.direction});
+    this.sort.emit({ column: this.sortable, direction: this.direction });
   }
 }

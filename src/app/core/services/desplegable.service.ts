@@ -73,9 +73,9 @@ export class DesplegableService {
 
     this._search$.pipe(
       tap(() => this._loading$.next(true)),
-      debounceTime(200),
+      debounceTime(2000),
       switchMap(() => this._search()),
-      delay(200),
+      delay(2000),
       tap(() => this._loading$.next(false))
     ).subscribe(result => {
       this._desplegables$.next(result.desplegables);

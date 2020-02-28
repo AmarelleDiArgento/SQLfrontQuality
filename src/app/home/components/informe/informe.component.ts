@@ -19,6 +19,7 @@ export class InformeComponent implements OnInit, AfterViewInit {
   public cambioPoscto: FormGroup;
 
   public Graf$: Observable<GraficaInfo[]>;
+  public postcosecha$: Observable<any[]>;
 
 
   public informes$: Observable<any[]>;
@@ -59,6 +60,8 @@ export class InformeComponent implements OnInit, AfterViewInit {
       this.Graf$ = this.data.graph$
       this.informes$ = this.data.post$
 
+      this.postcosecha$ = this.data.postcosecha$;
+
       this.cambioPoscto = this.formBuilder.group({
         seleccionado: [3, Validators.required]
       });
@@ -67,7 +70,7 @@ export class InformeComponent implements OnInit, AfterViewInit {
   }
 
   recargar() {
-console.log('Recargando... ');
+    console.log('Recargando... ');
 
     this.data.cargar(this.loc, this.returnDateRange())
     this.Graf$ = this.data.graph$
@@ -76,7 +79,7 @@ console.log('Recargando... ');
 
   titulo(origen: string) {
     console.log(origen);
-    
+
     switch (origen) {
       case 'C':
         this.Origen = "CULTIVO"
