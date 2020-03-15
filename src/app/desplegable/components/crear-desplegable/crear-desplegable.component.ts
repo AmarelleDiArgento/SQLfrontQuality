@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DesplegableService } from 'src/app/core/services/desplegable.service';
+import { DesplegableService } from '@core/services/desplegable.service';
 import { Router } from '@angular/router';
-import { SwalModalService } from 'src/app/core/services/swal-modal.service';
+import { SwalModalService } from '@core/services/swal-modal.service';
 
 @Component({
   selector: 'app-crear-desplegable',

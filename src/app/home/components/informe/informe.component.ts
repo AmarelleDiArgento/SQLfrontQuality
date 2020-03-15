@@ -1,11 +1,11 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { DataService } from 'src/app/core/services/data.service';
-import { GraficaInfo, Procesos, Shorts, Items } from 'src/app/shared/interfaces/grafica-info';
+import { DataService } from '@core/services/data.service';
+import { GraficaInfo, Procesos, Shorts, Items } from '@shared/interfaces/grafica-info';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NgbCalendar, NgbDateParserFormatter, NgbDate } from '@ng-bootstrap/ng-bootstrap';
-import { CalendarioService } from 'src/app/core/services/calendario.service';
+import { CalendarioService } from '@core/services/calendario.service';
 
 @Component({
   selector: 'app-informe',

@@ -1,10 +1,10 @@
 import { Component, OnInit, AfterContentInit, ViewChildren, QueryList } from '@angular/core';
-import { ProcesosDetalleService } from 'src/app/core/services/procesodetalle.service';
-import { SwalModalService } from 'src/app/core/services/swal-modal.service';
+import { ProcesosDetalleService } from '@core/services/procesodetalle.service';
+import { SwalModalService } from '@core/services/swal-modal.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Procesos_Detalle } from 'src/app/shared/interfaces/procesosdetalle';
-import { NgbdSortableHeader, SortEvent } from 'src/app/ng-bootstrap/directives/sortable.directive';
+import { Procesos_Detalle } from '@shared/interfaces/procesosdetalle';
+import { NgbdSortableHeader, SortEvent } from '@ngbtsp/directives/sortable.directive';
 
 @Component({
   selector: 'app-listar-proceso-detalle',

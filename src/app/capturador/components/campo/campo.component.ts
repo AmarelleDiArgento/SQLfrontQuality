@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Procesos_Detalle } from 'src/app/shared/interfaces/procesosdetalle';
-import { DesplegableService } from 'src/app/core/services/desplegable.service';
+import { Procesos_Detalle } from '@shared/interfaces/procesosdetalle';
+import { DesplegableService } from '@core/services/desplegable.service';
 import { isUndefined, isNull } from 'util';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';

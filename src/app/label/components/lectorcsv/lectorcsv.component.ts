@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Label } from 'src/app/shared/interfaces/label';
+import { Label } from '@shared/interfaces/label';
 
 @Component({
   selector: 'app-lectorcsv',

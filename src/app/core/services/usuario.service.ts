@@ -1,10 +1,10 @@
 import { Injectable, PipeTransform } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { JsonRes } from 'src/app/shared/interfaces/json-res';
-import { Usuario } from 'src/app/shared/interfaces/usuario';
-import { environment } from 'src/environments/environment';
-import { SortDirection } from 'src/app/ng-bootstrap/directives/sortable.directive';
+import { JsonRes } from '@shared/interfaces/json-res';
+import { Usuario } from '@shared/interfaces/usuario';
+import { environment } from 'environments/environment';
+import { SortDirection } from '@ngbtsp/directives/sortable.directive';
 import { BehaviorSubject, Subject, Observable, of } from 'rxjs';
 import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
 import { DecimalPipe } from '@angular/common';

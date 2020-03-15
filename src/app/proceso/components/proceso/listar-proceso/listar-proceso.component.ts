@@ -1,10 +1,10 @@
 import { Component, OnInit, AfterContentInit, ViewChildren, QueryList } from '@angular/core';
-import { ProcesoService } from 'src/app/core/services/proceso.service';
-import { SwalModalService } from 'src/app/core/services/swal-modal.service';
+import { ProcesoService } from '@core/services/proceso.service';
+import { SwalModalService } from '@core/services/swal-modal.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Procesos } from 'src/app/shared/interfaces/proceso';
-import { NgbdSortableHeader, SortEvent } from 'src/app/ng-bootstrap/directives/sortable.directive';
+import { Procesos } from '@shared/interfaces/proceso';
+import { NgbdSortableHeader, SortEvent } from '@ngbtsp/directives/sortable.directive';
 
 
 @Component({

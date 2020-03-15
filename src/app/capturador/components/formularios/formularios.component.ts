@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ProcesoService } from 'src/app/core/services/proceso.service';
+import { ProcesoService } from '@core/services/proceso.service';
 import { Observable } from 'rxjs';
-import { Procesos } from 'src/app/shared/interfaces/proceso';
-import { SwalModalService } from 'src/app/core/services/swal-modal.service';
+import { Procesos } from '@shared/interfaces/proceso';
+import { SwalModalService } from '@core/services/swal-modal.service';
 
 @Component({
   selector: 'app-formularios',

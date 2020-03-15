@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { CalendarioService } from 'src/app/core/services/calendario.service';
+import { CalendarioService } from '@core/services/calendario.service';
 import { Observable } from 'rxjs';
 import { NgbCalendar, NgbDateParserFormatter, NgbDate } from '@ng-bootstrap/ng-bootstrap';
 

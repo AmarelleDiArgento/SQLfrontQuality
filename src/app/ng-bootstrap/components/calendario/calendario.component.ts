@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbCalendar, NgbDate, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
-import { CalendarioService } from 'src/app/core/services/calendario.service';
+import { CalendarioService } from '@core/services/calendario.service';
 
 @Component({
   selector: 'app-calendario',

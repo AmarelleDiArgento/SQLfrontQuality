@@ -1,10 +1,10 @@
 import { Component, OnInit, AfterContentInit, ViewChildren, QueryList } from '@angular/core';
-import { DesplegableService } from 'src/app/core/services/desplegable.service'
-import { SwalModalService } from 'src/app/core/services/swal-modal.service';
+import { DesplegableService } from '@core/services/desplegable.service'
+import { SwalModalService } from '@core/services/swal-modal.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Desplegable } from 'src/app/shared/interfaces/desplegable';
-import { NgbdSortableHeader, SortEvent } from 'src/app/ng-bootstrap/directives/sortable.directive';
+import { Desplegable } from '@shared/interfaces/desplegable';
+import { NgbdSortableHeader, SortEvent } from '@ngbtsp/directives/sortable.directive';
 
 
 

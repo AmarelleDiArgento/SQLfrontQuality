@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UsuarioService } from 'src/app/core/services/usuario.service';
-import { Session } from 'src/app/shared/interfaces/session';
-import { Permiso } from 'src/app/shared/interfaces/permiso';
+import { UsuarioService } from '@core/services/usuario.service';
+import { Session } from '@shared/interfaces/session';
+import { Permiso } from '@shared/interfaces/permiso';
 import { Router } from '@angular/router';
-import { SwalModalService } from 'src/app/core/services/swal-modal.service';
+import { SwalModalService } from '@core/services/swal-modal.service';
 import { isUndefined } from 'util';
-import { CryptoService } from 'src/app/core/services/crypto.service';
+import { CryptoService } from '@core/services/crypto.service';
 
 
 

@@ -1,10 +1,10 @@
 import { Component, OnInit, AfterContentInit, ViewChildren, QueryList } from '@angular/core';
-import { UsuarioService } from 'src/app/core/services/usuario.service';
-import { SwalModalService } from 'src/app/core/services/swal-modal.service';
+import { UsuarioService } from '@core/services/usuario.service';
+import { SwalModalService } from '@core/services/swal-modal.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Usuario } from 'src/app/shared/interfaces/usuario';
-import { NgbdSortableHeader, SortEvent } from 'src/app/ng-bootstrap/directives/sortable.directive';
+import { Usuario } from '@shared/interfaces/usuario';
+import { NgbdSortableHeader, SortEvent } from '@ngbtsp/directives/sortable.directive';
 
 @Component({
   selector: 'app-listar-usuario',

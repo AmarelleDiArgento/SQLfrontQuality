@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
-import { GraficaInfo } from 'src/app/shared/interfaces/grafica-info';
-import { DataService } from 'src/app/core/services/data.service';
+import { GraficaInfo } from '@shared/interfaces/grafica-info';
+import { DataService } from '@core/services/data.service';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Grafica } from 'src/app/graph/interfaces/grafica';
+import { Grafica } from 'app/graph/interfaces/grafica';
 import { isNull, isUndefined, log } from 'util';
 import { Observable } from 'rxjs';
 

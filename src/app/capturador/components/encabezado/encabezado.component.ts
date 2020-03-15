@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Procesos_Detalle } from 'src/app/shared/interfaces/procesosdetalle';
+import { Procesos_Detalle } from '@shared/interfaces/procesosdetalle';
 
 @Component({
   selector: 'app-encabezado',

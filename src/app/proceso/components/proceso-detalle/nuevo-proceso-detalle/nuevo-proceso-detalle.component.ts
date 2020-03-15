@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ProcesosDetalleService } from 'src/app/core/services/procesodetalle.service';
+import { ProcesosDetalleService } from '@core/services/procesodetalle.service';
 import { Router } from '@angular/router';
-import { SwalModalService } from 'src/app/core/services/swal-modal.service';
+import { SwalModalService } from '@core/services/swal-modal.service';
 
 @Component({
   selector: 'app-nuevo-proceso-detalle',

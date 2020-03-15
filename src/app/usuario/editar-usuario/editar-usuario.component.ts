@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { UsuarioService } from 'src/app/core/services/usuario.service';
-import { Usuario } from 'src/app/shared/interfaces/usuario';
+import { UsuarioService } from '@core/services/usuario.service';
+import { Usuario } from '@shared/interfaces/usuario';
 import { HttpParams } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { SwalModalService } from 'src/app/core/services/swal-modal.service';
+import { SwalModalService } from '@core/services/swal-modal.service';
 
 @Component({
   selector: 'app-editar-usuario',

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ProcesosDetalleService } from 'src/app/core/services/procesodetalle.service';
+import { ProcesosDetalleService } from '@core/services/procesodetalle.service';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Procesos_Detalle } from 'src/app/shared/interfaces/procesosdetalle';
+import { Procesos_Detalle } from '@shared/interfaces/procesosdetalle';
 
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';

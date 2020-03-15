@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { GraficaInfo, Items, Shorts, Procesos } from 'src/app/shared/interfaces/grafica-info';
-import { JsonRes } from 'src/app/shared/interfaces/json-res';
+import { environment } from 'environments/environment';
+import { GraficaInfo, Items, Shorts, Procesos } from '@shared/interfaces/grafica-info';
+import { JsonRes } from '@shared/interfaces/json-res';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { tap, debounceTime, switchMap, delay } from 'rxjs/operators';
 

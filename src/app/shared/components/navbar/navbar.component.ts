@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Session } from '../../interfaces/session';
 import { Router } from '@angular/router';
-import { CryptoService } from 'src/app/core/services/crypto.service';
+import { CryptoService } from '@core/services/crypto.service';
 
 @Component({
   selector: 'app-navbar',

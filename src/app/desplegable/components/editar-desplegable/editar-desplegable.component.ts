@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, RequiredValidator } from '@angular/forms';
-import { DesplegableService } from 'src/app/core/services/desplegable.service';
-import { Desplegable } from 'src/app/shared/interfaces/desplegable';
+import { DesplegableService } from '@core/services/desplegable.service';
+import { Desplegable } from '@shared/interfaces/desplegable';
 import { HttpParams } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import Swal from 'sweetalert2';
-import { SwalModalService } from 'src/app/core/services/swal-modal.service';
+import { SwalModalService } from '@core/services/swal-modal.service';
 
 @Component({
   selector: 'app-editar-desplegable',

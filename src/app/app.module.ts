@@ -13,6 +13,12 @@ import { CoreModule } from './core/core.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { NgBootstrapModule } from './ng-bootstrap/ng-bootstrap.module';
 
+import * as Sentry from '@sentry/browser';
+
+Sentry.init({
+  dsn: 'https://bba870058386450eaf2e64f49e99d91c@sentry.io/4628152'
+});
+
 @NgModule({
   declarations: [
     AppComponent,
