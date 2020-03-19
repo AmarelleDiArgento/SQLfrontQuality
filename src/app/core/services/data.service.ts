@@ -5,6 +5,7 @@ import { GraficaInfo, Items, Shorts, Procesos } from '@shared/interfaces/grafica
 import { JsonRes } from '@shared/interfaces/json-res';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { tap, debounceTime, switchMap, delay } from 'rxjs/operators';
+import { isNull, isNullOrUndefined } from 'util';
 
 
 @Injectable({
@@ -12,14 +13,14 @@ import { tap, debounceTime, switchMap, delay } from 'rxjs/operators';
 })
 export class DataService {
 
-  private url: string
+  private url: string;
 
   public Graph: GraficaInfo[] = [];
 
   public graph = new BehaviorSubject<GraficaInfo[]>([]);
-  graph$ = this.graph.asObservable();
+  public graph$ = this.graph.asObservable();
 
-  public dat
+  public dat;
   public datas = new BehaviorSubject<[]>([]);
   public datas$ = this.datas.asObservable();
 
@@ -39,13 +40,13 @@ export class DataService {
   private _searchCult$ = new Subject<void>();
   private _cultivo$ = new BehaviorSubject<any[]>([]);
 
-  private fecha: [{ year: 2020, month: 2, day: 25, formatoSql: "2020-02-25" }, { year: 2020, month: 2, day: 28, formatoSql: "2020-02-28" }]
+  private fecha: [{ year: 2020, month: 2, day: 25, formatoSql: '2020-02-25' }, { year: 2020, month: 2, day: 28, formatoSql: '2020-02-28' }];
   constructor(
     private http: HttpClient,
 
   ) {
 
-    this.url = environment.api_url + '/gra'
+    this.url = environment.api_url + '/gra';
 
     this._searchPost$.pipe(
       tap(() => this._loading$.next(true)),
@@ -70,12 +71,12 @@ export class DataService {
   }
 
   private _searchPost(fecha): Observable<JsonRes> {
-    return this.http.post<JsonRes>(`${this.url}pos`, fecha)
+    return this.http.post<JsonRes>(`${this.url}pos`, fecha);
   }
 
 
   private _searchCult(fecha): Observable<JsonRes> {
-    return this.http.post<JsonRes>(`${this.url}cul`, fecha)
+    return this.http.post<JsonRes>(`${this.url}cul`, fecha);
   }
 
 
@@ -87,40 +88,38 @@ export class DataService {
 
 
   postcosecha(fecha) {
-    console.log('Hola Postco :D');
-    return this.http.post<JsonRes>(`${this.url}pos`, fecha)
+    // console.log('Hola Postco :D');
+    return this.http.post<JsonRes>(`${this.url}pos`, fecha);
   }
   cultivo(fecha) {
-    console.log('Hola cultivo :D');
-    return this.http.post<JsonRes>(`${this.url}cul`, fecha)
+    // console.log('Hola cultivo :D');
+    return this.http.post<JsonRes>(`${this.url}cul`, fecha);
   }
 
 
   auditoria(rango: any[]) {
-    return this.http.post<JsonRes>(`${this.url}exp`, rango)
+    return this.http.post<JsonRes>(`${this.url}exp`, rango);
   }
 
-  cargar(origen: string, fecha: any[]) {
-    console.log('Hola :D', origen);
+  cargar(origen: string, fecha: any[], supervisor: string, finca: string) {
+    // console.log('Hola :D', origen);
 
     this.Graph = [];
-    this.graph.next(this.Graph)
+    this.graph.next(this.Graph);
     switch (origen) {
       case 'C':
         this.cultivo(fecha).subscribe(i => {
-          this.dat = i.rows
-          console.log(i.rows);
-
-          this.datas.next(this.dat)
-          this.DataCultivo()
-        })
+          this.dat = i.rows;
+          this.datas.next(this.dat);
+          this.DataCultivo(this.dat);
+        });
         break;
       case 'P':
         this.postcosecha(fecha).subscribe(i => {
-          this.dat = i.rows
-          this.datas.next(this.dat)
-          this.DataPostco()
-        })
+          this.dat = i.rows;
+          this.datas.next(this.dat);
+          this.DataPostco(this.dat);
+        });
         break;
 
       default:
@@ -130,8 +129,67 @@ export class DataService {
 
 
   data(id: number): GraficaInfo {
-    return this.Graph[id]
+    return this.Graph[id];
   }
+
+  // Filtra por criterio.
+  criterio(item: any, supervisor: string, finca: string) {
+
+    if ((isNullOrUndefined(supervisor) || item.Supervisor.trim() === supervisor.trim())
+      && (isNullOrUndefined(finca) || item.Finca.trim() === finca.trim())) {
+      return item;
+    }
+  }
+  // Prueba
+
+  Filtro(data, supervisor: string, finca: string) {
+    return data.filter(r => this.criterio(r, supervisor, finca));
+  }
+  // retorna valores unicos 
+  Distinto = (valor, indice, self) => {
+    return self.indexOf(valor) === indice;
+  }
+
+  Suma = (rows, name, dato, criterio) => {
+    var acum = 0;
+    rows.reduce((a, b) => {
+      acum += (b[name] === dato) ? b[criterio] : 0;
+    });
+
+    return acum;
+  }
+
+  Cumplimiento = (Si, No) => Si / (Si + No);
+
+  resultado = (rows, name) => {
+
+    return Array.from(new Set(rows.map(s => s[name])))
+      .map(dato => {
+
+        var Si = this.Suma(rows, name, dato, 'Total_Si');
+        var No = this.Suma(rows, name, dato, 'Total_No');
+
+        return {
+          Supervisor: dato,
+          Total_Si: Si,
+          Total_No: No,
+          cumplimiento: this.Cumplimiento(Si, No)
+        };
+      });
+
+  }
+
+
+  Supervisores(data): string[] {
+    return data.map(({ Supervisor: d }) => d);
+  }
+  Unicos(data, supervisor: string, finca: string) {
+    return this.Supervisores(
+      this.Filtro(data, supervisor, finca))
+      .filter(this.Distinto);
+  }
+
+
 
 
   /**
@@ -139,11 +197,12 @@ export class DataService {
  * this.Graph contiene la data agrupada general
  */
 
-  DataPostco() {
-    this.Graph = []
-    this.postcosechas = []
 
-    this.dat.map(r => {
+  DataPostco(dat: any[]) {
+    this.Graph = [];
+    this.postcosechas = [];
+
+    dat.map(r => {
 
       let AgregoPostco = false;
 
@@ -151,7 +210,7 @@ export class DataService {
         if (i.origen === r.Postcosecha) {
           i.Si += r.Total_Si;
           i.No += r.Total_No;
-          i.cumplimiento = i.Si / (i.No + i.Si)
+          i.cumplimiento = i.Si / (i.No + i.Si);
           AgregoPostco = true;
           i.procesos = this.DataProceso(r, i.procesos);
         }
@@ -159,11 +218,11 @@ export class DataService {
 
       if (!AgregoPostco) {
         let gnew: GraficaInfo;
-        let id = this.Graph.length
-        this.postcosechas.push(r.Postcosecha)
-        this.post.next(this.postcosechas)
+        const id = this.Graph.length;
+        this.postcosechas.push(r.Postcosecha);
+        this.post.next(this.postcosechas);
         gnew = {
-          id: id,
+          id,
           origen: r.Postcosecha,
           Si: r.Total_Si,
           No: r.Total_No,
@@ -190,27 +249,30 @@ export class DataService {
               }]
             }]
           }]
-        }
-        this.Graph.push(gnew)
+        };
+        this.Graph.push(gnew);
       }
-      this.graph.next(this.Graph)
+      this.graph.next(this.Graph);
 
-    })
+    });
   }
 
 
-  DataCultivo() {
-    this.Graph = []
-    this.fincas = []
+  DataCultivo(dat: any[]) {
+    // console.log(dat);
+    
+    this.graph.next([]);
+    this.Graph = [];
+    this.fincas = [];
 
-    this.dat.map(r => {
+    dat.map(r => {
       let AgregoFinca = false;
 
       for (const i of this.Graph) {
         if (i.origen === r.Finca) {
           i.Si += r.Total_Si;
           i.No += r.Total_No;
-          i.cumplimiento = i.Si / (i.No + i.Si)
+          i.cumplimiento = i.Si / (i.No + i.Si);
           AgregoFinca = true;
           i.procesos = this.DataProceso(r, i.procesos);
         }
@@ -218,11 +280,11 @@ export class DataService {
 
       if (!AgregoFinca) {
         let gnew: GraficaInfo;
-        let id = this.Graph.length
-        this.fincas.push(r.Finca)
-        this.finc.next(this.fincas)
+        const id = this.Graph.length;
+        this.fincas.push(r.Finca);
+        this.finc.next(this.fincas);
         gnew = {
-          id: id,
+          id,
           origen: r.Finca,
           Si: r.Total_Si,
           No: r.Total_No,
@@ -249,12 +311,14 @@ export class DataService {
               }]
             }]
           }]
-        }
-        this.Graph.push(gnew)
-      }
-      this.graph.next(this.Graph)
+        };
 
-    })
+        this.Graph.push(gnew);
+      }
+
+      this.graph.next(this.Graph);
+
+    });
   }
 
   DataProceso(r, p: Procesos[]): Procesos[] {
@@ -265,9 +329,9 @@ export class DataService {
       if (p[i].proceso === r.nombre_proceso) {
         p[i].Si += r.Total_Si;
         p[i].No += r.Total_No;
-        p[i].cumplimiento = p[i].Si / (p[i].No + p[i].Si)
+        p[i].cumplimiento = p[i].Si / (p[i].No + p[i].Si);
         AgregoProceso = true;
-        p[i].shorts = this.DataShorts(r, p[i].shorts)
+        p[i].shorts = this.DataShorts(r, p[i].shorts);
       }
     }
 
@@ -293,10 +357,10 @@ export class DataService {
             cumplimiento: (r.Total_Si / (r.Total_Si + r.Total_No))
           }]
         }]
-      }
-      p.push(pnew)
+      };
+      p.push(pnew);
     }
-    return p
+    return p;
   }
 
   DataShorts(r, p: Shorts[]): Shorts[] {
@@ -306,9 +370,9 @@ export class DataService {
       if (p[i].short === r.Short_Item) {
         p[i].Si += r.Total_Si;
         p[i].No += r.Total_No;
-        p[i].cumplimiento = p[i].Si / (p[i].No + p[i].Si)
+        p[i].cumplimiento = p[i].Si / (p[i].No + p[i].Si);
         AgregoShort = true;
-        p[i].items = this.DataItems(r, p[i].items)
+        p[i].items = this.DataItems(r, p[i].items);
       }
     }
 
@@ -327,10 +391,10 @@ export class DataService {
           No: r.Total_No,
           cumplimiento: (r.Total_Si / (r.Total_Si + r.Total_No))
         }]
-      }
-      p.push(snew)
+      };
+      p.push(snew);
     }
-    return p
+    return p;
 
   }
 
@@ -342,7 +406,7 @@ export class DataService {
       if (p[i].item === r.item) {
         p[i].Si += r.Total_Si;
         p[i].No += r.Total_No;
-        p[i].cumplimiento = p[i].Si / (p[i].No + p[i].Si)
+        p[i].cumplimiento = p[i].Si / (p[i].No + p[i].Si);
         AgregoShort = true;
       }
     }
@@ -355,10 +419,10 @@ export class DataService {
         Si: r.Total_Si,
         No: r.Total_No,
         cumplimiento: (r.Total_Si / (r.Total_Si + r.Total_No))
-      }
-      p.push(snew)
+      };
+      p.push(snew);
     }
-    return p
+    return p;
   }
 
   /**

@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
 
   generarSession(data: any[]) {
     var arr: boolean = !isUndefined(data.length);
-      console.log(arr);
+      // console.log(arr);
 
     this.session = {
       usuario: (arr) ? data[0].id_usuario : data['id_usuario'],
@@ -75,7 +75,7 @@ export class LoginComponent implements OnInit {
       permisos: this.empaquetarPermisos(data, arr)
     }
     localStorage.setItem('Session', this.crypto.encriptar(JSON.stringify(this.session)))
-    console.log(this.session);
+    // console.log(this.session);
     
     this.router.navigate(['home']);
 

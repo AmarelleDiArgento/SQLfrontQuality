@@ -34,7 +34,7 @@ export class CapturadorComponent implements OnInit {
         this.preguntas = []
         data.map((e) => {
           if (e.tipo_M === 'H') {
-            //console.log(e);
+            // console.log(e);
             this.encabezado.push(e);
 
           } else {
@@ -46,7 +46,7 @@ export class CapturadorComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.procesosdetalle$);
+    // console.log(this.procesosdetalle$);
 
   }
 

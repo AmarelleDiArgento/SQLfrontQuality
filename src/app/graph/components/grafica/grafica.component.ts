@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Grafica } from '../../interfaces/grafica';
-import { Chart } from "chart.js";
+import { Chart } from 'chart.js';
 import { isUndefined } from 'util';
 
 @Component({
@@ -29,7 +29,7 @@ export class GraficaComponent implements OnInit {
   ngAfterViewInit() {
 
     this.element = document.getElementById(this.dataGraf.item) as HTMLElement;
-    this.genGrafLineal()
+    this.genGrafLineal();
   }
   ngOnInit() {
 
@@ -37,12 +37,12 @@ export class GraficaComponent implements OnInit {
   }
 
   genGrafLineal() {
-    this.tipo = this.ajuste(this.dataGraf.tipo, this.dataGraf.labels.length)
-    console.log(this.tipo);
-    console.log((isUndefined(this.dataGraf.full)) ? '' : this.dataGraf.full[0][0]);
-    
+    this.tipo = this.ajuste(this.dataGraf.tipo, this.dataGraf.labels.length);
+    // console.log(this.tipo);
+    // console.log((isUndefined(this.dataGraf.full)) ? '' : this.dataGraf.full[0][0]);
 
-    var dataset = this.dataSet()
+
+    let dataset = this.dataSet();
     this.lineal = new Chart(this.element, {
       type: this.tipo,
       data: {
@@ -51,12 +51,12 @@ export class GraficaComponent implements OnInit {
       },
       options: this.options
     });
-    // console.log(this.lineal);
+    console.log(this.lineal);
 
   }
 
   dataSet(): any[] {
-    var dataset = []
+    let dataset = [];
     // console.log(this.dataGraf.series.length);
 
     for (let i = 0; i < this.dataGraf.series.length; i++) {
@@ -68,14 +68,15 @@ export class GraficaComponent implements OnInit {
         borderColor: (this.tipo === 'doughnut') ? [this.dataGraf.border[i], '#6c757d'] : this.dataGraf.border[i], // Add custom color border (Line)
         backgroundColor: (this.tipo === 'doughnut') ? [this.dataGraf.background[i], '#6c757d80'] : this.dataGraf.background[i], // Add custom color background (Points and Fill)
         borderWidth: 1 // Specify bar border width
-      })
+      });
     }
+    console.log(dataset);
 
-    return dataset
+    return dataset;
   }
 
   recortar(labesl: string[]) {
-    return labesl.map(l => { return l.substr(0, 10) + '...' })
+    return labesl.map(l => l.substr(0, 10) + '...');
   }
 
   ajuste(tipo: string, conteo: number) {
@@ -92,10 +93,10 @@ export class GraficaComponent implements OnInit {
             top: 0,
             bottom: 0
           }
-        }
-        
+        };
 
-        return 'doughnut'
+
+        return 'doughnut';
 
 
       } else {
@@ -108,10 +109,10 @@ export class GraficaComponent implements OnInit {
               }
             }]
           }
-        }
-        return 'bar'
+        };
+        return 'bar';
 
-      };
+      }
     } else {
 
       this.options = {
@@ -141,7 +142,7 @@ export class GraficaComponent implements OnInit {
             fontSize: 18
           }
         }
-      }
+      };
       return tipo;
     }
   }
@@ -155,13 +156,13 @@ export class GraficaComponent implements OnInit {
 
     switch (true) {
       case data <= 79:
-        return 'danger'
+        return 'danger';
       case data > 79 && data <= 89:
-        return 'warning'
+        return 'warning';
       case data > 89:
-        return 'success'
+        return 'success';
       default:
-        return 'light'
+        return 'light';
     }
   }
 

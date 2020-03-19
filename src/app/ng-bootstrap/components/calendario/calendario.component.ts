@@ -38,7 +38,7 @@ export class CalendarioComponent {
       this.toDate = null;
       this.fromDate = date;
     }
-    console.log(this.returnDateRange());
+    // console.log(this.returnDateRange());
 
 
   }

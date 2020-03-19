@@ -26,7 +26,7 @@ export class ListarProcesosDetalleComponent implements OnInit {
   ) {
     this.activatedRoute.params.subscribe((params: Params) => {
       this.id = params.id;
-      console.log(this.id);
+      // console.log(this.id);
       this.service.tabla(this.id);
       this.procesosdetalle$ = this.service.procesosdetalle$;
       this.total$ = this.service.total$;
@@ -38,7 +38,7 @@ export class ListarProcesosDetalleComponent implements OnInit {
 
   }
   onSort({ column, direction }: SortEvent) {
-    console.log('click');
+    // console.log('click');
     // resetting other headers
     this.headers.forEach(header => {
       if (header.sortable !== column) {

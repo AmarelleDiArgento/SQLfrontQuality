@@ -23,10 +23,10 @@ export class NgbdSortableHeader {
   @Output() sort = new EventEmitter<SortEvent>();
   constructor() {
 
-    console.log('clic');
+    // console.log('clic');
   }
   rotate() {
-    console.log('clic');
+    // console.log('clic');
 
     this.direction = rotate[this.direction];
     this.sort.emit({ column: this.sortable, direction: this.direction });

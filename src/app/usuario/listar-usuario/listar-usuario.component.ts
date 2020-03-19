@@ -38,7 +38,7 @@ export class ListarUsuarioComponent implements OnInit {
   }
 
   onSort({ column, direction }: SortEvent) {
-    console.log('click');
+    // console.log('click');
     
     // resetting other headers
     this.headers.forEach(header => {

@@ -53,7 +53,7 @@ export class LectorcsvComponent implements OnInit {
 
 
     this.data = jsonData;
-    console.log(this.data);
+    // console.log(this.data);
 
 
   }
@@ -65,9 +65,9 @@ export class LectorcsvComponent implements OnInit {
 
     if (files && files.length) {
       /*
-       console.log("Filename: " + files[0].name);
-       console.log("Type: " + files[0].type);
-       console.log("Size: " + files[0].size + " bytes");
+       // console.log("Filename: " + files[0].name);
+       // console.log("Type: " + files[0].type);
+       // console.log("Size: " + files[0].size + " bytes");
        */
 
       const fileToRead = files[0];

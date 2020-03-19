@@ -40,16 +40,16 @@ export class CampoComponent implements OnInit {
   ngOnInit() {
     (localStorage.getItem('desplegables') === null) ? [] : this.desplegables = JSON.parse(localStorage.getItem('desplegables'));
 
-    console.log(this.campo);
-    //console.log('Dentro de campo:');
-    //console.log('campo', this.campo);
+    // console.log(this.campo);
+    // console.log('Dentro de campo:');
+    // console.log('campo', this.campo);
 
     if (!isUndefined(this.campo.lista_desp)) {
 
       if (this.campo.lista_desp !== "" && !isNull(this.campo.lista_desp)) {
         if (this.desplegables.length === 0) {
           this.agregarLocal(this.campo.lista_desp)
-          console.log(localStorage.getItem('desplegables'));
+          // console.log(localStorage.getItem('desplegables'));
 
         } else {
           this.validarLocal(this.campo.lista_desp)

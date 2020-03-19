@@ -27,8 +27,6 @@ export class InformeComponent implements OnInit, AfterViewInit {
 
   public activo: number = 3;
 
-
-
   public Origen
   public loc;
 
@@ -56,8 +54,10 @@ export class InformeComponent implements OnInit, AfterViewInit {
       this.fromDate = calendar.getNext(calendar.getToday(), 'd', (this.loc == 'C') ? -6 : 0);
       this.toDate = calendar.getToday();
 
-      this.data.cargar(this.loc, this.returnDateRange())
+      this.data.cargar(this.loc, this.returnDateRange(), null, null);
       this.Graf$ = this.data.graph$
+      // console.log(this.Graf$);
+      
       this.informes$ = this.data.post$
 
       this.postcosecha$ = this.data.postcosecha$;
@@ -69,16 +69,16 @@ export class InformeComponent implements OnInit, AfterViewInit {
     })
   }
 
-  recargar() {
-    console.log('Recargando... ');
+  recargar(supervisor: string, finca: string) {
+    // console.log('Recargando... ');
 
-    this.data.cargar(this.loc, this.returnDateRange())
+    this.data.cargar(this.loc, this.returnDateRange(), supervisor, finca)
     this.Graf$ = this.data.graph$
     this.informes$ = this.data.post$
   }
 
   titulo(origen: string) {
-    console.log(origen);
+    // console.log(origen);
 
     switch (origen) {
       case 'C':
@@ -128,10 +128,10 @@ export class InformeComponent implements OnInit, AfterViewInit {
 
   backgroundRow(data: any) {
 
-    // // console.log(data);
-    // // console.log('Menor que 75: ', data <= 75);
-    // // console.log('Entre 75 y 85: ', data > 75 && data <= 85);
-    // // console.log('Mayor que 85: ', data > 85);
+    // console.log(data);
+    // console.log('Menor que 75: ', data <= 75);
+    // console.log('Entre 75 y 85: ', data > 75 && data <= 85);
+    // console.log('Mayor que 85: ', data > 85);
     switch (true) {
       case data <= 0.79:
         return 'danger'
@@ -161,8 +161,8 @@ export class InformeComponent implements OnInit, AfterViewInit {
       this.toDate = null;
       this.fromDate = date;
     }
-    console.log(this.returnDateRange());
-    this.recargar()
+    // console.log(this.returnDateRange());
+    this.recargar(null, null)
 
   }
 
