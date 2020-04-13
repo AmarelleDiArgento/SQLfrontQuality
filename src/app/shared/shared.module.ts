@@ -3,19 +3,23 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { NgBootstrapModule } from '../ng-bootstrap/ng-bootstrap.module';
+import { UploadFileComponent } from './components/upload-file/upload-file.component';
 
 
 
 @NgModule({
   declarations: [
-    NavbarComponent
+    NavbarComponent,
+    UploadFileComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
     NgBootstrapModule
   ], exports: [
-    NavbarComponent
+    NavbarComponent,
+    NgBootstrapModule,
+    UploadFileComponent
   ]
 })
 export class SharedModule { }

@@ -145,10 +145,6 @@ export class DataService {
   Filtro(data, supervisor: string, finca: string) {
     return data.filter(r => this.criterio(r, supervisor, finca));
   }
-  // retorna valores unicos 
-  Distinto = (valor, indice, self) => {
-    return self.indexOf(valor) === indice;
-  }
 
   Suma = (rows, name, dato, criterio) => {
     var acum = 0;
@@ -183,6 +179,12 @@ export class DataService {
   Supervisores(data): string[] {
     return data.map(({ Supervisor: d }) => d);
   }
+  
+  // retorna valores unicos 
+  Distinto = (valor, indice, self) => {
+    return self.indexOf(valor) === indice;
+  }
+  
   Unicos(data, supervisor: string, finca: string) {
     return this.Supervisores(
       this.Filtro(data, supervisor, finca))
@@ -196,7 +198,6 @@ export class DataService {
  * Estructurar json! inicio
  * this.Graph contiene la data agrupada general
  */
-
 
   DataPostco(dat: any[]) {
     this.Graph = [];

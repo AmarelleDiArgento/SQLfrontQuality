@@ -1,0 +1,23 @@
+<div *ngIf="!image; else existeImagen" style="text-align:center; margin-top: 100px; ">
+
+  <ul>
+    <li *ngFor="let file of files">
+      <p>
+        <ngb-progressbar type="success" [value]="file.progress"></ngb-progressbar>
+      </p>
+      <span id="file-label">
+
+      </span>
+    </li>
+  </ul>
+
+  <button type=" button" (click)="onClick()" class="btn btn-success">
+    <i class="fas fa-upload"></i>
+  </button>
+  <input type="file" #fileUpload id="fileUpload" name="fileUpload" accept="image/*"
+    style="display:none;" />
+</div>
+
+<ng-template #existeImagen>
+  <img [src]="image" class="card-img" alt="existente " srcset="">
+</ng-template>

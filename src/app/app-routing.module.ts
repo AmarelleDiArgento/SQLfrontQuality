@@ -44,6 +44,10 @@ const routes: Routes = [
       {
         path: 'labels',
         loadChildren: () => import('./label/label.module').then(l => l.LabelModule)
+      },
+      {
+        path: 'recetario',
+        loadChildren: () => import('./recetario/recetario.module').then(r => r.RecetarioModule)
       }
     ],
     canActivate: [AuthGuard]

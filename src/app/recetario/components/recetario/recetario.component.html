@@ -1,0 +1,100 @@
+<form>
+
+  <div class="row text-center d-flex justify-content-between mb-3">
+
+    <div class="col-12">
+      <h1>Recetario.</h1>
+    </div>
+
+    <div class="input-group d-flex justify-content-between mb-3 col-12 col-md-6 ">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">
+          <i class="fas fa-search"></i>
+        </span>
+      </div>
+      <input class="form-control col" type="text" name="searchTerm" [(ngModel)]="service.searchTerm"
+        placeholder="Buscar..." aria-label="Buscar" aria-describedby="basic-addon1" />
+      <div class="ml-3">
+
+        <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+          <option [ngValue]="10">10</option>
+          <option [ngValue]="20">20</option>
+          <option [ngValue]="50">50</option>
+          <option [ngValue]="100">100</option>
+        </select>
+      </div>
+
+      <button type="button" [routerLink]="['./nuevo']" class="btn btn-info">
+        <i class="fas fa-lg fa-user-plus"></i>
+      </button>
+
+    </div>
+
+
+
+  </div>
+
+
+  <div class="row d-flex justify-content-center align-items-center full"
+    *ngIf="service.loading$ | async; else elseBlock">
+    <div class="spinner-grow text-info" style="width: 5rem; height: 5rem;" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+
+  <ng-template #elseBlock>
+
+    <table class="table table-striped text-center align-middle table-sm">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col" sortable="cliente" (sort)="onSort($event)">Cliente</th>
+          <th scope="col" sortable="clase" (sort)="onSort($event)">Clase</th>
+          <th scope="col" sortable="descripcion" (sort)="onSort($event)">Marca</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor=" let r of recetas$ | async; let i = index">
+          <th scope="row" class="align-middle">{{ i }}</th>
+          <td class="align-middle">
+            <ngb-highlight [result]="r.cliente" [term]="service.searchTerm"></ngb-highlight>
+          </td>
+
+          <td class="align-middle">
+            <ngb-highlight [result]="r.clase" [term]="service.searchTerm"></ngb-highlight>
+          </td>
+
+          <td class="align-middle">
+            <ngb-highlight [result]="r.descripcion" [term]="service.searchTerm"></ngb-highlight>
+          </td>
+
+          <td class="align-middle">
+            <div class="btn-group" role="group" aria-label="Basic example">
+              <button type="button" [routerLink]="['./editar/', r.id]" class="btn btn-primary">
+                <i class="fas fa-lg fa-pen"></i> </button>
+
+              <button type="button" [routerLink]="['./receta/', r.id]" class="btn btn-success">
+                <i class="fas fa-lg fa-eye"></i> </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="row">
+
+
+      <ngb-pagination class="d-none d-sm-none d-md-block" [collectionSize]="total$ | async" [(page)]="service.page"
+        [maxSize]="20" [rotate]="true" [pageSize]="service.pageSize"></ngb-pagination>
+
+      <ngb-pagination class="d-block d-sm-block d-md-none" [collectionSize]="total$ | async" [(page)]="service.page"
+        [maxSize]="6" [rotate]="true" [pageSize]="service.pageSize"></ngb-pagination>
+
+
+    </div>
+
+  </ng-template>
+
+
+
+</form>

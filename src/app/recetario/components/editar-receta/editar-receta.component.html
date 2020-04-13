@@ -1,0 +1,129 @@
+<div *ngIf=" marca$ | async as marca">
+
+  <h2><strong>Marca:</strong> {{ marca.nombre }} - {{ marca.cliente }}</h2>
+
+
+  <div class="card-group mt-md-2">
+    <div class="card">
+      <img [src]="marca.longitud" class="card-img" alt="imagen de longitud" *ngIf="marca.longitud;else longitud">
+      <ng-template #longitud>
+        <app-upload-file (upload)="archivo($event, marca.longitud)"></app-upload-file>
+      </ng-template>
+      <div class="card-body">
+        <h5 class="card-title">Longitud:</h5>
+        <p class="card-text">
+          Long
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">Actualizar.</small>
+      </div>
+    </div>
+
+    <div class="card">
+      <img [src]="marca.cauchos" class="card-img" alt="imagen de cauchos" *ngIf="marca.cauchos;else cauchos">
+      <ng-template #cauchos>
+        <app-upload-file (upload)="archivo($event, marca.cauchos)"></app-upload-file>
+      </ng-template>
+
+      <div class="card-body">
+        <h5 class="card-title">Ubicacion de cauchos:</h5>
+        <p class="card-text">
+          cauchos
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">Actualizar.</small>
+      </div>
+    </div>
+
+    <div class="card">
+      <img [src]="marca.longitud" class="card-img" alt="imagen de longitud" *ngIf="marca.longitud;else longitud">
+      <ng-template #longitud>
+        <app-upload-file (upload)="archivo($event, marca.longitud)"></app-upload-file>
+      </ng-template>
+      <div class="card-body">
+        <h5 class="card-title">Longitud:</h5>
+        <p class="card-text">
+          Long
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">Actualizar.</small>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="card-group mt-md-2">
+    <div class="card">
+      <img [src]="marca.armado.url" class="card-img" alt="imagen de armado" *ngIf="marca.armado.url;else armado">
+      <ng-template #armado>
+        <app-upload-file (upload)="archivo($event, marca.armado.url)"></app-upload-file>
+      </ng-template>
+      <div class="card-body">
+        <h5 class="card-title">Armando</h5>
+        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content.
+          This content is a little bit longer.</p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">Last updated 3 mins ago</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-md-2">
+    <div class="card mb-3 col-12" *ngFor="let m of marca.menus">
+      <div class="row no-gutters">
+        <div class="col-md-4">
+
+          <img src="" class="card-img" alt="imagen de vista superior menu #{{ m.id }}"
+            *ngIf="m.superior;else fotoSuperior">
+          <ng-template #fotoSuperior>
+            <app-upload-file (upload)="archivo($event, m.id)"></app-upload-file>
+          </ng-template>
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">{{m.nombre}} - Menu: #{{ m.id }}</h5>
+
+            <table class="table table-striped ">
+              <thead class="thead-inverse">
+                <tr>
+                  <th>Producto</th>
+                  <th>Variedad</th>
+                  <th>Tallos</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let p of m.productos">
+                  <td scope="row">{{p.producto}}</td>
+                  <td>{{p.variedad}}</td>
+                  <td>{{p.tallos}}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div *ngFor="let ma of m.materiales" class="alert alert-success" role="alert"
+              class="card mb-1 alert alert-success">
+              <div class="row no-gutters">
+                <div class="col-md-4">
+
+                  <img [src]="ma.url" class="card-img" alt="imagen de  #{{ ma.tipo }}" *ngIf="ma.url;else material">
+                  <ng-template #material>
+                    <app-upload-file (upload)="archivo($event, ma.tipo)"></app-upload-file>
+                  </ng-template>
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ma.tipo}}</h5>
+                    {{ma.cantidad}}, {{ma.material}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
