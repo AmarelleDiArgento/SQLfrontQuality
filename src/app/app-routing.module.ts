@@ -46,6 +46,10 @@ const routes: Routes = [
         loadChildren: () => import('./label/label.module').then(l => l.LabelModule)
       },
       {
+        path: 'powerbi',
+        loadChildren: () => import('./powerbi/powerbi.module').then(bi => bi.PowerbiModule)
+      },
+      {
         path: 'recetario',
         loadChildren: () => import('./recetario/recetario.module').then(r => r.RecetarioModule)
       }
