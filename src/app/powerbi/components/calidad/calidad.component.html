@@ -1,8 +1,18 @@
-<iframe width="1200" height="800"
-  src="https://app.powerbi.com/view?r=eyJrIjoiNzU3NzZiNzQtZTU5MC00Nzg2LThlMTYtNTdhMWI4MjE3YjVlIiwidCI6IjJlMDcwNzA1LWQ1NmEtNDNhNC1hMzU3LWE2MGIwODI1NDExMyIsImMiOjR9"
-  frameborder="0" allowFullScreen="true"></iframe>
+<div class="row text-center d-flex justify-content-between mb-3">
+  <div class="row">
+    <div class="col-12">
+      <ul ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" *ngFor="let r of reporte; let i = index" (click)="cambiarInforme(i)">
+          <a class="nav-link" [ngClass]="{active: r.activo}">{{r.titulo}}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <h1 class="mt-1 text-center">{{reporte[selected].titulo}}</h1>
+    </div>
+  </div>
+  <iframe class="dimframe" [src]="reporte[selected].url | safe" frameborder="0" allowFullScreen="false"></iframe>
 
-
-<iframe width="1200" height="800"
-  src="https://app.powerbi.com/reportEmbed?reportId=e6828048-ed89-41ca-bc52-c881eb3c00a8&autoAuth=true&ctid=2e070705-d56a-43a4-a357-a60b08254113&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLXNvdXRoLWNlbnRyYWwtdXMtcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQvIn0%3D"
-  frameborder="0" allowFullScreen="true"></iframe>
+</div>
