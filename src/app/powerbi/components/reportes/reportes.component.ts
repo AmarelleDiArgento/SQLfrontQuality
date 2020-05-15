@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { SafePipe } from '@shared/pipes/safe.pipe';
 
 @Component({
-  selector: 'app-calidad',
-  templateUrl: './calidad.component.html',
-  styleUrls: ['./calidad.component.scss']
+  selector: 'app-reportes',
+  templateUrl: './reportes.component.html',
+  styleUrls: ['./reportes.component.scss']
 })
-export class CalidadComponent implements OnInit {
+export class ReportesComponent implements OnInit {
 
 
 
