@@ -1,8 +1,6 @@
-
-
 <form [formGroup]="selector" *ngIf="isCultivo()">
   <div class="form-group">
-    <label for="id_Proceso">Supervisor: </label>
+    <label for="id_Proceso">{{tipoDeSeleccion}}: </label>
     <select class="custom-select custom-select-lg mb-3" id="supervisor" formControlName="supervisor">
       <option selected>Todos</option>
       <option *ngFor="let s of supervisores" [value]="s">{{s}}</option>

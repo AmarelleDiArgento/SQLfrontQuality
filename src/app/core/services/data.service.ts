@@ -40,6 +40,9 @@ export class DataService {
   private _searchCult$ = new Subject<void>();
   private _cultivo$ = new BehaviorSubject<any[]>([]);
 
+  private _searchSiem$ = new Subject<void>();
+  private _siembra$ = new BehaviorSubject<any[]>([]);
+
   private fecha: [{ year: 2020, month: 2, day: 25, formatoSql: '2020-02-25' }, { year: 2020, month: 2, day: 28, formatoSql: '2020-02-28' }];
   constructor(
     private http: HttpClient,
@@ -68,6 +71,16 @@ export class DataService {
       this._cultivo$.next(result.rows);
     });
 
+    this._searchSiem$.pipe(
+      tap(() => this._loading$.next(true)),
+      debounceTime(200),
+      switchMap(() => this._searchSiem(this.fecha)),
+      delay(200),
+      tap(() => this._loading$.next(false))
+    ).subscribe(result => {
+      this._siembra$.next(result.rows);
+    });
+
   }
 
   private _searchPost(fecha): Observable<JsonRes> {
@@ -80,8 +93,13 @@ export class DataService {
   }
 
 
+  private _searchSiem(fecha): Observable<JsonRes> {
+    return this.http.post<JsonRes>(`${this.url}cul`, fecha);
+  }
+
   get postcosecha$() { return this._postcosechas$.asObservable(); }
   get cultivo$() { return this._cultivo$.asObservable(); }
+  get siembra$() { return this._cultivo$.asObservable(); }
 
   get loading$() { return this._loading$.asObservable(); }
 
@@ -95,7 +113,10 @@ export class DataService {
     // console.log('Hola cultivo :D');
     return this.http.post<JsonRes>(`${this.url}cul`, fecha);
   }
-
+  siembra(fecha) {
+    // console.log('Hola cultivo :D');
+    return this.http.post<JsonRes>(`${this.url}pla`, fecha);
+  }
 
   auditoria(rango: any[]) {
     return this.http.post<JsonRes>(`${this.url}exp`, rango);
@@ -119,6 +140,13 @@ export class DataService {
           this.dat = i.rows;
           this.datas.next(this.dat);
           this.DataPostco(this.dat);
+        });
+        break;
+      case 'S':
+        this.siembra(fecha).subscribe(i => {
+          this.dat = i.rows;
+          this.datas.next(this.dat);
+          this.DataCultivo(this.dat);
         });
         break;
 
@@ -179,12 +207,12 @@ export class DataService {
   Supervisores(data): string[] {
     return data.map(({ Supervisor: d }) => d);
   }
-  
+
   // retorna valores unicos 
   Distinto = (valor, indice, self) => {
     return self.indexOf(valor) === indice;
   }
-  
+
   Unicos(data, supervisor: string, finca: string) {
     return this.Supervisores(
       this.Filtro(data, supervisor, finca))
@@ -261,7 +289,7 @@ export class DataService {
 
   DataCultivo(dat: any[]) {
     // console.log(dat);
-    
+
     this.graph.next([]);
     this.Graph = [];
     this.fincas = [];

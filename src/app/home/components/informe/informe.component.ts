@@ -51,13 +51,13 @@ export class InformeComponent implements OnInit, AfterViewInit {
       this.loc = params.loc
       this.titulo(this.loc);
 
-      this.fromDate = calendar.getNext(calendar.getToday(), 'd', (this.loc == 'C') ? -6 : 0);
+      this.fromDate = calendar.getNext(calendar.getToday(), 'd', (this.loc == 'C' || this.loc == 'S') ? -6 : 0);
       this.toDate = calendar.getToday();
 
       this.data.cargar(this.loc, this.returnDateRange(), null, null);
       this.Graf$ = this.data.graph$
       // console.log(this.Graf$);
-      
+
       this.informes$ = this.data.post$
 
       this.postcosecha$ = this.data.postcosecha$;
@@ -86,6 +86,9 @@ export class InformeComponent implements OnInit, AfterViewInit {
         break;
       case 'P':
         this.Origen = "POSTCOSECHA"
+        break;
+      case 'S':
+        this.Origen = "AUDITORIA DE SIEMBRAS"
         break;
       case 'B':
         this.Origen = "BOUQUETERA"

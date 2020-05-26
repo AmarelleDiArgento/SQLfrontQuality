@@ -60,8 +60,7 @@ export class DetallesComponent implements OnInit, AfterViewInit {
 
   // var form
   selector: FormGroup;
-
-
+  tipoDeSeleccion: string = '';
   constructor(
     private data: DataService,
     private formBuilder: FormBuilder,
@@ -75,7 +74,7 @@ export class DetallesComponent implements OnInit, AfterViewInit {
 
     // Formulario de supervisores 
     if (this.isCultivo()) {
-
+      this.tipoDeSeleccion = (this.loc == 'C') ? 'Supervisores' : 'Productos'
       this.selector = this.formBuilder.group({
         supervisor: ['Todos', [Validators.required]]
       });
@@ -113,7 +112,9 @@ export class DetallesComponent implements OnInit, AfterViewInit {
     });
   }
 
-  isCultivo = () => this.loc === 'C';
+  isCultivo = () => this.loc === 'C' || this.loc === 'S';
+
+
   todos = (v) => (v === 'Todos') ? null : v;
 
   ngOnInit() {
@@ -174,7 +175,7 @@ export class DetallesComponent implements OnInit, AfterViewInit {
     this.grafSuper = {
       tipo: 'radar',
       relleno: true,
-      titulo: 'Supervisores',
+      titulo: this.tipoDeSeleccion,
       item: 'sup',
       labels: datos[0],
       full: this.full[0],
@@ -212,7 +213,7 @@ export class DetallesComponent implements OnInit, AfterViewInit {
 
     let gr = [];
     let id = 0;
-    if(this.isCultivo()){
+    if (this.isCultivo()) {
       gr.push(this.grafSuper);
     }
     gr.push(this.grafGen);
