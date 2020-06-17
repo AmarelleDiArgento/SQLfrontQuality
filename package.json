@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "node patch.js && ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -30,7 +30,7 @@
     "chart.js": "^2.9.3",
     "crypto-js": "^4.0.0",
     "file-saver": "^2.0.2",
-    "rxjs": "~6.5.4",
+    "rxjs": "~6.5.5",
     "sweetalert2": "^9.8.2",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.3"
@@ -55,5 +55,8 @@
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
     "typescript": "~3.7.5"
+  },
+  "browser": {
+    "crypto": false
   }
 }
