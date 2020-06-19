@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsuarioService } from '@core/services/usuario.service';
-import { Session } from '@shared/interfaces/session';
-import { Permiso } from '@shared/interfaces/permiso';
+import { SessionFull } from '@shared/interfaces/session';
 import { Router } from '@angular/router';
 import { SwalModalService } from '@core/services/swal-modal.service';
 import { isUndefined } from 'util';
@@ -28,7 +27,8 @@ export class LoginComponent implements OnInit {
       { type: "minlength", message: "El password es muy corto" }
     ]
   }
-  session: Session;
+
+  sessionFull: SessionFull;
 
   constructor(
     private form: FormBuilder,
@@ -51,54 +51,23 @@ export class LoginComponent implements OnInit {
 
   }
 
+  // onSubmit() {
+  //   this.serUsuario.login(this.loginForm.value).subscribe(data => {
+  //     if (data.respuesta === 'success') {
+  //       this.generarSession(data.rows);
+  //     } else {
+  //       this.swal.modal(data)
+  //     }
+  //   });
+
+  // }
+
   onSubmit() {
-    this.serUsuario.login(this.loginForm.value).subscribe(data => {
-      if (data.respuesta === 'success') {
-        this.generarSession(data.rows);
-      } else {
-        this.swal.modal(data)
-      }
-    })
-
+    this.serUsuario.loginSessionFull(this.loginForm.value)
+      .subscribe(data => {
+        this.sessionFull = data[0] as SessionFull;
+        localStorage.setItem('Session', this.crypto.encriptar(JSON.stringify(this.sessionFull)));
+        this.router.navigate(['home']);
+      });
   }
-
-  generarSession(data: any[]) {
-    var arr: boolean = !isUndefined(data.length);
-      // console.log(arr);
-
-    this.session = {
-      usuario: (arr) ? data[0].id_usuario : data['id_usuario'],
-      nombre: (arr) ? data[0].nombre_usuario : data['nombre_usuario'],
-      grupo: (arr) ? data[0].Grupo1 : data['Grupo1'],
-      area: (arr) ? data[0].Grupo2 : data['Grupo2'],
-      ubicacion: (arr) ? data[0].Grupo3 : data['Grupo3'],
-      permisos: this.empaquetarPermisos(data, arr)
-    }
-    localStorage.setItem('Session', this.crypto.encriptar(JSON.stringify(this.session)))
-    // console.log(this.session);
-    
-    this.router.navigate(['home']);
-
-
-  }
-
-  empaquetarPermisos(data: any[], arreglo: boolean): Permiso[] {
-    var pers: Permiso[] = [];
-    var permisos = (arreglo) ? data : [data];
-
-    if (permisos[0].nombre_permiso === null) {
-      return null;
-    } else {
-      permisos.forEach(p => {
-        pers.push({
-          permiso: p.nombre_permiso.trim(),
-          url: p.url.trim(),
-          estado: p.estado === 1
-        })
-      })
-    }
-
-    return pers
-  }
-
 }

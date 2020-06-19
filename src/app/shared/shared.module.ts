@@ -6,6 +6,7 @@ import { NgBootstrapModule } from '../ng-bootstrap/ng-bootstrap.module';
 import { UploadFileComponent } from './components/upload-file/upload-file.component';
 import { SafePipe } from './pipes/safe.pipe';
 import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 
@@ -21,6 +22,8 @@ import { BrowserModule } from '@angular/platform-browser';
     NgBootstrapModule
   ], exports: [
     SafePipe,
+    FormsModule,
+    ReactiveFormsModule,
     NavbarComponent,
     NgBootstrapModule,
     UploadFileComponent

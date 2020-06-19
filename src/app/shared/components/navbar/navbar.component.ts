@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Session } from '../../interfaces/session';
+import { SessionFull } from '../../interfaces/session';
 import { Router } from '@angular/router';
 import { CryptoService } from '@core/services/crypto.service';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-navbar',
@@ -10,9 +11,12 @@ import { CryptoService } from '@core/services/crypto.service';
 })
 export class NavbarComponent {
 
-  session: Session
+  session: SessionFull = null;
 
   public isMenuCollapsed = true;
+  public isOptionCollapsed: boolean[] = [];
+
+
   constructor(
     private router: Router,
     private crypto: CryptoService,
@@ -22,12 +26,32 @@ export class NavbarComponent {
       this.crypto.recuperar(
         localStorage.getItem('Session')
       )
-    ) as Session;
+    ) as SessionFull;
+
+    console.log(this.session.modulos.length);
+
+    if (!isNullOrUndefined(this.session.modulos)) {
+      for (let i = 0; i < this.session.modulos.length; i++) {
+        this.isOptionCollapsed.push(true);
+      }
+    }
+
+    console.log(this.session);
+
+  }
+
+  componerUrl(url: string): string[] {
+    let newUrl = url.split('/');
+    console.log(newUrl);
+    newUrl = ['/', ...newUrl];
+    console.log(newUrl);
+    
+    return ['', ...newUrl];
   }
 
   logout() {
     this.session = null;
     localStorage.removeItem('Session');
-    this.router.navigate(['\auth'])
+    this.router.navigate(['auth'])
   }
 }

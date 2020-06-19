@@ -14,6 +14,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { NgBootstrapModule } from './ng-bootstrap/ng-bootstrap.module';
 
 import * as Sentry from '@sentry/browser';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 Sentry.init({
   dsn: 'https://bba870058386450eaf2e64f49e99d91c@sentry.io/4628152'
@@ -33,7 +34,8 @@ Sentry.init({
     BrowserModule,
     NgBootstrapModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,33 @@
+<div class="jumbotron">
+  <h1 class="display-4">Bienvenido</h1>
+  <p class="lead">{{usuario}}, estos son los permisos que tienes asignados.</p>
+  <hr class="my-4">
+  <div class="accordion" id="accordionExample">
+
+    <ng-container *ngIf="session as ses;">
+      <div class="card btn-outline-dark" *ngFor="let m of ses.modulos; let i = index">
+        <div class="card-header" id="headingOne" (click)="clicCollapse(i)">
+          <h4 class="mb-0">
+            {{i+1}}. {{m.nombre}}
+
+          </h4>
+        </div>
+
+        <div [ngbCollapse]="isMenuCollapse[i]">
+          <div class="card-body p-1">
+
+            <ul class="list-group m-0">
+              <li class="list-group-item btn-outline-secondary" *ngFor="let p of m.permisos" [routerLink]="['/',p.url]">
+                {{p.permiso}}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+
+
+
+  </div>
+</div>

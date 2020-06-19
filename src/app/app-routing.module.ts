@@ -1,8 +1,9 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
 import { LayoutComponent } from './layout/layout.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { LaunchingComponent } from './launching/launching.component';
 import { AuthGuard } from './shared/Guards/auth.guard';
 
 
@@ -52,6 +53,10 @@ const routes: Routes = [
       {
         path: 'recetario',
         loadChildren: () => import('./recetario/recetario.module').then(r => r.RecetarioModule)
+      },
+      {
+        path: 'capture',
+        loadChildren: () => import('./elitecapture/elitecapture.module').then(c => c.ElitecaptureModule)
       }
     ],
     canActivate: [AuthGuard]
@@ -59,6 +64,10 @@ const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then(a => a.AuthModule)
+  },
+  {
+    path: 'launching',
+    component: LaunchingComponent
   },
   {
     path: '**',

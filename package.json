@@ -22,7 +22,7 @@
     "@angular/platform-browser-dynamic": "~9.1.11",
     "@angular/router": "~9.1.11",
     "@fortawesome/fontawesome-free": "^5.12.1",
-    "@ng-bootstrap/ng-bootstrap": "^5.3.0",
+    "@ng-bootstrap/ng-bootstrap": "^6.1.0",
     "@sentry/browser": "^5.14.2",
     "@sweetalert2/theme-bootstrap-4": "^3.1.1",
     "angularx-qrcode": "^2.1.0",

@@ -46,6 +46,11 @@ function matches(usuario: Usuario, term: string, pipe: PipeTransform) {
 
 @Injectable({ providedIn: 'root' })
 export class UsuarioService {
+
+  private sessionUsuario: any[];
+  private session = new BehaviorSubject<any[]>([]);
+  public session$ = this.session.asObservable();
+
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
   private _usuarios$ = new BehaviorSubject<Usuario[]>([]);
@@ -111,6 +116,11 @@ export class UsuarioService {
 
   login(logger: Partial<Usuario>) {
     return this.http.post<JsonRes>(`${this.url}in`, logger)
+  }
+
+
+  loginSessionFull(logger: Partial<Usuario>) {
+    return this.http.post<JsonRes>(`${this.url}infull`, logger)
   }
 
   todos() {
