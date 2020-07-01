@@ -7,7 +7,8 @@
     "build": "node patch.js && ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "analyzer": "npx webpack-bundle-analyzer dist/SQLfrontQuality/stats-es2015.json"
   },
   "private": true,
   "dependencies": {
@@ -54,7 +55,8 @@
     "protractor": "^5.4.3",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
-    "typescript": "~3.7.5"
+    "typescript": "~3.7.5",
+    "webpack-bundle-analyzer": "^3.8.0"
   },
   "browser": {
     "crypto": false

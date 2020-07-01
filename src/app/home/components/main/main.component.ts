@@ -47,4 +47,13 @@ console.log(i);
     }
   }
 
+  componerUrl(url: string): string[] {
+    let newUrl = url.split('/');
+    // console.log(newUrl);
+    newUrl = ['/', ...newUrl];
+    // console.log(newUrl);
+    
+    return [...newUrl];
+  }
+
 }

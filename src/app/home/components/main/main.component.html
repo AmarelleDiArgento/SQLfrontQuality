@@ -17,7 +17,7 @@
           <div class="card-body p-1">
 
             <ul class="list-group m-0">
-              <li class="list-group-item btn-outline-secondary" *ngFor="let p of m.permisos" [routerLink]="['/',p.url]">
+              <li class="list-group-item btn-outline-secondary" *ngFor="let p of m.permisos" [routerLink]="componerUrl(p.url)">
                 {{p.permiso}}
               </li>
             </ul>
