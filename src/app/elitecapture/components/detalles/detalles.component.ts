@@ -72,7 +72,7 @@ export class DetallesComponent implements OnInit, AfterViewInit {
     this.validar();
     this.cargarOrigen(this.det);
 
-    // Formulario de supervisores 
+    // Formulario de supervisores
     if (this.isCultivo()) {
       this.tipoDeSeleccion = (this.loc == 'C') ? 'Supervisores' : 'Productos'
       this.selector = this.formBuilder.group({
@@ -112,7 +112,7 @@ export class DetallesComponent implements OnInit, AfterViewInit {
     });
   }
 
-  isCultivo = () => this.loc === 'C' || this.loc === 'S';
+  isCultivo = () => this.loc === 'C' || this.loc === 'S' || this.loc === 'M';
 
 
   todos = (v) => (v === 'Todos') ? null : v;
@@ -152,7 +152,7 @@ export class DetallesComponent implements OnInit, AfterViewInit {
       this.generarGraficaSupervisor(dataSuper);
     }
 
-    //  = 
+    //  =
     this.grafGen = {
       tipo: 'radar',
       relleno: true,

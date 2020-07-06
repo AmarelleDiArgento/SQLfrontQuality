@@ -97,6 +97,11 @@ export class DataService {
     return this.http.post<JsonRes>(`${this.url}cul`, fecha);
   }
 
+  private _searchMoni(fecha): Observable<JsonRes> {
+    return this.http.post<JsonRes>(`${this.url}mon`, fecha);
+  }
+
+
   get postcosecha$() { return this._postcosechas$.asObservable(); }
   get cultivo$() { return this._cultivo$.asObservable(); }
   get siembra$() { return this._cultivo$.asObservable(); }
@@ -117,13 +122,16 @@ export class DataService {
     // console.log('Hola cultivo :D');
     return this.http.post<JsonRes>(`${this.url}pla`, fecha);
   }
+  monitoreo(fecha) {
+    // console.log('Hola cultivo :D');
+    return this.http.post<JsonRes>(`${this.url}mon`, fecha);
+  }
 
   auditoria(rango: any[]) {
     return this.http.post<JsonRes>(`${this.url}exp`, rango);
   }
 
   cargar(origen: string, fecha: any[], supervisor: string, finca: string) {
-    // console.log('Hola :D', origen);
 
     this.Graph = [];
     this.graph.next(this.Graph);
@@ -144,6 +152,13 @@ export class DataService {
         break;
       case 'S':
         this.siembra(fecha).subscribe(i => {
+          this.dat = i.rows;
+          this.datas.next(this.dat);
+          this.DataCultivo(this.dat);
+        });
+        break;
+      case 'M':
+        this.monitoreo(fecha).subscribe(i => {
           this.dat = i.rows;
           this.datas.next(this.dat);
           this.DataCultivo(this.dat);
@@ -208,7 +223,7 @@ export class DataService {
     return data.map(({ Supervisor: d }) => d);
   }
 
-  // retorna valores unicos 
+  // retorna valores unicos
   Distinto = (valor, indice, self) => {
     return self.indexOf(valor) === indice;
   }
@@ -288,7 +303,7 @@ export class DataService {
 
 
   DataCultivo(dat: any[]) {
-    // console.log(dat);
+    console.log('Data Cul:', dat);
 
     this.graph.next([]);
     this.Graph = [];

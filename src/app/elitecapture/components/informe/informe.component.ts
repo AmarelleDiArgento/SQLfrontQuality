@@ -51,7 +51,7 @@ export class InformeComponent implements OnInit, AfterViewInit {
       this.loc = params.loc
       this.titulo(this.loc);
 
-      this.fromDate = calendar.getNext(calendar.getToday(), 'd', (this.loc == 'C' || this.loc == 'S') ? -6 : 0);
+      this.fromDate = calendar.getNext(calendar.getToday(), 'd', (this.loc == 'P') ?  0 : -6);
       this.toDate = calendar.getToday();
 
       this.data.cargar(this.loc, this.returnDateRange(), null, null);
@@ -89,6 +89,9 @@ export class InformeComponent implements OnInit, AfterViewInit {
         break;
       case 'S':
         this.Origen = "AUDITORIA DE SIEMBRAS"
+        break;
+      case 'M':
+        this.Origen = "MONITOREO DIVERSIFICADOS"
         break;
       case 'B':
         this.Origen = "BOUQUETERA"
@@ -150,7 +153,7 @@ export class InformeComponent implements OnInit, AfterViewInit {
 
   small = () => {
     return (this.formatter.format(this.toDate) !== "") ?
-      'Del ' + this.formatter.format(this.toDate) + ' al ' + this.formatter.format(this.toDate) :
+      'Del ' + this.formatter.format(this.fromDate) + ' al ' + this.formatter.format(this.toDate) :
       'El ' + this.formatter.format(this.fromDate)
   };
 
