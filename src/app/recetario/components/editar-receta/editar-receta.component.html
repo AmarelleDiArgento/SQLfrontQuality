@@ -1,4 +1,6 @@
-<div *ngIf=" marca$ | async as marca">
+
+<div class="container">
+  <div *ngIf=" marca$ | async as marca">
 
   <h2><strong>Marca:</strong> {{ marca.nombre }} - {{ marca.cliente }}</h2>
 
@@ -126,4 +128,5 @@
 
   </div>
 
+</div>
 </div>

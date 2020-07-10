@@ -1,68 +1,70 @@
-<div class="row">
-  <div class="col-12 col-md-8 text-center">
-    <h1>SEGUIMIENTO GENERAL {{Origen}}:</h1>
-  </div>
-  <div class="col-12 col-md-4">
-    <div class="form-group hidden">
-      <div class="input-group">
-        <input name="datepicker" class="form-control inputcero" ngbDatepicker #datepicker="ngbDatepicker"
-          [autoClose]="'outside'" (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"
-          outsideDays="hidden" [startDate]="fromDate">
-        <ng-template #t let-date let-focused="focused">
-          <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
-            [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
-            (mouseleave)="hoveredDate = null">
-            {{ date.day }}
-          </span>
-        </ng-template>
-      </div>
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-8 text-center">
+      <h1>SEGUIMIENTO GENERAL {{Origen}}:</h1>
     </div>
-    <div class="form-group">
-      <label for="fechaini">Seleccione la fecha:</label>
-      <div class="input-group">
-        <input #dpFromDate class="form-control text-center" id="fechaini" placeholder="yyyy-mm-dd" name="dpFromDate"
-          aria-describedby="calendarHelp" [value]="formatter.format(fromDate)"
-          (input)="fromDate = validateInput(fromDate, dpFromDate.value)">
-        <input #dpToDate class="form-control text-center" placeholder="yyyy-mm-dd" name="dpToDate"
-          [value]="formatter.format(toDate)" (input)="toDate = validateInput(toDate, dpToDate.value)">
-        <div class="input-group-append">
-          <button class="btn btn-outline-warning bg-warning text-light" (click)="datepicker.toggle()" type="button">
-            <i class="far fa-calendar-alt fa-lg"></i></button>
+    <div class="col-12 col-md-4">
+      <div class="form-group hidden">
+        <div class="input-group">
+          <input name="datepicker" class="form-control inputcero" ngbDatepicker #datepicker="ngbDatepicker"
+            [autoClose]="'outside'" (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"
+            outsideDays="hidden" [startDate]="fromDate">
+          <ng-template #t let-date let-focused="focused">
+            <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+              [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
+              (mouseleave)="hoveredDate = null">
+              {{ date.day }}
+            </span>
+          </ng-template>
         </div>
       </div>
-      <small id="calendarHelp" class="form-text text-muted">{{small()}}</small>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col">
-    <ng-container *ngFor="let g of Graf$ | async ">
-
-      <div *ngIf="g.origen !== 'NULL'" class="card mt-2 border-{{backgroundRow(g.cumplimiento)}}">
-        <div class="card-header bg-{{backgroundRow(g.cumplimiento)}} d-flex justify-content-between"
-          (click)="g.activo = !g.activo" [attr.aria-expanded]="!g.activo">
-          <div class="text-uppercase">{{g.origen}}</div>
-          <div class="font-weight-bold">{{(g.cumplimiento * 100).toFixed(1)}} %</div>
-        </div>
-        <div class="card-body" [ngbCollapse]="g.activo">
-          <h5 class="card-title">Procesos monitoreados:
-            <div class="small">
-
-              <button type="button" class="btn btn-link" data-toggle="tooltip" data-placement="bottom"
-                title="Tooltip on bottom" [routerLink]="['./', g.id]">Ver detalles</button>
-            </div>
-          </h5>
-          <div *ngFor="let p of g.procesos"
-            class="alert alert-{{backgroundRow(p.cumplimiento)}} d-flex justify-content-between text-uppercase"
-            role="alert">
-
-            <div class="text-uppercase">{{p.proceso}}</div>
-            <div class="font-weight-bold">{{(p.cumplimiento * 100).toFixed(1)}} %</div>
+      <div class="form-group">
+        <label for="fechaini">Seleccione la fecha:</label>
+        <div class="input-group">
+          <input #dpFromDate class="form-control text-center" id="fechaini" placeholder="yyyy-mm-dd" name="dpFromDate"
+            aria-describedby="calendarHelp" [value]="formatter.format(fromDate)"
+            (input)="fromDate = validateInput(fromDate, dpFromDate.value)">
+          <input #dpToDate class="form-control text-center" placeholder="yyyy-mm-dd" name="dpToDate"
+            [value]="formatter.format(toDate)" (input)="toDate = validateInput(toDate, dpToDate.value)">
+          <div class="input-group-append">
+            <button class="btn btn-outline-warning bg-warning text-light" (click)="datepicker.toggle()" type="button">
+              <i class="far fa-calendar-alt fa-lg"></i></button>
           </div>
         </div>
+        <small id="calendarHelp" class="form-text text-muted">{{small()}}</small>
       </div>
-    </ng-container>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <ng-container *ngFor="let g of Graf$ | async ">
+
+        <div *ngIf="g.origen !== 'NULL'" class="card mt-2 border-{{backgroundRow(g.cumplimiento)}}">
+          <div class="card-header bg-{{backgroundRow(g.cumplimiento)}} d-flex justify-content-between"
+            (click)="g.activo = !g.activo" [attr.aria-expanded]="!g.activo">
+            <div class="text-uppercase">{{g.origen}}</div>
+            <div class="font-weight-bold">{{(g.cumplimiento * 100).toFixed(1)}} %</div>
+          </div>
+          <div class="card-body" [ngbCollapse]="g.activo">
+            <h5 class="card-title">Procesos monitoreados:
+              <div class="small">
+
+                <button type="button" class="btn btn-link" data-toggle="tooltip" data-placement="bottom"
+                  title="Tooltip on bottom" [routerLink]="['./', g.id]">Ver detalles</button>
+              </div>
+            </h5>
+            <div *ngFor="let p of g.procesos"
+              class="alert alert-{{backgroundRow(p.cumplimiento)}} d-flex justify-content-between text-uppercase"
+              role="alert">
+
+              <div class="text-uppercase">{{p.proceso}}</div>
+              <div class="font-weight-bold">{{(p.cumplimiento * 100).toFixed(1)}} %</div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+    </div>
 
   </div>
-
 </div>

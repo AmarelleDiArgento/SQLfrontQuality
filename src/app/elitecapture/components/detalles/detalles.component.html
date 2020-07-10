@@ -1,13 +1,15 @@
-<form [formGroup]="selector" *ngIf="isCultivo()">
-  <div class="form-group">
-    <label for="id_Proceso">{{tipoDeSeleccion}}: </label>
-    <select class="custom-select custom-select-lg mb-3" id="supervisor" formControlName="supervisor">
-      <option selected>Todos</option>
-      <option *ngFor="let s of supervisores" [value]="s">{{s}}</option>
-    </select>
-  </div>
-</form>
+<div class="container">
+  <form [formGroup]="selector" *ngIf="isCultivo()">
+    <div class="form-group">
+      <label for="id_Proceso">{{tipoDeSeleccion}}: </label>
+      <select class="custom-select custom-select-lg mb-3" id="supervisor" formControlName="supervisor">
+        <option selected>Todos</option>
+        <option *ngFor="let s of supervisores" [value]="s">{{s}}</option>
+      </select>
+    </div>
+  </form>
 
-<div class="mt-3" *ngFor="let g of graficas; let i = index">
-  <app-grafica [dataGraf]="g"></app-grafica>
+  <div class="mt-3" *ngFor="let g of graficas; let i = index">
+    <app-grafica [dataGraf]="g"></app-grafica>
+  </div>
 </div>

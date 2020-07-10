@@ -1,13 +1,14 @@
-<div class="row">
+<div class="container">
+  <div class="row">
     <div class="col-12 offset-md-2 col-md-8 mt-md-5">
-  
+
       <div class="card">
         <div class="card-header">
           <h2>Editar Desplegable</h2>
         </div>
         <div class="card-body">
           <form [formGroup]="editarDesplegable" (ngSubmit)="onSubmit()">
-            
+
             <div class="form-group">
               <label for="id_Desplegable">ID: </label>
               <input type="text" autofocus class="form-control" id="id_Desplegable" formControlName="id_Desplegable" readonly
@@ -18,7 +19,7 @@
                 </div>
               </span>
             </div>
-  
+
             <div class="form-group">
               <label for="Filtro">Filtro: </label>
               <input type="text" autofocus class="form-control" id="Filtro" formControlName="Filtro"
@@ -29,7 +30,7 @@
                 </div>
               </span>
             </div>
-  
+
             <div class="form-group">
               <label for="Codigo">Codigo: </label>
               <input type="number" autofocus class="form-control" id="Codigo" formControlName="Codigo"
@@ -53,13 +54,13 @@
                   </div>
                 </span>
               </div>
-  
+
             <button type="submit" class="btn btn-primary btn-lg btn-block btn-full">Actualizar</button>
-  
+
           </form>
         </div>
       </div>
-  
+
     </div>
   </div>
-  
+</div>

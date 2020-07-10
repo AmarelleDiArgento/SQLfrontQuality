@@ -1,13 +1,13 @@
-import { Component, OnInit } from "@angular/core";
-import { SessionFull } from "../../interfaces/session";
-import { Router } from "@angular/router";
-import { CryptoService } from "@core/services/crypto.service";
-import { isNullOrUndefined } from "util";
+import { Component, OnInit } from '@angular/core';
+import { SessionFull } from '../../interfaces/session';
+import { Router } from '@angular/router';
+import { CryptoService } from '@core/services/crypto.service';
+import { isNullOrUndefined } from 'util';
 
 @Component({
-  selector: "app-navbar",
-  templateUrl: "./navbar.component.html",
-  styleUrls: ["./navbar.component.scss"],
+  selector: 'app-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent {
   session: SessionFull = null;
@@ -17,10 +17,9 @@ export class NavbarComponent {
 
   constructor(private router: Router, private crypto: CryptoService) {
     this.session = JSON.parse(
-      this.crypto.recuperar(localStorage.getItem("Session"))
+      this.crypto.recuperar(localStorage.getItem('Session'))
     ) as SessionFull;
 
-    console.log(this.session.modulos.length);
 
     if (this.session.modulos !== null && this.session.modulos !== undefined) {
       for (const mod of this.session.modulos) {
@@ -31,10 +30,9 @@ export class NavbarComponent {
     console.log(this.session);
   }
 
-  componerUrl(url: string): string[] {
-    let newUrl = url.split("/");
-    // console.log(newUrl);
-    newUrl = ["/", ...newUrl];
+  componerUrl(url: string, reportes: Reportes): string[] {
+    let newUrl = url.split('/');
+    newUrl = ['/', ...newUrl];
     // console.log(newUrl);
 
     return [...newUrl];
@@ -42,7 +40,7 @@ export class NavbarComponent {
 
   logout() {
     this.session = null;
-    localStorage.removeItem("Session");
-    this.router.navigate(["auth"]);
+    localStorage.removeItem('Session');
+    this.router.navigate(['auth']);
   }
 }
