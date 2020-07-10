@@ -32,7 +32,7 @@ export class EditarRecetaComponent implements OnInit {
   }
 
   archivo(event, id) {
-    console.log(event, id, this.id);
+    // console.log(event, id, this.id);
 
   }
 

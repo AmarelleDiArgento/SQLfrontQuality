@@ -31,7 +31,7 @@ export class MainComponent implements OnInit {
     }
   }
   clicCollapse(i: number) {
-console.log(i);
+// console.log(i);
 
     this.isMenuCollapse[i] = !this.isMenuCollapse[i]
   }

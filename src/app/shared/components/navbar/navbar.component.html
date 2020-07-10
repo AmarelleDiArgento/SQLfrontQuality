@@ -26,7 +26,7 @@
             {{m.nombre}}
           </a>
           <div ngbDropdownMenu aria-labelledby="navbarDropdown3" class="dropdown-menu">
-            <a *ngFor="let p of m.permisos" ngbDropdownItem [routerLink]="componerUrl(p.url, p.reportes)">{{p.permiso}}</a>
+            <a *ngFor="let p of m.permisos" ngbDropdownItem [routerLink]="componerUrl(p.url)">{{p.permiso}}</a>
           </div>
         </li>
       </ng-container>

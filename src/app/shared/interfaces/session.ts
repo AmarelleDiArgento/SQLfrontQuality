@@ -29,6 +29,7 @@ export interface Reportes {
     descripcion: string;
     url: string;
     estado: boolean;
+    activo?: boolean;
 }
 
 

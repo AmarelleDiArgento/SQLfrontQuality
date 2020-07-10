@@ -41,7 +41,7 @@ export class UploadFileComponent implements OnInit {
       })).subscribe((event: any) => {
         if (typeof (event) === 'object') {
           this.image = environment.api_receta_url + event.body.path;
-          console.log(this.image);
+          // console.log(this.image);
            
           this.upload.emit(event);
         }

@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { SessionFull } from '../../interfaces/session';
+import { Component } from '@angular/core';
+import { SessionFull, Reportes } from '../../interfaces/session';
 import { Router } from '@angular/router';
 import { CryptoService } from '@core/services/crypto.service';
-import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-navbar',
@@ -20,17 +19,16 @@ export class NavbarComponent {
       this.crypto.recuperar(localStorage.getItem('Session'))
     ) as SessionFull;
 
-
     if (this.session.modulos !== null && this.session.modulos !== undefined) {
       for (const mod of this.session.modulos) {
         this.isOptionCollapsed.push(true);
       }
     }
 
-    console.log(this.session);
+    // console.log(this.session);
   }
 
-  componerUrl(url: string, reportes: Reportes): string[] {
+  componerUrl(url: string): string[] {
     let newUrl = url.split('/');
     newUrl = ['/', ...newUrl];
     // console.log(newUrl);

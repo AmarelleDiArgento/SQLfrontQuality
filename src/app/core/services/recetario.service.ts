@@ -128,7 +128,7 @@ export class RecetarioService {
   convertir(data): Marca {
     const marca: Marca = this.encabezado((data.length > 1) ? data[0] : data);
     marca.menus = this.menu(data);
-    console.log(marca);
+    // console.log(marca);
     
     return marca;
   }

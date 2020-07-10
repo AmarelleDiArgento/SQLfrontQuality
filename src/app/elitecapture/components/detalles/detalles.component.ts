@@ -201,7 +201,7 @@ export class DetallesComponent implements OnInit, AfterViewInit {
         full.push(isUndefined(p.items) ? '' : p.items[0].item);
       }
     }
-    //console.log('label', labels, 'datas', datas, 'full', full);
+    //// console.log('label', labels, 'datas', datas, 'full', full);
 
     return [labels, datas, full];
 

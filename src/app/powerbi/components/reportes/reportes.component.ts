@@ -1,8 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { SafePipe } from "@shared/pipes/safe.pipe";
-import { SessionFull } from "../../interfaces/session";
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute, Params } from "@angular/router";
 import { CryptoService } from "@core/services/crypto.service";
+import { SessionFull, Reportes, Permisos } from "@shared/interfaces/session";
 
 @Component({
   selector: "app-reportes",
@@ -10,15 +9,31 @@ import { CryptoService } from "@core/services/crypto.service";
   styleUrls: ["./reportes.component.scss"],
 })
 export class ReportesComponent implements OnInit {
-  constructor(private router: Router, private crypto: CryptoService) {
+  data = false;
+  selected: number = 0;
+  proceso: string;
+  reporte: Reportes[];
+  session: SessionFull;
+
+  constructor(
+    private router: Router,
+    private crypto: CryptoService,
+    private activatedRoute: ActivatedRoute
+  ) {
     this.session = JSON.parse(
       this.crypto.recuperar(localStorage.getItem("Session"))
     ) as SessionFull;
-  }
 
-  data = null;
-  selected: number = 0;
-  reporte = [];
+    this.activatedRoute.params.subscribe((params: Params) => {
+      this.proceso = params.id;
+      // console.log(this.proceso);
+
+      this.optenerReportes();
+      if (this.data) {
+        this.cambiarInforme(this.selected);
+      }
+    });
+  }
 
   cambiarInforme(id: number) {
     this.reporte[this.selected].activo = false;
@@ -26,28 +41,24 @@ export class ReportesComponent implements OnInit {
     this.reporte[this.selected].activo = true;
   }
 
-  ngOnInit(): void {
-    this.optenerReportes();
-    if (this.data) {
-      this.cambiarInforme(this.selected);
-    }
-  }
+  ngOnInit(): void {}
 
-  matches(reporte: permiso, term: string) {
-    console.log(reporte.permiso);
-
-    return reporte.url.toLowerCase().includes(term.toLowerCase());
+  matches(permiso: Permisos, term: string) {
+    return permiso.url.toLowerCase().includes(term.toLowerCase());
   }
 
   optenerReportes() {
+    let per: Permisos[];
     for (const m of this.session.modulos) {
       if (m.nombre === "Reportes BI") {
-        for (const p of m.permisos) {
-          if (p.url === "powerbi/calidad") {
-            //             for(cont r ofp.reportes){}
-          }
-        }
+        per = m.permisos.filter((repo) => this.matches(repo, this.proceso));
+        per.map((p) => {
+          this.reporte = p.reportes;
+        });
       }
     }
+
+    this.data = this.reporte.length > 0;
+    // console.log(this.reporte);
   }
 }

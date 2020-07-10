@@ -51,7 +51,7 @@ export class GraficaComponent implements OnInit {
       },
       options: this.options
     });
-    console.log(this.lineal);
+    // console.log(this.lineal);
 
   }
 
@@ -70,7 +70,7 @@ export class GraficaComponent implements OnInit {
         borderWidth: 1 // Specify bar border width
       });
     }
-    console.log(dataset);
+    // console.log(dataset);
 
     return dataset;
   }

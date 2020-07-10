@@ -303,7 +303,7 @@ export class DataService {
 
 
   DataCultivo(dat: any[]) {
-    console.log('Data Cul:', dat);
+    // console.log('Data Cul:', dat);
 
     this.graph.next([]);
     this.Graph = [];
