@@ -24,22 +24,22 @@ export class GestionErrorComponent implements OnInit {
 
   page = 1;
 
-  
+
   hoveredDate: NgbDate;
   fromDate: NgbDate;
   toDate: NgbDate;
 
-  
+
   constructor(
     public captServ: CapturadorService,
     private sw: SwalModalService,
-    
+
     private calendar: NgbCalendar,
     public formatter: NgbDateParserFormatter,
     public calendarioServ: CalendarioService
 
   ) {
-    
+
     this.fromDate = calendar.getNext(calendar.getToday(), 'd', 0);
     this.toDate = calendar.getToday();
 
@@ -53,7 +53,7 @@ export class GestionErrorComponent implements OnInit {
 
   onSort({ column, direction }: SortEvent) {
     // console.log('click');
-    
+
     // resetting other headers
     this.headers.forEach(header => {
       if (header.sortable !== column) {
@@ -65,26 +65,31 @@ export class GestionErrorComponent implements OnInit {
     this.captServ.sortDirection = direction;
   }
 
-  // eliminarUsuario(id: string) {
-  //   this.captServ.eliminar(id)
-  //     .subscribe(data => {
-  //       // console.log(data);
-  //       let val = this.sw.modal(data)
-  //       if (val) {
-  //         // console.log('Cargue');
+  eliminarFormulario(unico: FormBorrable) {
+    console.log(unico);
 
-  //         // this.()
-  //       }
-  //     })
+    this.captServ.eliminar(unico)
+      .subscribe(data => {
+        console.log(data);
+        // let dato: number[] = [];
+        // data.rows
+        //   .forEach(
+        //     (form: any) => {
+        //       dato.push(form.id)
+        //     });
 
-  // }
+        // console.log(dato.toString());
 
-  recargar(supervisor: string, finca: string) {
-    // // console.log('Recargando... ');
+      });
 
-    // this.data.cargar(this.loc, this.returnDateRange(), supervisor, finca)
-    // this.Graf$ = this.data.graph$
-    // this.informes$ = this.data.post$
+  }
+
+  recargar() {
+    console.log('Recargando... ');
+
+    this.captServ.tabla(this.returnDateRange());
+    this.forms$ = this.captServ.forms$;
+    this.total$ = this.captServ.total$;
   }
 
 
@@ -104,8 +109,8 @@ export class GestionErrorComponent implements OnInit {
       this.toDate = null;
       this.fromDate = date;
     }
-    // console.log(this.returnDateRange());
-    this.recargar(null, null)
+    console.log(this.returnDateRange());
+    this.recargar();
 
   }
 

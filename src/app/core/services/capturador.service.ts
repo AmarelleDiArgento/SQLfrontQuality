@@ -8,6 +8,7 @@ import { SortDirection } from '@ngbtsp/directives/sortable.directive';
 import { BehaviorSubject, Subject, Observable, of } from 'rxjs';
 import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
 import { DecimalPipe } from '@angular/common';
+import { NgbCalendar, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 
 interface SearchResult {
   forms: FormBorrable[];
@@ -63,6 +64,8 @@ export class CapturadorService {
   private url: string
   private primero = true
 
+  public fecha;
+
   private _state: State = {
     page: 1,
     pageSize: 50,
@@ -72,10 +75,17 @@ export class CapturadorService {
   };
   constructor(
     private http: HttpClient,
-    private pipe: DecimalPipe
+    private pipe: DecimalPipe,
+    private calendar: NgbCalendar,
+    public formatter: NgbDateParserFormatter,
   ) {
+
+
+    let fromDate = calendar.getNext(calendar.getToday(), 'd', 0);
+    let toDate = calendar.getToday();
+
     this.url = environment.api_url + '/cap'
-    this.tabla()
+    this.tabla(this.returnDateRange(fromDate,toDate));
 
 
     this._search$.pipe(
@@ -92,8 +102,10 @@ export class CapturadorService {
     this._search$.next();
   }
 
-  tabla() {
-    this.todos().subscribe(data => {
+
+
+  tabla(fecha: any) {
+    this.todos(fecha).subscribe(data => {
       this.FORMS = data.rows
       this._forms$.next(this.FORMS);
     })
@@ -101,8 +113,12 @@ export class CapturadorService {
 
 
 
-  todos() {
-    return this.http.post<JsonRes>(`${this.url}allfec`, { fFi: '2020-12-01', fIn: '2020-12-01', proc: 'PQC' })
+  todos(fecha: any) {
+    return this.http.post<JsonRes>(`${this.url}allfec`, {...fecha, proc: 'PQC' })
+  }
+
+  eliminar(unico: FormBorrable){
+    return this.http.post<JsonRes>(`${this.url}deluni`, unico)
   }
 
 
@@ -152,5 +168,22 @@ export class CapturadorService {
 
     return of({ forms, total });
 
+  }
+
+
+  
+
+  returnDateRange(fromDate, toDate): any[] {
+
+    return [
+      {
+        ... fromDate,
+        formatoSql: this.formatter.format(fromDate)
+      },
+      {
+        ... (toDate !== null) ? toDate : fromDate,
+        formatoSql: this.formatter.format((toDate !== null) ? toDate : fromDate)
+      }
+    ];
   }
 }
