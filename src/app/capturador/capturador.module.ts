@@ -9,6 +9,7 @@ import { NgBootstrapModule } from '../ng-bootstrap/ng-bootstrap.module';
 import { EncabezadoComponent } from './components/encabezado/encabezado.component';
 import { PreguntaComponent } from './components/pregunta/pregunta.component';
 import { CampoComponent } from './components/campo/campo.component';
+import { GestionErrorComponent } from './components/gestion-error/gestion-error.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { CampoComponent } from './components/campo/campo.component';
     CapturadorComponent,
     EncabezadoComponent,
     PreguntaComponent,
-    CampoComponent
+    CampoComponent,
+    GestionErrorComponent
   ],
   imports: [
     CommonModule,

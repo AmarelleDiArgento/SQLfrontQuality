@@ -20,7 +20,7 @@
 
 
       <button *ngFor="let p of proceso$ | async" type="button" class="btn btn-success btn-lg btn-block text-uppercase"
-        [routerLink]="['./', p.codigo_proceso]" routerLinkActive="router-link-active">{{p.nombre_proceso}}
+        [routerLink]="['./','editor', p.codigo_proceso]" routerLinkActive="router-link-active">{{p.nombre_proceso}}
       </button>
 
 
