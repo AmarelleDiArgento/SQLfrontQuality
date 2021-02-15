@@ -11,7 +11,7 @@ import {
   NgbdSortableHeader,
   SortEvent,
 } from "@ngbtsp/directives/sortable.directive";
-import { Encabezado, FormBorrable } from "@shared/interfaces/formularios";
+import { FormBorrable } from "@shared/interfaces/formularios";
 import { Observable } from "rxjs";
 
 @Component({
@@ -50,7 +50,7 @@ export class GestionErrorComponent implements OnInit {
 
   ngOnInit() {}
 
-  AjustarEncabezado(e: string): Encabezado {
+  AjustarEncabezado(e: string): [{ llave: string; valor: string }] {
     return JSON.parse(e);
   }
 
