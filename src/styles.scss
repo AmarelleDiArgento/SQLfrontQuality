@@ -2,3 +2,13 @@
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
+
+.popover {
+  max-width: 450px !important;
+  background-color: #e4e6e3 !important;
+  border: 1.5px solid #fba905 !important;
+}
+
+.popover-body {
+  padding: 0% !important;
+}
