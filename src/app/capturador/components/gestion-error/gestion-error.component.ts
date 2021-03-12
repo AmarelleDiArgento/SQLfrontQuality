@@ -1,7 +1,15 @@
 import { Component, OnInit, QueryList, ViewChildren } from "@angular/core";
 import { CapturadorService } from "@core/services/capturador.service";
 import { CalendarioService } from "@core/services/calendario.service";
-import { SwalModalService } from "@core/services/swal-modal.service";
+import Swal from "sweetalert2";
+
+export interface SweetAlertResult<T = any> {
+  readonly dismiss?: Swal.DismissReason;
+  readonly isConfirmed: boolean;
+  readonly isDismissed: boolean;
+  readonly value?: T;
+}
+
 import {
   NgbCalendar,
   NgbDate,
@@ -35,8 +43,6 @@ export class GestionErrorComponent implements OnInit {
 
   constructor(
     public captServ: CapturadorService,
-    private sw: SwalModalService,
-
     private calendar: NgbCalendar,
     public formatter: NgbDateParserFormatter,
     public calendarioServ: CalendarioService
@@ -49,6 +55,43 @@ export class GestionErrorComponent implements OnInit {
   }
 
   ngOnInit() {}
+
+  eliminar(unico: FormBorrable, formularios: any) {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger",
+      },
+      buttonsStyling: false,
+    });
+
+    swalWithBootstrapButtons
+      .fire({
+        title: "¿Estas segur@?",
+        text: "¡No podrás revertir esto!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Si, borralo!",
+        cancelButtonText: "No, cancelar!",
+        reverseButtons: true,
+      })
+      .then((result: SweetAlertResult) => {
+        if (result.isConfirmed) {
+          console.log(unico);
+
+          this.eliminarFormulario(unico, swalWithBootstrapButtons);
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire(
+            "Cancelado!",
+            "tu formulario esta a salvo! :)",
+            "error"
+          );
+        }
+      });
+  }
 
   AjustarEncabezado(e: string): [{ llave: string; valor: string }] {
     return JSON.parse(e);
@@ -68,19 +111,17 @@ export class GestionErrorComponent implements OnInit {
     this.captServ.sortDirection = direction;
   }
 
-  eliminarFormulario(unico: FormBorrable) {
+  eliminarFormulario(unico: FormBorrable, swalWithBootstrapButtons: any) {
     console.log(unico);
 
     this.captServ.eliminar(unico).subscribe((data) => {
       console.log(data);
-      // let dato: number[] = [];
-      // data.rows
-      //   .forEach(
-      //     (form: any) => {
-      //       dato.push(form.id)
-      //     });
 
-      // console.log(dato.toString());
+      swalWithBootstrapButtons.fire(
+        "¡Eliminado!",
+        "Formulario eliminado.",
+        "success"
+      );
     });
   }
 
