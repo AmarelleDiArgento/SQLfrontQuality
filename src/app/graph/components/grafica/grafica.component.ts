@@ -154,15 +154,18 @@ export class GraficaComponent implements OnInit {
     // console.log('Entre 60 y 85: ', data > 60 && data <= 85);
     // console.log('Mayor que 85: ', data > 85);
 
+
+
     switch (true) {
-      case data <= 79:
-        return 'danger';
-      case data > 79 && data <= 89:
-        return 'warning';
-      case data > 89:
-        return 'success';
+      case data < 80:
+        return 'danger'
+      case data >= 80 && data < 90:
+        return 'warning'
+      case data >= 90:
+        return 'success'
       default:
-        return 'light';
+        return 'light'
+
     }
   }
 

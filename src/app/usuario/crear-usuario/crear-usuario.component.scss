@@ -4,3 +4,25 @@
   justify-content: center;
   min-height: 100vh;
 }
+
+.contenedorFullAltoPantalla {
+  height: 90vh
+}
+
+.contenedortercio {
+  height: 30vh;
+}
+
+.card-body {
+  width: 100%;
+}
+
+.scroll-on {
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.scroll-off {
+  overflow-x: hidden;
+  overflow-y: hidden;
+}

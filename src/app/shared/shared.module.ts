@@ -7,6 +7,8 @@ import { UploadFileComponent } from './components/upload-file/upload-file.compon
 import { SafePipe } from './pipes/safe.pipe';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { HighlighttextDirective } from './directives/highlighttext.directive';
+import { AutocompletadoComponent } from './components/autocompletado/autocompletado.component';
 
 
 
@@ -14,7 +16,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
   declarations: [
     NavbarComponent,
     UploadFileComponent,
-    SafePipe
+    SafePipe,
+    HighlighttextDirective,
+    AutocompletadoComponent
   ],
   imports: [
     CommonModule,
@@ -26,7 +30,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     ReactiveFormsModule,
     NavbarComponent,
     NgBootstrapModule,
-    UploadFileComponent
+    UploadFileComponent,
+    HighlighttextDirective,
+    AutocompletadoComponent
   ]
 })
 export class SharedModule { }

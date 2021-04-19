@@ -139,11 +139,11 @@ export class InformeComponent implements OnInit, AfterViewInit {
     // console.log('Entre 75 y 85: ', data > 75 && data <= 85);
     // console.log('Mayor que 85: ', data > 85);
     switch (true) {
-      case data <= 0.79:
+      case data < 0.8:
         return 'danger'
-      case data > 0.79 && data <= 0.89:
+      case data >= 0.8 && data < 0.9:
         return 'warning'
-      case data > 0.89:
+      case data >= 0.9:
         return 'success'
       default:
         return 'light'

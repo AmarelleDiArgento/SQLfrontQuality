@@ -1,13 +1,13 @@
-import { Injectable, PipeTransform } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable, PipeTransform } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
 
-import { JsonRes } from '@shared/interfaces/json-res';
-import { Desplegable } from '@shared/interfaces/desplegable';
-import { environment } from 'environments/environment';
-import { SortDirection } from '@ngbtsp/directives/sortable.directive';
-import { BehaviorSubject, Subject, Observable, of } from 'rxjs';
-import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
-import { DecimalPipe } from '@angular/common';
+import { JsonRes } from "@shared/interfaces/json-res";
+import { Desplegable } from "@shared/interfaces/desplegable";
+import { environment } from "environments/environment";
+import { SortDirection } from "@ngbtsp/directives/sortable.directive";
+import { BehaviorSubject, Subject, Observable, of } from "rxjs";
+import { debounceTime, delay, switchMap, tap } from "rxjs/operators";
+import { DecimalPipe } from "@angular/common";
 
 interface SearchResult {
   desplegables: Desplegable[];
@@ -26,25 +26,31 @@ function compare(v1, v2) {
   return v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 }
 
-function sort(desplegables: Desplegable[], column: string, direction: string): Desplegable[] {
-  if (direction === '') {
+function sort(
+  desplegables: Desplegable[],
+  column: string,
+  direction: string
+): Desplegable[] {
+  if (direction === "") {
     return desplegables;
   } else {
     return [...desplegables].sort((a, b) => {
       const res = compare(a[column], b[column]);
-      return direction === 'asc' ? res : -res;
+      return direction === "asc" ? res : -res;
     });
   }
 }
 
 function matches(desplegable: Desplegable, term: string, pipe: PipeTransform) {
-  return pipe.transform(desplegable.id_Desplegable).includes(term)
-    || desplegable.Filtro.toLowerCase().includes(term.toLowerCase())
-    || pipe.transform(desplegable.Codigo).includes(term)
-    || desplegable.Opcion.toLowerCase().includes(term.toLowerCase())
+  return (
+    pipe.transform(desplegable.id_Desplegable).includes(term) ||
+    desplegable.Filtro.toLowerCase().includes(term.toLowerCase()) ||
+    pipe.transform(desplegable.Codigo).includes(term) ||
+    desplegable.Opcion.toLowerCase().includes(term.toLowerCase())
+  );
 }
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: "root" })
 export class DesplegableService {
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
@@ -58,76 +64,94 @@ export class DesplegableService {
   private _state: State = {
     page: 1,
     pageSize: 10,
-    searchTerm: '',
-    sortColumn: '',
-    sortDirection: ''
+    searchTerm: "",
+    sortColumn: "",
+    sortDirection: "",
   };
 
-  constructor(
-    private http: HttpClient,
-    private pipe: DecimalPipe
-  ) {
-    this.url = environment.api_url + '/des';
+  constructor(private http: HttpClient, private pipe: DecimalPipe) {
+    this.url = environment.api_url + "/des";
     this.tabla();
 
-
-    this._search$.pipe(
-      tap(() => this._loading$.next(true)),
-      debounceTime(2000),
-      switchMap(() => this._search()),
-      delay(2000),
-      tap(() => this._loading$.next(false))
-    ).subscribe(result => {
-      this._desplegables$.next(result.desplegables);
-      this._total$.next(result.total);
-    });
+    this._search$
+      .pipe(
+        tap(() => this._loading$.next(true)),
+        debounceTime(2000),
+        switchMap(() => this._search()),
+        delay(2000),
+        tap(() => this._loading$.next(false))
+      )
+      .subscribe((result) => {
+        this._desplegables$.next(result.desplegables);
+        this._total$.next(result.total);
+      });
 
     this._search$.next();
   }
 
   tabla() {
-    this.todos().subscribe(data => {
-      this.DESPLEGABLES = data.rows
+    this.todos().subscribe((data) => {
+      this.DESPLEGABLES = data.rows;
     });
   }
   crear(desplegable: Desplegable) {
-
-    return this.http.post<JsonRes>(`${this.url}ins`, desplegable)
+    return this.http.post<JsonRes>(`${this.url}ins`, desplegable);
   }
 
   editar(id: string, changes: Partial<Desplegable>) {
-    return this.http.put<JsonRes>(`${this.url}upd/${id}`, changes)
+    return this.http.put<JsonRes>(`${this.url}upd/${id}`, changes);
   }
 
   eliminar(id: string) {
-    return this.http.delete<JsonRes>(`${this.url}del/${id}`)
+    return this.http.delete<JsonRes>(`${this.url}del/${id}`);
   }
 
   optener(id: string) {
-    return this.http.post<JsonRes>(`${this.url}one/${id}`, id)
+    return this.http.post<JsonRes>(`${this.url}one/${id}`, id);
   }
 
   filtro(filtro: string) {
-    return this.http.post<JsonRes>(`${this.url}fil/${filtro}`, filtro)
+    return this.http.post<JsonRes>(`${this.url}fil/${filtro}`, filtro);
   }
 
   todos() {
     return this.http.get<JsonRes>(`${this.url}all`);
   }
 
+  get desplegables$() {
+    return this._desplegables$.asObservable();
+  }
+  get total$() {
+    return this._total$.asObservable();
+  }
+  get loading$() {
+    return this._loading$.asObservable();
+  }
+  get page() {
+    return this._state.page;
+  }
+  get pageSize() {
+    return this._state.pageSize;
+  }
+  get searchTerm() {
+    return this._state.searchTerm;
+  }
 
-  get desplegables$() { return this._desplegables$.asObservable(); }
-  get total$() { return this._total$.asObservable(); }
-  get loading$() { return this._loading$.asObservable(); }
-  get page() { return this._state.page; }
-  get pageSize() { return this._state.pageSize; }
-  get searchTerm() { return this._state.searchTerm; }
-
-  set page(page: number) { this._set({ page }); }
-  set pageSize(pageSize: number) { this._set({ pageSize }); }
-  set searchTerm(searchTerm: string) { this._set({ searchTerm }); }
-  set sortColumn(sortColumn: string) { this._set({ sortColumn }); }
-  set sortDirection(sortDirection: SortDirection) { this._set({ sortDirection }); }
+  set page(page: number) {
+    this._set({ page });
+  }
+  set pageSize(pageSize: number) {
+    this._set({ pageSize });
+  }
+  set searchTerm(searchTerm: string) {
+    this._set({ searchTerm });
+  }
+  set sortColumn(sortColumn: string) {
+    this._set({ sortColumn });
+  }
+  set sortDirection(sortDirection: SortDirection) {
+    this._set({ sortDirection });
+  }
 
   private _set(patch: Partial<State>) {
     Object.assign(this._state, patch);
@@ -135,18 +159,34 @@ export class DesplegableService {
   }
 
   private _search(): Observable<SearchResult> {
-    const { sortColumn, sortDirection, pageSize, page, searchTerm } = this._state;
+    const {
+      sortColumn,
+      sortDirection,
+      pageSize,
+      page,
+      searchTerm,
+    } = this._state;
 
     // 1. sort
     let desplegables = sort(this.DESPLEGABLES, sortColumn, sortDirection);
 
     // 2. filter
-    desplegables = desplegables.filter(desplegable => matches(desplegable, searchTerm, this.pipe));
-    const total = desplegables.length;
+    desplegables =
+      desplegables !== undefined
+        ? desplegables.filter((desplegable) =>
+            matches(desplegable, searchTerm, this.pipe)
+          )
+        : desplegables;
+    const total = desplegables !== undefined ? desplegables.length : 0;
 
     // 3. paginate
-    desplegables = desplegables.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
+    desplegables =
+      desplegables !== undefined
+        ? desplegables.slice(
+            (page - 1) * pageSize,
+            (page - 1) * pageSize + pageSize
+          )
+        : desplegables;
     return of({ desplegables, total });
   }
-
 }

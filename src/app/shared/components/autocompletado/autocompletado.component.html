@@ -1,0 +1,3 @@
+<label for="typeahead-basic">{{input}}:</label><small> {{ campo.value  }}</small>
+<input id="typeahead-basic" type="text" class="form-control" #campo [ngbTypeahead]="search"
+  (keyup)="returnValue(campo.value)" />

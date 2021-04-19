@@ -11,6 +11,7 @@ import {
   NgbProgressbarModule,
   NgbTooltipModule,
   NgbDropdownModule,
+  NgbAccordionModule,
 
 } from '@ng-bootstrap/ng-bootstrap';
 import { NgbdSortableHeader } from './directives/sortable.directive';
@@ -31,6 +32,7 @@ import { CalendarioComponent } from './components/calendario/calendario.componen
     NgbDatepickerModule,
     NgbPopoverModule,
     NgbProgressbarModule,
+    NgbAccordionModule,
     NgbTooltipModule,
     NgbDropdownModule
 
@@ -41,6 +43,7 @@ import { CalendarioComponent } from './components/calendario/calendario.componen
     NgbTypeaheadModule,
     NgbDatepickerModule,
     NgbPopoverModule,
+    NgbAccordionModule,
     NgbProgressbarModule,
     NgbTooltipModule,
     NgbDropdownModule

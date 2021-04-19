@@ -9,6 +9,8 @@ import { ListarUsuarioComponent } from './listar-usuario/listar-usuario.componen
 import { UsuarioRoutingModule } from './usuario-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgBootstrapModule } from '../ng-bootstrap/ng-bootstrap.module';
+import { TestingModule } from 'app/testing/testing.module';
+import { SharedModule } from '@shared/shared.module';
 
 
 @NgModule({
@@ -19,9 +21,11 @@ import { NgBootstrapModule } from '../ng-bootstrap/ng-bootstrap.module';
   imports: [
     CommonModule,
     UsuarioRoutingModule,
+    SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    NgBootstrapModule
+    NgBootstrapModule,
+    TestingModule
   ]
 })
 export class UsuarioModule { }

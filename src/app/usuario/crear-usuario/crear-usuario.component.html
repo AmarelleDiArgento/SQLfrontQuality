@@ -1,44 +1,80 @@
-<div class="container">
+<div class="container-fluid">
 
 
-<div class="row">
-  <div class="col-12 offset-md-2 col-md-8 mt-md-5">
+  <div class="row">
+    <div class="col-12 col-md-6 ">
 
-    <div class="card">
-      <div class="card-header">
-        <h2>Nuevo usuario</h2>
+      <div class="card">
+        <div class="card-header">
+          <h2>Nuevo usuario</h2>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="nuevoUsuario" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label for="id_usuario">Codigo: </label>
+
+              <input type="text" autofocus class="form-control" id="id_usuario" formControlName="id_usuario"
+                [ngClass]="{ 'is-invalid': submitted && f.id_usuario.errors }"
+                placeholder="Digite el codigo de empleado">
+              <span>
+                <div *ngIf="submitted && f.id_usuario.errors">
+                  <div *ngIf="f.id_usuario.errors.required"> <label id="error">El codigo es requerido</label></div>
+                </div>
+              </span>
+            </div>
+            <div class="form-group">
+              <label for="nombre_usuario">Nombre: </label>
+              <input type="text" autofocus class="form-control" id="nombre_usuario" formControlName="nombre_usuario"
+                [ngClass]="{ 'is-invalid': submitted && f.nombre_usuario.errors }"
+                placeholder="Digite el nombre del empleado">
+              <span>
+                <div *ngIf="submitted && f.nombre_usuario.errors">
+                  <div *ngIf="f.nombre_usuario.errors.required"> <label id="error">El codigo es requerido</label></div>
+                </div>
+              </span>
+            </div>
+            <ng-container *ngFor="let grupo of grupos$ | async; index as i">
+              <div class="form-group">
+                <app-autocompletado [campo]="campos[i]" [input]="inputs[i]" [lista]="grupo"   (valor)="valorAuto($event)" >
+                </app-autocompletado>
+              </div>
+
+            </ng-container>
+            <button type="submit" class="btn btn-primary btn-lg btn-block btn-full">Crear</button>
+          </form>
+        </div>
       </div>
-      <div class="card-body">
-        <form [formGroup]="nuevoUsuario" (ngSubmit)="onSubmit()">
-          <div class="form-group">
-            <label for="id_usuario">Codigo: </label>
 
-            <input type="text" autofocus class="form-control" id="id_usuario" formControlName="id_usuario"
-              [ngClass]="{ 'is-invalid': submitted && f.id_usuario.errors }" placeholder="Digite el codigo de empleado">
-            <span>
-              <div *ngIf="submitted && f.id_usuario.errors">
-                <div *ngIf="f.id_usuario.errors.required"> <label id="error">El codigo es requerido</label></div>
-              </div>
-            </span>
-          </div>
-          <div class="form-group">
-            <label for="nombre_usuario">Nombre: </label>
-            <input type="text" autofocus class="form-control" id="nombre_usuario" formControlName="nombre_usuario"
-              [ngClass]="{ 'is-invalid': submitted && f.nombre_usuario.errors }"
-              placeholder="Digite el nombre del empleado">
-            <span>
-              <div *ngIf="submitted && f.nombre_usuario.errors">
-                <div *ngIf="f.nombre_usuario.errors.required"> <label id="error">El codigo es requerido</label></div>
-              </div>
-            </span>
-          </div>
-
-          <button type="submit" class="btn btn-primary btn-lg btn-block btn-full">Crear</button>
-        </form>
+    </div>
+    <div class="col-12 col-md-6">
+      <div class="card contenedortercio mb-2">
+        <div class="card-header">
+          <h2>Fincas Asignadas</h2>
+        </div>
+        <div class="card-body scroll-on">
+          <app-checklist [lista$]="fincas$" [multiple]="false" [titulos]="titulosFinca"
+            (checkStatus)="eventoClicFinca($event)"></app-checklist>
+        </div>
+      </div>
+      <div class="card contenedortercio mb-2">
+        <div class="card-header">
+          <h2>Permisos The Graph</h2>
+        </div>
+        <div class="card-body scroll-on">
+          <app-checklist [lista$]="permisos$" [multiple]="false" [titulos]="titulosPermiso"
+            (checkStatus)="eventoClicPermiso($event)"></app-checklist>
+        </div>
+      </div>
+      <div class="card contenedortercio">
+        <div class="card-header">
+          <h2>Formularios EliteCapture
+          </h2>
+        </div>
+        <div class="card-body scroll-on">
+          <app-checklist [lista$]="formularios$" [multiple]="false" [titulos]="titulosFormulario"
+            (checkStatus)="eventoClicFormulario($event)"></app-checklist>
+        </div>
       </div>
     </div>
-
   </div>
-</div>
-
 </div>

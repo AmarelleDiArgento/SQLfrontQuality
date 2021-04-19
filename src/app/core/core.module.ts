@@ -15,7 +15,6 @@ import { CryptoService } from './services/crypto.service';
   declarations: [],
   imports: [
     CommonModule
-
   ],
   providers: [
     UsuarioService,
